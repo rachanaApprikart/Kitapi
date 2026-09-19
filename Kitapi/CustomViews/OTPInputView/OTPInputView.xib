@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OTPInputView" customModule="Kitapi" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="pKs-wQ-tWJ" id="HJp-gk-W12"/>
+                <outlet property="otpTextFieldView1" destination="YVK-CW-hMV" id="luV-Yc-em3"/>
+                <outlet property="otpTextFieldView2" destination="hGc-hA-jm8" id="DAc-W4-E6U"/>
+                <outlet property="otpTextFieldView3" destination="Wtw-cI-3eC" id="7eG-oZ-5ge"/>
+                <outlet property="otpTextFieldView4" destination="pFU-b5-vwK" id="4pi-Jh-doa"/>
+                <outlet property="otpTextFieldView5" destination="wnS-DZ-Rrk" id="QXH-w5-fTu"/>
+                <outlet property="otpTextFieldView6" destination="cTy-OW-8Zm" id="2t1-wd-P8G"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" ambiguous="YES" id="bVd-TT-04c">
+            <rect key="frame" x="0.0" y="0.0" width="337" height="59"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="pKs-wQ-tWJ">
+                    <rect key="frame" x="0.0" y="0.0" width="350" height="54"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YVK-CW-hMV" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="48.333333333333336" height="54"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hGc-hA-jm8" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="60.333333333333329" y="0.0" width="48.333333333333329" height="54"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wtw-cI-3eC" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="120.66666666666667" y="0.0" width="48.333333333333329" height="54"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pFU-b5-vwK" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="181" y="0.0" width="48.333333333333343" height="54"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wnS-DZ-Rrk" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="241.33333333333334" y="0.0" width="48.333333333333343" height="54"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cTy-OW-8Zm" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="301.66666666666669" y="0.0" width="48.333333333333314" height="54"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="Pyi-Pk-v31"/>
+                        <constraint firstAttribute="width" constant="350" id="xmo-S9-LXx"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="nZr-ki-BJo"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="nZr-ki-BJo" firstAttribute="trailing" secondItem="pKs-wQ-tWJ" secondAttribute="trailing" id="CLv-XM-6Cx"/>
+                <constraint firstItem="pKs-wQ-tWJ" firstAttribute="leading" secondItem="nZr-ki-BJo" secondAttribute="leading" id="L7P-f4-zGm"/>
+                <constraint firstItem="pKs-wQ-tWJ" firstAttribute="bottom" secondItem="nZr-ki-BJo" secondAttribute="bottom" id="YCx-ZE-sWL"/>
+                <constraint firstItem="pKs-wQ-tWJ" firstAttribute="top" secondItem="bVd-TT-04c" secondAttribute="top" id="yoJ-to-Cd1"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-811.45038167938924" y="669.36619718309862"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

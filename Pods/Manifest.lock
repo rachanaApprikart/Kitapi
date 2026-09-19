@@ -1,0 +1,32 @@
+PODS:
+  - DropDown (2.3.13)
+  - IQKeyboardManagerSwift (7.0.3)
+  - SVProgressHUD (2.3.1):
+    - SVProgressHUD/Core (= 2.3.1)
+  - SVProgressHUD/Core (2.3.1)
+  - SwiftMessages (10.0.0):
+    - SwiftMessages/App (= 10.0.0)
+  - SwiftMessages/App (10.0.0)
+
+DEPENDENCIES:
+  - DropDown
+  - IQKeyboardManagerSwift
+  - SVProgressHUD
+  - SwiftMessages
+
+SPEC REPOS:
+  trunk:
+    - DropDown
+    - IQKeyboardManagerSwift
+    - SVProgressHUD
+    - SwiftMessages
+
+SPEC CHECKSUMS:
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
+  IQKeyboardManagerSwift: f9c5dc36cba16ddd2e51fa7d51c34a2e083029b5
+  SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
+  SwiftMessages: d3540f0f981dfbac25bd2ae9a662effa48f76f92
+
+PODFILE CHECKSUM: 7aa90f3a12110816545c59e68df5170f2419ad6d
+
+COCOAPODS: 1.12.1

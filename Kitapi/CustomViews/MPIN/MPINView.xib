@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MPINView">
+            <connections>
+                <outlet property="contentView" destination="wyc-XU-PIf" id="MGM-ux-r8E"/>
+                <outlet property="pin1TextField" destination="YED-mE-YDA" id="9sc-7M-gsE"/>
+                <outlet property="pin2TextField" destination="IPd-g7-Oc7" id="sNP-TW-ckw"/>
+                <outlet property="pin3TextField" destination="Abl-uf-FIy" id="L47-mB-Geg"/>
+                <outlet property="pin4TextField" destination="DMj-UR-8YD" id="neT-Uw-e6z"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="370" height="96"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="wyc-XU-PIf">
+                    <rect key="frame" x="0.0" y="22" width="370" height="60"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YED-mE-YDA" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="83.666666666666671" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IPd-g7-Oc7" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="95.666666666666686" y="0.0" width="83.333333333333314" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Abl-uf-FIy" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="191" y="0.0" width="83.666666666666686" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DMj-UR-8YD" customClass="OTPTextField" customModule="Kitapi" customModuleProvider="target">
+                            <rect key="frame" x="286.66666666666669" y="0.0" width="83.333333333333314" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="Z8n-F0-s3x"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="5i4-Za-tgo"/>
+                        <constraint firstAttribute="width" constant="270" id="bMx-QG-cZ5"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="wyc-XU-PIf" secondAttribute="bottom" id="7Od-F5-PED"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wyc-XU-PIf" secondAttribute="trailing" id="ObZ-rJ-9tx"/>
+                <constraint firstItem="wyc-XU-PIf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Tut-Yq-QOw"/>
+                <constraint firstItem="wyc-XU-PIf" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="W9V-x4-0a4"/>
+                <constraint firstItem="wyc-XU-PIf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="kOq-gY-au7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="44.274809160305338" y="-89.436619718309871"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

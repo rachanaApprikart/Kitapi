@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SelectDateCVCell" customModule="Kitapi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="291" height="65"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="291" height="65"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xRF-d4-ZB9">
+                        <rect key="frame" x="0.0" y="0.0" width="291" height="65"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdI-4H-bb9">
+                                <rect key="frame" x="0.0" y="0.0" width="291" height="65"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <connections>
+                                    <action selector="selectDatesAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="W9R-97-RFW"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTo-Hs-gzc">
+                                <rect key="frame" x="102.33333333333334" y="22" width="86.333333333333343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar_check" translatesAutoresizingMaskIntoConstraints="NO" id="du5-Jf-Rsh">
+                                <rect key="frame" x="62.333333333333343" y="20" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="Cb3-Dt-DvT"/>
+                                    <constraint firstAttribute="width" constant="25" id="pNl-uX-F7N"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_drop_down" translatesAutoresizingMaskIntoConstraints="NO" id="cDz-Kr-QnZ">
+                                <rect key="frame" x="203.66666666666666" y="20" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="fap-eu-wGx"/>
+                                    <constraint firstAttribute="height" constant="25" id="rKB-8f-hHO"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cDz-Kr-QnZ" firstAttribute="centerY" secondItem="xRF-d4-ZB9" secondAttribute="centerY" id="1wH-Ll-SE0"/>
+                            <constraint firstAttribute="trailing" secondItem="gdI-4H-bb9" secondAttribute="trailing" id="4ql-67-Vfo"/>
+                            <constraint firstItem="ZTo-Hs-gzc" firstAttribute="centerX" secondItem="xRF-d4-ZB9" secondAttribute="centerX" id="I2u-bt-taZ"/>
+                            <constraint firstItem="gdI-4H-bb9" firstAttribute="leading" secondItem="xRF-d4-ZB9" secondAttribute="leading" id="L5c-MH-kA7"/>
+                            <constraint firstItem="ZTo-Hs-gzc" firstAttribute="centerY" secondItem="xRF-d4-ZB9" secondAttribute="centerY" id="LwK-Z4-ky1"/>
+                            <constraint firstItem="gdI-4H-bb9" firstAttribute="top" secondItem="xRF-d4-ZB9" secondAttribute="top" id="Pag-DJ-djN"/>
+                            <constraint firstItem="du5-Jf-Rsh" firstAttribute="centerY" secondItem="xRF-d4-ZB9" secondAttribute="centerY" id="X7u-4X-Yle"/>
+                            <constraint firstAttribute="bottom" secondItem="gdI-4H-bb9" secondAttribute="bottom" id="c8t-Lw-Keh"/>
+                            <constraint firstItem="cDz-Kr-QnZ" firstAttribute="leading" secondItem="ZTo-Hs-gzc" secondAttribute="trailing" constant="15" id="hWh-2n-Txi"/>
+                            <constraint firstItem="ZTo-Hs-gzc" firstAttribute="leading" secondItem="du5-Jf-Rsh" secondAttribute="trailing" constant="15" id="k6b-pu-Zxm"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="xRF-d4-ZB9" secondAttribute="trailing" id="7h9-nl-9xU"/>
+                <constraint firstItem="xRF-d4-ZB9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="8Oe-dy-b4i"/>
+                <constraint firstAttribute="bottom" secondItem="xRF-d4-ZB9" secondAttribute="bottom" id="sgV-g4-2mU"/>
+                <constraint firstItem="xRF-d4-ZB9" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="uD7-G7-Pvw"/>
+            </constraints>
+            <size key="customSize" width="291" height="65"/>
+            <connections>
+                <outlet property="bgView" destination="xRF-d4-ZB9" id="zNq-6U-ti9"/>
+                <outlet property="selectDateLabel" destination="ZTo-Hs-gzc" id="zic-dI-PGG"/>
+            </connections>
+            <point key="canvasLocation" x="203.81679389312976" y="-5.9859154929577469"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="arrow_drop_down" width="14" height="20"/>
+        <image name="calendar_check" width="20" height="20"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

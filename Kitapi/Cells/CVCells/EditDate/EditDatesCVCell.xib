@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="EditDatesCVCell" customModule="Kitapi" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="66" height="62"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="66" height="62"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BAq-Qz-tWJ">
+                        <rect key="frame" x="0.0" y="0.0" width="66" height="62"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wlK-NR-tWk">
+                                <rect key="frame" x="0.0" y="0.0" width="66" height="62"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="expand_circle_right (1)"/>
+                                <connections>
+                                    <action selector="editDatesAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="3Lx-Eh-7qi"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="wlK-NR-tWk" secondAttribute="bottom" id="3Xp-Xe-IkS"/>
+                            <constraint firstItem="wlK-NR-tWk" firstAttribute="leading" secondItem="BAq-Qz-tWJ" secondAttribute="leading" id="41o-EM-voL"/>
+                            <constraint firstItem="wlK-NR-tWk" firstAttribute="top" secondItem="BAq-Qz-tWJ" secondAttribute="top" id="fih-bI-rwJ"/>
+                            <constraint firstAttribute="trailing" secondItem="wlK-NR-tWk" secondAttribute="trailing" id="nrj-cc-wWB"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="BAq-Qz-tWJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="81Y-6k-y75"/>
+                <constraint firstAttribute="bottom" secondItem="BAq-Qz-tWJ" secondAttribute="bottom" id="EuS-LS-bcY"/>
+                <constraint firstItem="BAq-Qz-tWJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="V7m-Vi-9Js"/>
+                <constraint firstAttribute="trailing" secondItem="BAq-Qz-tWJ" secondAttribute="trailing" id="fby-gG-VD9"/>
+            </constraints>
+            <size key="customSize" width="66" height="62"/>
+            <point key="canvasLocation" x="32.061068702290072" y="-7.042253521126761"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="expand_circle_right (1)" width="13.333333015441895" height="13.333333015441895"/>
+    </resources>
+</document>
