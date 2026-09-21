@@ -40,7 +40,6 @@ class ChildProfileViewController: UIViewController {
         return String(describing: ChildProfileViewController.self)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setCreateChildProfileScreenUI()
@@ -131,10 +130,14 @@ extension ChildProfileViewController: AvatarPickerDelegate, DatePickerDelegate {
     }
     
     func didSelectDOB(date: String) {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
         self.dobTextFieldView.customTextField.text = date
     }
     
     func didSelectProfileImage(imageData: Data, image: UIImage) {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
         self.addProfileImageView.image = UIImage(data: imageData)
         self.viewModel.profilePicture = image
     }

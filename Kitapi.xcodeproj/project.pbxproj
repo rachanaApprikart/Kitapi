@@ -83,6 +83,7 @@
 		184ACCA83017314C00D14BCF /* ChoreDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184ACCA73017314C00D14BCF /* ChoreDescriptionViewController.swift */; };
 		184AEDB9303C2E040090BB32 /* GoalsOverviewCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184AEDB7303C2E040090BB32 /* GoalsOverviewCVCell.swift */; };
 		184AEDBA303C2E040090BB32 /* GoalsOverviewCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184AEDB8303C2E040090BB32 /* GoalsOverviewCVCell.xib */; };
+		184BDAD4306112E200005A60 /* ImagePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184BDAD3306112E200005A60 /* ImagePickerViewController.swift */; };
 		184C06072FCC68F8009146DE /* ChildListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C06052FCC68F8009146DE /* ChildListTVCell.swift */; };
 		184C06082FCC68F8009146DE /* ChildListTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184C06062FCC68F8009146DE /* ChildListTVCell.xib */; };
 		184D0752304AD21E006EA830 /* ChildHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184D0751304AD21E006EA830 /* ChildHeaderView.xib */; };
@@ -266,6 +267,7 @@
 		184ACCA73017314C00D14BCF /* ChoreDescriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreDescriptionViewController.swift; sourceTree = "<group>"; };
 		184AEDB7303C2E040090BB32 /* GoalsOverviewCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsOverviewCVCell.swift; sourceTree = "<group>"; };
 		184AEDB8303C2E040090BB32 /* GoalsOverviewCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GoalsOverviewCVCell.xib; sourceTree = "<group>"; };
+		184BDAD3306112E200005A60 /* ImagePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewController.swift; sourceTree = "<group>"; };
 		184C06052FCC68F8009146DE /* ChildListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildListTVCell.swift; sourceTree = "<group>"; };
 		184C06062FCC68F8009146DE /* ChildListTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChildListTVCell.xib; sourceTree = "<group>"; };
 		184D0751304AD21E006EA830 /* ChildHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChildHeaderView.xib; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 			children = (
 				186687C92F7E79FE00479EF1 /* SignUpViewController.swift */,
 				185A853A2F8E7F9200A4D4B9 /* SignUpViewModel.swift */,
+				184BDAD3306112E200005A60 /* ImagePickerViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -1381,6 +1384,7 @@
 				185A85352F8E125D00A4D4B9 /* Registration.swift in Sources */,
 				185F40C52FBF170F0073669D /* ChoresViewController.swift in Sources */,
 				183584AA3044202D0040B76E /* MilestoneCVCell.swift in Sources */,
+				184BDAD4306112E200005A60 /* ImagePickerViewController.swift in Sources */,
 				18E4F4362EF7D4DA003A103F /* AppDelegate.swift in Sources */,
 				18260A54303DD9DC001C29B2 /* CreateGoal.swift in Sources */,
 				184D82A32FEAC39E0011EBEC /* ChoreTemplateViewModel.swift in Sources */,

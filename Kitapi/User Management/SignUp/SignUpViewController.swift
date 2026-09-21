@@ -7,6 +7,7 @@
 
 import UIKit
 import DropDown
+import FloatingPanel
 
 class SignUpViewController: UIViewController {
     
@@ -38,7 +39,8 @@ class SignUpViewController: UIViewController {
     fileprivate let genderDropDown = DropDown()
     
     private let viewModel = RegisterViewModel()
-    
+    private var floatingPanel: FloatingPanelController?
+
     static var sbIdentifier: String {
         return String(describing: SignUpViewController.self)
     }
@@ -51,7 +53,9 @@ class SignUpViewController: UIViewController {
     
     @IBAction func selectCountryCodeAction(_ sender: UIButton) {
     }
+    
     @IBAction func editProfilePhotoAction(_ sender: UIButton) {
+        self.openImagePickerVC()
     }
     
     @IBAction func TandCBtnAction(_ sender: UIButton) {
@@ -71,6 +75,11 @@ class SignUpViewController: UIViewController {
         self.viewModel.phone = self.phoneNumberTextFieldView.customTextField.text?.trimmingCharacters(in: .whitespaces) ?? ""
         self.viewModel.gender = self.genderTextFieldView.customTextField.text ?? ""
         self.viewModel.confirmPassword = self.confirmPasswordTextFieldView.customTextField.text ?? ""
+        
+        guard TandCButton.isSelected else {
+            MessageManager.shared.show(message: "Please accept terms and conditions")
+            return
+        }
         Task {
             await self.viewModel.register()
         }
@@ -135,6 +144,17 @@ class SignUpViewController: UIViewController {
      }
 }
 
+//MARK: IMAGE PICKER DDELEGATE
+
+extension SignUpViewController: ImagePickerDelegate {
+    
+    func didSelectProfileImage(imageData: Data, image: UIImage) {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
+        self.profilePhotoImageView.image = UIImage(data: imageData)
+        self.viewModel.profilePicture = image
+    }
+}
 
 
 //MARK: ------------ UI-------------
@@ -305,6 +325,37 @@ extension SignUpViewController {
         sender.isSelected = !sender.isSelected
     }
     
+    private func openImagePickerVC() {
+        guard let contentVC = VCManager.openImagePickerVC() else { return }
+        contentVC.delegate = self
+        self.presentFloatingPanel(with: contentVC, layout: FloatingPanelCustomLayout(state: .half, inset: 0.4)
+        )
+    }
+    
+    private func presentFloatingPanel(with contentVC: UIViewController, layout: FloatingPanelLayout)
+    {
+
+        guard floatingPanel == nil else { return }
+        
+        let fpc = FloatingPanelController()
+        fpc.delegate = self
+        fpc.set(contentViewController: contentVC)
+        
+        // Appearance
+        fpc.surfaceView.appearance.cornerRadius = 25
+        fpc.surfaceView.grabberHandle.isHidden = false
+        
+        // Layout
+        fpc.layout = layout
+        
+        // Dismiss interactions
+        fpc.isRemovalInteractionEnabled = true
+        fpc.backdropView.dismissalTapGestureRecognizer.isEnabled = true
+        
+        self.floatingPanel = fpc
+        self.present(fpc, animated: true)
+    }
+    
     //15-04
     private func showActivityIndicator() {
         self.activityView.isHidden = false
@@ -397,4 +448,16 @@ extension SignUpViewController: UITextFieldDelegate {
         }
         return true
     }
+}
+
+extension SignUpViewController: FloatingPanelControllerDelegate {
+    
+    func floatingPanelDidRemove(_ fpc: FloatingPanelController) {
+        self.floatingPanel = nil
+    }
+    
+    func floatingPanelDidDismiss(_ fpc: FloatingPanelController) {
+        self.floatingPanel = nil
+    }
+    
 }

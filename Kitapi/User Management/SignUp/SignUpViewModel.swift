@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 class RegisterViewModel {
     
@@ -17,7 +17,8 @@ class RegisterViewModel {
     var phone: String = ""
     var gender: String = ""
     var confirmPassword: String = ""
-    
+    var profilePicture: UIImage? = nil
+
     // Callbacks for UIKit (always called on main thread)
     var onLoadingChanged: ((Bool) -> Void)?
     var onError: ((String) -> Void)?
@@ -94,7 +95,7 @@ class RegisterViewModel {
         
         do {
             // Make async API call
-            let response = try await registrationService.register(request: requestBody)
+            let response = try await registrationService.register(request: requestBody, profilePicture: self.profilePicture)
             
             // Validate response
             guard response.data?.success ?? false, let userData = response.data?.user else {

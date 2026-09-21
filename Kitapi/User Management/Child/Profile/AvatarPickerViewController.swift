@@ -43,11 +43,9 @@ class AvatarPickerViewController: UIViewController {
         return String(describing: AvatarPickerViewController.self)
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setProfileScreenUI()
-      
     }
     
     deinit {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 let BASE_URL: String = "https://kidswallet.apprikart.in"
 
@@ -13,16 +14,17 @@ let BASE_URL: String = "https://kidswallet.apprikart.in"
 
 struct RegistrationService {
     
-    func register(request: RegisterRequest) async throws -> APIResponse<RegistrationResponse> {
+    func register(request: RegisterRequest, profilePicture: UIImage?) async throws -> APIResponse<RegistrationResponse> {
         let url = RegisterEndPoint.createUser.getFullPath()
         
-        let parameters: [String: String] = [
+        let parameters: [String: Any] = [
             "name": request.name,
             "countryCode": request.countryCode,
             "phone": request.phone ?? "",
             "gender": request.gender,
             "email": request.email,
-            "password": request.password
+            "password": request.password,
+            "image": profilePicture as Any
         ]
         return await APIClient.callAPIWithFormData(url: url, method: .post, parameters: parameters)
     }
