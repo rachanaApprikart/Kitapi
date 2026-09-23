@@ -65,6 +65,7 @@ class RecordVoiceNoteViewController: UIViewController {
     }
     
     @IBAction func saveRecordingAction(_ sender: UIButton) {
+        self.delegate?.voiceNoteDidRecord()
     }
     
     @IBAction func cancelAction(_ sender: Any) {
@@ -200,4 +201,5 @@ enum RecordingState {
 
 protocol RecordVoiceNoteDelegate: AnyObject {
     func recordVoiceScreenDidDismiss()
+    func voiceNoteDidRecord()
 }

@@ -101,7 +101,7 @@ class ChoresViewController: UIViewController {
     private func showCreatChoreVC() {
         guard let contentVC = VCManager.openCreateChoresVC() else { return }
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.9)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.95)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     

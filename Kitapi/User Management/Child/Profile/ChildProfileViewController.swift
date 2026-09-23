@@ -240,15 +240,15 @@ extension ChildProfileViewController {
         self.genderDropDown.selectionAction = { [weak self] index, item in
             self?.genderTextFieldView.customTextField.text = item
             self?.viewModel.childGender = item.lowercased()
-            
             self?.genderTextFieldView.hideErrorMessage()
+            self?.viewModel.profilePicture = index == 0 ? AppImages.boy_avatar_1 : AppImages.girl_avatar_1
         }
     }
     
     private func openDatePickerVC() {
         guard let contentVC = VCManager.openDatePickerVC() else { return }
         contentVC.delegate = self
-        self.presentFloatingPanel(with: contentVC, layout: FloatingPanelCustomLayout(state: .half, inset: 0.5)
+        self.presentFloatingPanel(with: contentVC, layout: FloatingPanelCustomLayout(state: .half, inset: 0.6)
         )
     }
 

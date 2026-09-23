@@ -21,13 +21,13 @@
 		182EB9972F8638660093A900 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182EB9962F8638660093A900 /* NewPasswordViewController.swift */; };
 		1831098A2F7B9C1500D5A4E5 /* KitapiFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183109892F7B9C1500D5A4E5 /* KitapiFonts.swift */; };
 		1831098C2F7B9EA100D5A4E5 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831098B2F7B9EA100D5A4E5 /* AppConstants.swift */; };
-		18319078304DCC70007DD981 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 18319077304DCC70007DD981 /* FloatingPanel */; };
-		1831907B304DCCA4007DD981 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1831907A304DCCA4007DD981 /* Kingfisher */; };
 		18319A822F7D5B870062A5FA /* Tapgesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18319A812F7D5B870062A5FA /* Tapgesture.swift */; };
 		1831B6402F83925400C89E68 /* OTPInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831B63F2F83925400C89E68 /* OTPInputView.swift */; };
 		1831B6422F83927400C89E68 /* OTPInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1831B6412F83927400C89E68 /* OTPInputView.xib */; };
 		1831B6442F839B6E00C89E68 /* OTPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831B6432F839B6E00C89E68 /* OTPTextField.swift */; };
 		1831B6462F83A51B00C89E68 /* VerifyOTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831B6452F83A51B00C89E68 /* VerifyOTPViewController.swift */; };
+		183553DF3064040D00C0E874 /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = 183553DE3064040D00C0E874 /* FloatingPanel */; };
+		183553E23064042F00C0E874 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 183553E13064042F00C0E874 /* Kingfisher */; };
 		183584A63043ECDF0040B76E /* AvailableChores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183584A53043ECDF0040B76E /* AvailableChores.swift */; };
 		183584AA3044202D0040B76E /* MilestoneCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183584A83044202D0040B76E /* MilestoneCVCell.swift */; };
 		183584AB3044202D0040B76E /* MilestoneCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183584A93044202D0040B76E /* MilestoneCVCell.xib */; };
@@ -385,9 +385,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1831907B304DCCA4007DD981 /* Kingfisher in Frameworks */,
+				183553E23064042F00C0E874 /* Kingfisher in Frameworks */,
 				DC2557E1F5EFBD0A54B3F727 /* Pods_Kitapi.framework in Frameworks */,
-				18319078304DCC70007DD981 /* FloatingPanel in Frameworks */,
+				183553DF3064040D00C0E874 /* FloatingPanel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1156,8 +1156,8 @@
 			);
 			name = Kitapi;
 			packageProductDependencies = (
-				18319077304DCC70007DD981 /* FloatingPanel */,
-				1831907A304DCCA4007DD981 /* Kingfisher */,
+				183553DE3064040D00C0E874 /* FloatingPanel */,
+				183553E13064042F00C0E874 /* Kingfisher */,
 			);
 			productName = Kitapi;
 			productReference = 18E4F4322EF7D4DA003A103F /* Kitapi.app */;
@@ -1188,8 +1188,8 @@
 			);
 			mainGroup = 18E4F4292EF7D4DA003A103F;
 			packageReferences = (
-				18319076304DCC70007DD981 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
-				18319079304DCCA4007DD981 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				183553DD3064040D00C0E874 /* XCRemoteSwiftPackageReference "FloatingPanel" */,
+				183553E03064042F00C0E874 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 18E4F4332EF7D4DA003A103F /* Products */;
 			projectDirPath = "";
@@ -1664,7 +1664,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		18319076304DCC70007DD981 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
+		183553DD3064040D00C0E874 /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel";
 			requirement = {
@@ -1672,7 +1672,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		18319079304DCCA4007DD981 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		183553E03064042F00C0E874 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -1683,14 +1683,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		18319077304DCC70007DD981 /* FloatingPanel */ = {
+		183553DE3064040D00C0E874 /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 18319076304DCC70007DD981 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
+			package = 183553DD3064040D00C0E874 /* XCRemoteSwiftPackageReference "FloatingPanel" */;
 			productName = FloatingPanel;
 		};
-		1831907A304DCCA4007DD981 /* Kingfisher */ = {
+		183553E13064042F00C0E874 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 18319079304DCCA4007DD981 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 183553E03064042F00C0E874 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

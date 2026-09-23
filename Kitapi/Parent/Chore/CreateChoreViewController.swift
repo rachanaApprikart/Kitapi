@@ -23,6 +23,11 @@ class CreateChoreViewController: UIViewController {
     @IBOutlet weak var toTimeTextField: CustomTextField!
     @IBOutlet weak var oftenTitleLabel: UILabel!
     
+    @IBOutlet weak var descriptionTitleLabel: UILabel!
+    @IBOutlet weak var audioDescriptionView: UIView!
+    @IBOutlet weak var mainAudioView: UIView!
+    @IBOutlet weak var playButton: UIButton!
+    
     @IBOutlet weak var frequencySegmentedControl: UISegmentedControl!
     @IBOutlet weak var frequencyCV: UICollectionView!
     
@@ -56,6 +61,9 @@ class CreateChoreViewController: UIViewController {
         self.toTime = self.fromTime.adding(minutes: 15)
         self.updateTimers()
         self.bindViewModel()
+    }
+    
+    @IBAction func playAudioAction(_ sender: UIButton) {
     }
     
     @IBAction func changeRecurranceAction(_ sender: UISegmentedControl) {
@@ -220,6 +228,14 @@ extension CreateChoreViewController: RecordVoiceNoteDelegate, TimePickerDelegate
     func recordVoiceScreenDidDismiss() {
         self.floatingPanel?.dismiss(animated: true)
         self.floatingPanel = nil
+    }
+    
+    func voiceNoteDidRecord() {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
+        self.choreDescpTextField.isHidden = true
+        self.audioDescriptionView.isHidden = false
+
     }
 }
 
@@ -419,6 +435,19 @@ extension CreateChoreViewController {
         self.choreDescpTextField.placeHolderLabel.text = APPConstants.choreDescpTitle
         self.choreDescpTextField.customTextField.tag = 1
         self.choreDescpTextField.showRightMicView()
+        self.audioDescriptionView.isHidden = true
+        self.choreDescpTextField.isHidden = false
+
+        self.descriptionTitleLabel.text = APPConstants.choreDescpTitle
+        self.descriptionTitleLabel.textColor = .labelPlaceholderColor
+        self.descriptionTitleLabel.textAlignment = .left
+        self.descriptionTitleLabel.numberOfLines = 1
+        self.descriptionTitleLabel.font = UIFont(name: Fonts.urbanistRegular, size: 14)
+        
+        self.mainAudioView.layer.cornerRadius = 17
+        self.mainAudioView.layer.borderWidth = 0.5
+        self.mainAudioView.layer.borderColor = UIColor.borderColor.cgColor
+        self.playButton.layer.cornerRadius = 15
         
         self.fromTimeTextField.customTextField.delegate = self
         self.fromTimeTextField.customTextField.setPlaceholder(text: APPConstants.timePlaceholder)
@@ -491,7 +520,7 @@ extension CreateChoreViewController {
     
     @objc private func micTapped() {
         guard let contentVC = VCManager.openRecordVoiceNoteVC() else { return }
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.5)
+        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.55)
         contentVC.delegate = self
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }

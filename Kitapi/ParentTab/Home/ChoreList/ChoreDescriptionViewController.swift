@@ -35,6 +35,10 @@ class ChoreDescriptionViewController: UIViewController {
     @IBOutlet weak var descriptionTitleLabel: UILabel!
     @IBOutlet weak var textDescriptionLabel: UILabel!
     
+    @IBOutlet weak var audioDescriptionView: UIView!
+    @IBOutlet weak var playButton: UIButton!
+    
+    
     @IBOutlet weak var updateChoreStatusView: UIStackView!
     @IBOutlet weak var acceptBGView: UIView!
     @IBOutlet weak var acceptButton: UIButton!
@@ -59,6 +63,10 @@ class ChoreDescriptionViewController: UIViewController {
         self.bindViewModel()
         self.fetchChoreDetails()
     }
+    
+    @IBAction func playAudioAction(_ sender: UIButton) {
+    }
+    
     
     @IBAction func acceptAction(_ sender: UIButton) {
         self.updateTheChoreStatus(status: .completed, reason: nil)
@@ -326,6 +334,7 @@ extension ChoreDescriptionViewController {
         self.showStatusMesageLabel.font = UIFont(name: Fonts.urbanistSemiBold, size: 16)
         self.showStatusMesageLabel.numberOfLines = 1
         
+        self.playButton.layer.cornerRadius = 15
     }
     
     private func showUpdateChoreStatusView(){

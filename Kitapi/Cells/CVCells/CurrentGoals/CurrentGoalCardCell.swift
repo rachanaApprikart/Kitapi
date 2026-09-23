@@ -44,7 +44,7 @@ class CurrentGoalCardCell: UICollectionViewCell {
     func populateGoalCardCell(with goal: GoalData){
         
         let totalTask = "\(goal.taskCount ?? 0)"
-        let completedTask = "\(goal.completedTasksCount ?? 0)"
+        let completedTask = "\(goal.completedTaskCount ?? 0)"
         
         self.goalTitle.text = goal.title
         self.numberOfChoresLabel.text = completedTask + "/" + totalTask + " Chores"
