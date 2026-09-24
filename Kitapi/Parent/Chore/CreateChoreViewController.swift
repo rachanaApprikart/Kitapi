@@ -7,7 +7,7 @@
 
 import UIKit
 import FloatingPanel
-
+import AVFoundation
 
 class CreateChoreViewController: UIViewController {
     
@@ -28,6 +28,7 @@ class CreateChoreViewController: UIViewController {
     @IBOutlet weak var mainAudioView: UIView!
     @IBOutlet weak var playButton: UIButton!
     
+    @IBOutlet weak var audioWaveformImage: UIImageView!
     @IBOutlet weak var frequencySegmentedControl: UISegmentedControl!
     @IBOutlet weak var frequencyCV: UICollectionView!
     
@@ -42,6 +43,10 @@ class CreateChoreViewController: UIViewController {
     private var recurrenceType: RepeatType = .once 
     private var recurrenceDates: [Date] = []
     
+    private var audioPlayer: AVAudioPlayer?
+    private var recordedAudioURL: URL?
+    private var isPlaying = false
+
     private let viewModel = CreateChoreViewModel()
     
     weak var delegate: ChoreUpdateDelegate?
@@ -64,6 +69,7 @@ class CreateChoreViewController: UIViewController {
     }
     
     @IBAction func playAudioAction(_ sender: UIButton) {
+        self.toggleAudioPlayback()
     }
     
     @IBAction func changeRecurranceAction(_ sender: UISegmentedControl) {
@@ -185,12 +191,67 @@ class CreateChoreViewController: UIViewController {
             )
         }
     }
+    
+    //MARK: AUDIO FUNCTIONS
+    
+    private func toggleAudioPlayback() {
+
+        self.isPlaying ? self.stopAudioPlayback() : self.playRecordedAudio()
+    }
+    
+    private func playRecordedAudio() {
+
+        guard let url = recordedAudioURL else {
+            return
+        }
+
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default)
+            try session.setActive(true)
+
+            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+            self.audioPlayer?.delegate = self
+            self.audioPlayer?.play()
+            self.isPlaying = true
+            self.refreshPlayButtonIcon()
+
+        } catch {
+            print("Failed to play voice note: \(error.localizedDescription)")
+        }
+    }
+    
+    private func stopAudioPlayback() {
+        self.audioPlayer?.stop()
+        self.audioPlayer = nil
+        self.isPlaying   = false
+        self.refreshPlayButtonIcon()
+    }
+    
+    
+    private func refreshPlayButtonIcon() {
+        let symbolName = isPlaying ? "stop.fill" : "play.fill"
+        let config     = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
+        let image      = UIImage(systemName: symbolName, withConfiguration: config)?
+            .withRenderingMode(.alwaysTemplate)
+        self.playButton.setImage(image, for: .normal)
+        self.playButton.tintColor = .white
+    }
+    
 }
     
 
 //MARK: -- PROTOCOLS AND DELEGATES ---
 
 extension CreateChoreViewController: RecordVoiceNoteDelegate, TimePickerDelegate, CalendarVCDelegate {
+    
+    func voiceNoteDidRecord(audioURL: URL, duration: TimeInterval) {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
+        self.choreDescpTextField.isHidden = true
+        self.audioDescriptionView.isHidden = false
+        self.recordedAudioURL = audioURL
+    }
     
     func calendarVCDidDismiss() {
         self.floatingPanel?.dismiss(animated: true)
@@ -228,14 +289,6 @@ extension CreateChoreViewController: RecordVoiceNoteDelegate, TimePickerDelegate
     func recordVoiceScreenDidDismiss() {
         self.floatingPanel?.dismiss(animated: true)
         self.floatingPanel = nil
-    }
-    
-    func voiceNoteDidRecord() {
-        self.floatingPanel?.dismiss(animated: true)
-        self.floatingPanel = nil
-        self.choreDescpTextField.isHidden = true
-        self.audioDescriptionView.isHidden = false
-
     }
 }
 
@@ -593,6 +646,16 @@ extension CreateChoreViewController {
     private func clearAllErrors() {
         self.choreTextField.hideErrorMessage()
         self.choreDescpTextField.hideError()
+    }
+}
+
+extension CreateChoreViewController: AVAudioPlayerDelegate {
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.audioPlayer = nil
+            self?.refreshPlayButtonIcon()
+        }
     }
 }
 

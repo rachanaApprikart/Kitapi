@@ -51,7 +51,7 @@ struct TaskData: Codable {
     let title: String?
     let image: ProfilePicture?
     let video: ProfilePicture?
-    let audioDescription: ProfilePicture?
+    let audioDescription: AudioDescription?
     let taskTemplateId, parentId, childId: String?
     let rewardCoins: Int?
     let isRecurring: Bool?
@@ -76,6 +76,13 @@ struct TaskData: Codable {
     }
 }
 
+struct AudioDescription: Codable {
+    let url: String
+    let filename: String
+    let originalName: String
+    let size: Int
+    let mimetype: String
+}
 
 struct GetAllChoresRequest: Codable {
     let page: String

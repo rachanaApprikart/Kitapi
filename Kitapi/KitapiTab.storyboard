@@ -327,6 +327,7 @@
                         <outlet property="activityView" destination="0ba-gd-1Pi" id="G7y-dS-5yq"/>
                         <outlet property="appBGView" destination="Ygd-r2-ZrZ" id="zIC-jl-EHD"/>
                         <outlet property="audioDescriptionView" destination="fV5-xv-uhV" id="Nrw-Gj-UYI"/>
+                        <outlet property="audioWaveformImage" destination="qUx-Aa-fst" id="fDU-NT-dJK"/>
                         <outlet property="choreDescpTextField" destination="Hth-ka-D3E" id="HmV-pd-kjE"/>
                         <outlet property="choreTextField" destination="gxQ-5z-NPT" id="Jv2-Et-Byb"/>
                         <outlet property="createChoreButton" destination="4Jz-aD-omh" id="LDp-UV-hfr"/>
@@ -1600,6 +1601,7 @@
                     </view>
                     <connections>
                         <outlet property="appBGView" destination="EFb-vm-5Qz" id="O1K-a0-wYJ"/>
+                        <outlet property="audioWaveImageView" destination="nee-aW-KQ0" id="kZ3-8g-aO4"/>
                         <outlet property="cancelButton" destination="F7J-nP-duy" id="BT7-RM-De2"/>
                         <outlet property="cancelRecordingButtton" destination="gGW-DA-Z8T" id="keZ-rd-mcB"/>
                         <outlet property="headerLabel" destination="79H-LG-Ka1" id="uaO-4K-1AI"/>
