@@ -69,8 +69,8 @@ class RecordVoiceNoteViewController: UIViewController {
     }
     
     @IBAction func saveRecordingAction(_ sender: UIButton) {
-        guard let url = recordingURL else { return }
-        self.delegate?.voiceNoteDidRecord(audioURL: url, duration: elapsedTime)
+        guard let url = self.recordingURL else { return }
+        self.delegate?.voiceNoteDidRecord(audioURL: url)
     }
     
     // Idle state — user hasn't started yet
@@ -204,7 +204,7 @@ class RecordVoiceNoteViewController: UIViewController {
         self.audioRecorder?.stop()
         self.deleteCurrentRecordingFile()
         self.elapsedTime = 0
-        self.state       = .idle
+        self.state = .idle
         self.delegate?.recordVoiceScreenDidDismiss()
     }
     
@@ -391,11 +391,11 @@ extension RecordVoiceNoteViewController {
         animation.autoreverses = true
         animation.repeatCount = .infinity
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        self.audioWaveImageView.layer.add(animation, forKey: "waveform")
+        self.audioWaveImageView.layer.add(animation, forKey: "waveform-1")
     }
 
     private func stopWaveformAnimation() {
-        self.audioWaveImageView.layer.removeAnimation(forKey: "waveform")
+        self.audioWaveImageView.layer.removeAnimation(forKey: "waveform-1")
     }
 }
 
@@ -408,5 +408,5 @@ enum RecordingState {
 
 protocol RecordVoiceNoteDelegate: AnyObject {
     func recordVoiceScreenDidDismiss()
-    func voiceNoteDidRecord(audioURL: URL, duration: TimeInterval)
+    func voiceNoteDidRecord(audioURL: URL)
 }

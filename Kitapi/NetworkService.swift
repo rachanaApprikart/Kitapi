@@ -12,7 +12,6 @@ import UIKit
 
 class APIClient {
     
-    
     static func callAPIWithRawData<T: Decodable> (url: String, method: HTTPMethod = .get, body: Data? = nil, headers: [String: String] = [:], tokenScope: TokenScope = .parent)  async -> (APIResponse<T>) {
         
         guard let url = URL(string: url) else {
@@ -30,25 +29,25 @@ class APIClient {
             print("Request Body:", String(data: body, encoding: .utf8) ?? "")
         }
         
-//        if let tokenVal = AppUserDefaults.authorizationToken {
-//            request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-//            LogFile.debugMessage(debug: "token", value: tokenVal)
-//        }
+        if let tokenVal = AppUserDefaults.authorizationToken {
+            request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+            LogFile.debugMessage(debug: "token", value: tokenVal)
+        }
         
-        switch tokenScope {
-            case .parent:
-                if let tokenVal = AppUserDefaults.authorizationToken {
-                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-                    LogFile.debugMessage(debug: " parent token", value: tokenVal)
-                }
-            case .child:
-                if let tokenVal = ChildSessionManager.shared.currentChildModeToken {
-                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-                    LogFile.debugMessage(debug: "child token", value: tokenVal)
-                }
-            case .none:
-                break
-            }
+//        switch tokenScope {
+//            case .parent:
+//                if let tokenVal = AppUserDefaults.authorizationToken {
+//                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+//                    LogFile.debugMessage(debug: " parent token", value: tokenVal)
+//                }
+//            case .child:
+//                if let tokenVal = ChildSessionManager.shared.currentChildModeToken {
+//                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+//                    LogFile.debugMessage(debug: "child token", value: tokenVal)
+//                }
+//            case .none:
+//                break
+//            }
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
@@ -181,6 +180,15 @@ class APIClient {
                 body.append(imageData)
                 body.append("\r\n")
             }
+            else if let fileURL = value as? URL, let fileData = try? Data(contentsOf: fileURL) {
+                let filename = fileURL.lastPathComponent
+                let mimeType = fileURL.pathExtension == "m4a" ? "audio/m4a" : "audio/mpeg"
+                body.append("--\(boundary)\r\n")
+                body.append("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(filename)\"\r\n")
+                body.append("Content-Type: \(mimeType)\r\n\r\n")
+                body.append(fileData)
+                body.append("\r\n")
+            }
             // ✅ NEW: Handle arrays — one part per element, same field name
             else if let arrayValue = value as? [Any] {
                 for item in arrayValue {
@@ -225,11 +233,6 @@ enum HTTPMethod: String {
     case put = "PUT"
     case delete = "DELETE"
     case patch = "PATCH"
-}
-
-enum ContentType {
-    case json
-    case formData
 }
 
 enum TokenScope {

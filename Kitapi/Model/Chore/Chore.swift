@@ -10,10 +10,20 @@ import Foundation
 struct CreateChoreRequest: Codable {
     let taskTemplateId: String
     let childId: String
-    let description: String
+    let description: String?
     let startTime, endTime: String
     let recurrence: String
     let recurrenceDates: [String]
+}
+
+struct CreateChoreAudioRequest {
+    let taskTemplateId: String
+    let childId: String
+    let startTime: String
+    let endTime: String
+    let recurrence: String
+    let recurrenceDates: [String]
+    let audioDescriptionURL: URL
 }
 
 struct CreateChoreResponse: Codable {
@@ -21,7 +31,6 @@ struct CreateChoreResponse: Codable {
     let message: String
     let data: ChoreData
 }
-
 
 struct ChoreData: Codable {
     let taskTemplateID, title: String

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ChoreDescriptionViewController: UIViewController {
     
@@ -38,7 +39,7 @@ class ChoreDescriptionViewController: UIViewController {
     @IBOutlet weak var audioDescriptionView: UIView!
     @IBOutlet weak var playButton: UIButton!
     
-    
+    @IBOutlet weak var audioWaveformImage: UIImageView!
     @IBOutlet weak var updateChoreStatusView: UIStackView!
     @IBOutlet weak var acceptBGView: UIView!
     @IBOutlet weak var acceptButton: UIButton!
@@ -46,6 +47,11 @@ class ChoreDescriptionViewController: UIViewController {
     @IBOutlet weak var rejectButton: UIButton!
     
     @IBOutlet weak var showStatusMesageLabel: UILabel!
+    
+    private var recordedAudioURL: URL?      // local temp file after download
+    private var remoteAudioURL: URL?        // CDN URL from API response
+    private var audioPlayer: AVAudioPlayer?
+    private var isPlayingAudio = false
     
     private let choresDescriptionViewModel = ChoreDescriptionViewModel()
     weak var delegate: ChoreUpdateDelegate?
@@ -65,8 +71,8 @@ class ChoreDescriptionViewController: UIViewController {
     }
     
     @IBAction func playAudioAction(_ sender: UIButton) {
+        self.toggleAudioPlayback()
     }
-    
     
     @IBAction func acceptAction(_ sender: UIButton) {
         self.updateTheChoreStatus(status: .completed, reason: nil)
@@ -137,8 +143,21 @@ class ChoreDescriptionViewController: UIViewController {
         guard let taskData = details else { return }
         self.choreStatusView.removeDashedCircle()
         
+        if let description = taskData.audioDescription {
+            self.textDescriptionLabel.isHidden = true
+            self.audioDescriptionView.isHidden = false
+            self.textDescriptionLabel.text = ""
+            self.remoteAudioURL = URL(string: description.url)
+            self.recordedAudioURL = nil             // not downloaded yet
+        } else {
+            self.textDescriptionLabel.isHidden = false
+            self.audioDescriptionView.isHidden = true
+            self.recordedAudioURL = nil
+            self.remoteAudioURL = nil
+            self.textDescriptionLabel.text = taskData.description
+        }
+        
         self.choreNameLabel.text = template?.title ?? ""
-        self.textDescriptionLabel.text = taskData.description
         self.rewardCoinsLabel.text = "\(String(describing: taskData.rewardCoins ?? 0))"
         self.recurrenceLabel.text = taskData.recurrence?.rawValue
         self.dateLabel.text = taskData.dueDateFormatted
@@ -234,6 +253,132 @@ class ChoreDescriptionViewController: UIViewController {
         
         return outputFormatter.string(from: date)
     }
+    
+    //MARK: AUDIO FUNCTIONS
+    
+    func toggleAudioPlayback() {
+           if self.isPlayingAudio {
+               self.stopAudioPlayback()
+           } else {
+               if let localURL = self.recordedAudioURL {
+                   // Already downloaded — play directly
+                   self.playRecordedAudio(url: localURL)
+               } else if let remoteURL = self.remoteAudioURL {
+                   // Not downloaded yet — download first then play
+                   self.downloadAndPlayAudio(from: remoteURL)
+               }
+           }
+       }
+    
+       // MARK: Download
+    
+       func downloadAndPlayAudio(from remoteURL: URL) {
+           // Disable play button to prevent double tap while downloading
+           self.playButton.isEnabled = false
+    
+           URLSession.shared.dataTask(with: remoteURL) { [weak self] data, _, error in
+               guard let self = self else { return }
+    
+               DispatchQueue.main.async {
+                   self.playButton.isEnabled = true
+               }
+    
+               if let error = error {
+                   print("Audio download failed: \(error.localizedDescription)")
+                   return
+               }
+    
+               guard let data = data else {
+                   print("Audio download returned empty data")
+                   return
+               }
+    
+               // Use .m4a extension so AVAudioPlayer picks the correct codec
+               let tempURL = FileManager.default.temporaryDirectory
+                   .appendingPathComponent(UUID().uuidString)
+                   .appendingPathExtension("m4a")
+    
+               do {
+                   try data.write(to: tempURL)
+                   DispatchQueue.main.async {
+                       self.recordedAudioURL = tempURL   // cache for subsequent taps
+                       self.playRecordedAudio(url: tempURL)
+                   }
+               } catch {
+                   print("Failed to write audio temp file: \(error.localizedDescription)")
+               }
+           }.resume()
+       }
+    
+       // MARK: - Play
+    
+       private func playRecordedAudio(url: URL) {
+           do {
+               try AVAudioSession.sharedInstance().setCategory(
+                   .playAndRecord,
+                   mode: .default,
+                   options: [.defaultToSpeaker]
+               )
+               try AVAudioSession.sharedInstance().setActive(true)
+    
+               self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+               self.audioPlayer?.delegate = self
+               self.audioPlayer?.volume = 1.0
+               self.audioPlayer?.play()
+               self.isPlayingAudio = true
+               self.startWaveformAnimation()
+               self.refreshPlayButtonIcon()
+           } catch {
+               print("Failed to play voice note: \(error.localizedDescription)")
+           }
+       }
+    
+       // MARK: - Stop
+    
+       func stopAudioPlayback() {
+           self.audioPlayer?.stop()
+           self.audioPlayer = nil
+           self.isPlayingAudio = false
+           self.stopWaveformAnimation()
+           self.refreshPlayButtonIcon()
+       }
+}
+
+//MARK: - AUDIO PLAYER DELEGATES
+
+extension ChoreDescriptionViewController: AVAudioPlayerDelegate {
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.isPlayingAudio = false
+            self?.stopWaveformAnimation()
+            self?.refreshPlayButtonIcon()
+        }
+    }
+    
+    private func refreshPlayButtonIcon() {
+        let symbolName = isPlayingAudio ? "stop.fill" : "play.fill"
+        let config     = UIImage.SymbolConfiguration(pointSize: 13, weight: .semibold)
+        let image      = UIImage(systemName: symbolName, withConfiguration: config)?
+            .withRenderingMode(.alwaysTemplate)
+        self.playButton.setImage(image, for: .normal)
+        self.playButton.tintColor = .white
+    }
+    
+    private func startWaveformAnimation() {
+        let animation = CABasicAnimation(keyPath: "transform.scale.x")
+        animation.fromValue = 1.0
+        animation.toValue = 1.08
+        animation.duration = 0.4
+        animation.autoreverses = true
+        animation.repeatCount = .infinity
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        self.audioWaveformImage.layer.add(animation, forKey: "waveform-2")
+    }
+
+    private func stopWaveformAnimation() {
+        self.audioWaveformImage.layer.removeAnimation(forKey: "waveform-2")
+    }
 }
 
 //28-07
@@ -242,6 +387,9 @@ extension ChoreDescriptionViewController {
     
     private func setChoreDescriptionScreenUI() {
         self.hideActivityIndicator()
+        self.textDescriptionLabel.isHidden = true
+        self.audioDescriptionView.isHidden = true
+        
         self.choreImageBGView.layer.cornerRadius = 20
         self.choreImageBGView.backgroundColor = .gradientColor2
         

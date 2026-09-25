@@ -19,6 +19,22 @@ struct ChoreService {
         return await APIClient.callAPIWithRawData(url: url, method: .post, body: data)
     }
     
+    func createChoreWithAudio(request: CreateChoreAudioRequest) async throws -> APIResponse<CreateChoreResponse> {
+
+        let url = ChoreEndPoint.createChore.getFullPath()
+
+        let parameters: [String: Any] = [
+            "taskTemplateId": request.taskTemplateId,
+            "childId": request.childId,
+            "startTime": request.startTime,
+            "endTime": request.endTime,
+            "recurrence": request.recurrence,
+            "recurrenceDates": request.recurrenceDates,
+            "audioDescription": request.audioDescriptionURL
+        ]
+        return await APIClient.callAPIWithFormData(url: url, method: .post, parameters: parameters)
+    }
+    
     func getAllChores(request: GetAllChoresRequest) async throws -> APIResponse<GetAllChoresResponse> {
         
         var url = ChoreEndPoint.getAllChores.getFullPath()

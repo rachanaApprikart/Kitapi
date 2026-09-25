@@ -45,8 +45,8 @@ class CreateChoreViewController: UIViewController {
     
     private var audioPlayer: AVAudioPlayer?
     private var recordedAudioURL: URL?
-    private var isPlaying = false
-
+    private var isPlayingAudio: Bool = false
+    
     private let viewModel = CreateChoreViewModel()
     
     weak var delegate: ChoreUpdateDelegate?
@@ -155,9 +155,7 @@ class CreateChoreViewController: UIViewController {
         self.fromTimeTextField.customTextField.text = self.fromTime.displayTextIn12HourFormat
         self.toTimeTextField.customTextField.text = self.toTime.displayTextIn12HourFormat
     }
-    
-   
-    
+        
     private func generateCurrentWeek() {
         
         self.weekDays.removeAll()
@@ -195,25 +193,26 @@ class CreateChoreViewController: UIViewController {
     //MARK: AUDIO FUNCTIONS
     
     private func toggleAudioPlayback() {
-
-        self.isPlaying ? self.stopAudioPlayback() : self.playRecordedAudio()
+        self.isPlayingAudio ? self.stopAudioPlayback() : self.playRecordedAudio()
     }
     
     private func playRecordedAudio() {
 
-        guard let url = recordedAudioURL else {
+        guard let url = self.recordedAudioURL else {
             return
         }
 
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .default)
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
             try session.setActive(true)
 
             self.audioPlayer = try AVAudioPlayer(contentsOf: url)
             self.audioPlayer?.delegate = self
+            self.audioPlayer?.volume = 1.0
             self.audioPlayer?.play()
-            self.isPlaying = true
+            self.isPlayingAudio = true
+            self.startWaveformAnimation()
             self.refreshPlayButtonIcon()
 
         } catch {
@@ -224,20 +223,10 @@ class CreateChoreViewController: UIViewController {
     private func stopAudioPlayback() {
         self.audioPlayer?.stop()
         self.audioPlayer = nil
-        self.isPlaying   = false
+        self.isPlayingAudio = false
+        self.stopWaveformAnimation()
         self.refreshPlayButtonIcon()
     }
-    
-    
-    private func refreshPlayButtonIcon() {
-        let symbolName = isPlaying ? "stop.fill" : "play.fill"
-        let config     = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
-        let image      = UIImage(systemName: symbolName, withConfiguration: config)?
-            .withRenderingMode(.alwaysTemplate)
-        self.playButton.setImage(image, for: .normal)
-        self.playButton.tintColor = .white
-    }
-    
 }
     
 
@@ -245,12 +234,15 @@ class CreateChoreViewController: UIViewController {
 
 extension CreateChoreViewController: RecordVoiceNoteDelegate, TimePickerDelegate, CalendarVCDelegate {
     
-    func voiceNoteDidRecord(audioURL: URL, duration: TimeInterval) {
+    func voiceNoteDidRecord(audioURL: URL) {
         self.floatingPanel?.dismiss(animated: true)
         self.floatingPanel = nil
+        self.recordedAudioURL = audioURL
+        self.choreDescpTextField.customTextField.text = nil  // ← clear any typed text
         self.choreDescpTextField.isHidden = true
         self.audioDescriptionView.isHidden = false
-        self.recordedAudioURL = audioURL
+        self.viewModel.audioDescriptionURL = audioURL
+        self.viewModel.choreDescription = ""
     }
     
     func calendarVCDidDismiss() {
@@ -620,14 +612,54 @@ extension CreateChoreViewController {
         self.activityIndicator.startAnimating()
         self.view.bringSubviewToFront(self.activityView)
     }
-    
     private func hideActivityIndicator() {
         self.activityView.isHidden = true
         self.view.sendSubviewToBack(self.activityView)
         self.activityIndicator.stopAnimating()
     }
-    
+}
 
+
+//MARK: - AUDIO PLAYER DELEGATES
+
+extension CreateChoreViewController: AVAudioPlayerDelegate {
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.isPlayingAudio = false
+            self?.stopWaveformAnimation()
+            self?.refreshPlayButtonIcon()
+        }
+    }
+    
+    private func refreshPlayButtonIcon() {
+        let symbolName = isPlayingAudio ? "stop.fill" : "play.fill"
+        let config     = UIImage.SymbolConfiguration(pointSize: 13, weight: .semibold)
+        let image      = UIImage(systemName: symbolName, withConfiguration: config)?
+            .withRenderingMode(.alwaysTemplate)
+        self.playButton.setImage(image, for: .normal)
+        self.playButton.tintColor = .white
+    }
+    
+    private func startWaveformAnimation() {
+        let animation = CABasicAnimation(keyPath: "transform.scale.x")
+        animation.fromValue = 1.0
+        animation.toValue = 1.08
+        animation.duration = 0.4
+        animation.autoreverses = true
+        animation.repeatCount = .infinity
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        self.audioWaveformImage.layer.add(animation, forKey: "waveform")
+    }
+
+    private func stopWaveformAnimation() {
+        self.audioWaveformImage.layer.removeAnimation(forKey: "waveform")
+    }
+}
+
+//MARK: TEXTFIELD DELEGATES
+
+extension CreateChoreViewController: UITextFieldDelegate {
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
         
@@ -642,22 +674,13 @@ extension CreateChoreViewController {
               break
           }
     }
-    
     private func clearAllErrors() {
         self.choreTextField.hideErrorMessage()
         self.choreDescpTextField.hideError()
     }
 }
 
-extension CreateChoreViewController: AVAudioPlayerDelegate {
-
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.audioPlayer = nil
-            self?.refreshPlayButtonIcon()
-        }
-    }
-}
+//MARK: - FLOATING PANEL DELEGATES
 
 extension CreateChoreViewController: FloatingPanelControllerDelegate {
     
@@ -709,6 +732,4 @@ protocol ChoreUpdateDelegate: AnyObject {
     func choreUpdatedSuccessfully()
 }
 
-extension CreateChoreViewController: UITextFieldDelegate {
-    
-}
+

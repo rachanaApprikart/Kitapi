@@ -3235,6 +3235,7 @@
                         <outlet property="activityIndicatorView" destination="8VT-ZW-K8S" id="aXr-ZC-NT9"/>
                         <outlet property="activityView" destination="WN9-S1-p6o" id="lV1-95-ebv"/>
                         <outlet property="audioDescriptionView" destination="if3-Iq-5Na" id="fJB-KF-sq6"/>
+                        <outlet property="audioWaveformImage" destination="cLz-sd-0y5" id="uMl-Nc-gbI"/>
                         <outlet property="choreImageBGView" destination="qR4-Yf-dVO" id="hmQ-pu-krC"/>
                         <outlet property="choreImageView" destination="ld1-bT-ALf" id="qGp-0U-rST"/>
                         <outlet property="choreNameLabel" destination="uG7-xi-m0x" id="2K2-FN-Tyb"/>
