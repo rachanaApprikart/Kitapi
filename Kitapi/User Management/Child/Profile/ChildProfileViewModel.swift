@@ -82,6 +82,9 @@ class ChildProfileViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Registration failed"
+                        
                     default:
                         errorMessage = "Something went wrong"
                     }

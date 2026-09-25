@@ -49,10 +49,14 @@ class CurrentGoalCardCell: UICollectionViewCell {
         self.goalTitle.text = goal.title
         self.numberOfChoresLabel.text = completedTask + "/" + totalTask + " Chores"
         self.goalPercentageLabel.text = "\(Int(goal.progressPercentage ?? 0))% Completed"
-        self.goalsProgressBar.configure(status: .completed, percentage: goal.progressPercentage ?? 0.0)
+        
+        if goal.status == .completed{
+            self.goalsProgressBar.configure(status: .completed, percentage: goal.progressPercentage ?? 0.0)
+        } else {
+            self.goalsProgressBar.configure(status: .pending, percentage: 0.0)
 
+        }
     }
-
 }
 
 extension CurrentGoalCardCell {
@@ -85,5 +89,6 @@ extension CurrentGoalCardCell {
         self.goalCardView.layer.borderWidth = 1
         self.goalCardView.layer.borderColor = UIColor.buttonBorderColor.cgColor
         self.goalCardView.layer.cornerRadius = 12
+        self.goalCardView.clipsToBounds = true
     }
 }

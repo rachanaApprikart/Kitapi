@@ -102,6 +102,9 @@ class CreateChoreViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Chore creation failed"
+                        
                     default:
                         errorMessage = "Something went wrong"
                     }
@@ -163,6 +166,9 @@ class CreateChoreViewModel {
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Chore creation failed"
                         
                     default:
                         errorMessage = "Something went wrong"

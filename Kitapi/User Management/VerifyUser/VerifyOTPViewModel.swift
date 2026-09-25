@@ -44,6 +44,9 @@ class VerifyOTPViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Failed to send OTP"
+                        
                     default:
                         errorMessage = "Something went wrong"
                     }
@@ -79,7 +82,7 @@ class VerifyOTPViewModel {
         let requestBody = VerifyOTPRequest(
             email: email,
             otp: otp,
-            fcmToken: "emNDa2uvS7eCNtbs3VieJq:APA91bEiPapQi8VJTUHKXYneR6Z3Ot2pPVlhHns9FGV2n3rpGdiJ2Y9incMPN6F8HWU20dwAHLGCncym6YX6iPYpO_xHaEVM2NYg0EZ2oim8e0KK0CUnUy4",
+            fcmToken: "",
             deviceType: "iOS",
             deviceVersion: version)
         
@@ -105,6 +108,9 @@ class VerifyOTPViewModel {
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Failed to verify OTP"
                         
                     default:
                         errorMessage = "Something went wrong"

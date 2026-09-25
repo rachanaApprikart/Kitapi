@@ -76,10 +76,13 @@ class NewPasswordViewModel {
                 if let apiError = response.error {
                     switch apiError {
                     case .apiError(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Login failed"
+                        errorMessage = errorResponse.message ?? "Failed to reset OTP"
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Failed to reset OTP"
                         
                     default:
                         errorMessage = "Something went wrong"

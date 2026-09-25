@@ -39,6 +39,11 @@ class ChoresViewController: UIViewController {
         self.setChoresVCUI()        // 1. UI setup + registers .childDidChange observer
         self.bindViewModel()        // 2. wire up viewModel callbacks BEFORE any fetch can fire
         self.updateUIForSelectedChild()       // 3. update labels immediately (name may already be available)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.fetchChoresForSelectedChild()
     }
     

@@ -49,6 +49,9 @@ class MPINViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Failed to create MPIN"
+                        
                     default:
                         errorMessage = "Something went wrong"
                     }
@@ -97,16 +100,19 @@ class MPINViewModel {
                     switch apiError {
                         
                     case .apiError(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Failed to create MPIN"
+                        errorMessage = errorResponse.message ?? "Failed to enable child mode"
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Failed to enable child mode"
                         
                     default:
                         errorMessage = "Something went wrong"
                     }
                 } else {
-                    errorMessage = response.data?.message ?? "Failed to create MPIN"
+                    errorMessage = response.data?.message ?? "Failed to enable child mode"
                 }
                 
                 DispatchQueue.main.async { [weak self] in

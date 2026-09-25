@@ -113,6 +113,9 @@ class GoalsViewModel {
             case .requestFailed(let error):
                 return error.localizedDescription
                 
+            case .authenticationFailed(let errorResponse):
+                return errorResponse.message ?? "Unable to retrieve"
+                
             default:
                 return "Something went wrong"
             }

@@ -441,7 +441,7 @@ extension CreateChoreViewController: UICollectionViewDelegate, UICollectionViewD
         calendarVC.selectedDates = recurrenceDates
         calendarVC.delegate = self
 
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.75)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.8)
         self.presentFloatingPanel(with: calendarVC, layout: layout)
     }
 }

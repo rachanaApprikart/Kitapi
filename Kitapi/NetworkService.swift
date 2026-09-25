@@ -69,7 +69,9 @@ class APIClient {
                     return APIResponse(data: nil, error: .decodingFailed, statusCode: statusCode)
                 }
             } else if (statusCode == 401) || (statusCode == 403) {
-                return APIResponse(data: nil, error: .authenticationFailed, statusCode: statusCode)
+                let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
+                return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
+                
             } else {
                 // Try to decode the error response
                 do {
@@ -147,7 +149,8 @@ class APIClient {
                 }
             }
             else if (statusCode == 401) || (statusCode == 403) {
-                return APIResponse(data: nil, error: .authenticationFailed, statusCode: statusCode)
+                let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
+                return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
             } else {
                 // Try to decode error response
                 do {

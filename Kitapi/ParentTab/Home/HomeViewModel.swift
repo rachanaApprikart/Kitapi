@@ -47,6 +47,9 @@ class HomeViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Unable to retrieve"
+
                     default:
                         errorMessage = "Something went wrong"
                     }
@@ -97,6 +100,9 @@ class HomeViewModel {
                        
                    case .requestFailed(let error):
                        errorMessage = error.localizedDescription
+                       
+                   case .authenticationFailed(let errorResponse):
+                       errorMessage = errorResponse.message ?? "Unable to retrieve"
                        
                    default:
                        errorMessage = "Something went wrong"

@@ -115,6 +115,9 @@ class CreateGoalViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Goal creation failed"
+                        
                     default:
                         errorMessage = "Something went wrong"
                     }

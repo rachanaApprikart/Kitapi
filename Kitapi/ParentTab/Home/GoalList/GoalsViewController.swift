@@ -42,6 +42,11 @@ class GoalsViewController: UIViewController {
         self.setGoalsVCUI()
         self.bindViewModel()
         self.updateUIForSelectedChild()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.fetchGoalsForSelectedChild()
     }
     

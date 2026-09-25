@@ -42,6 +42,9 @@ class ChoreViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Unable to retrieve"
+                        
                     default:
                         errorMessage = "Something went wrong"
                     }
@@ -92,7 +95,7 @@ class ChoreViewModel {
         // pending, rejected, overdue
         let remaining = chores
             .filter { [.pending, .rejected, .overdue].contains($0.status) }
-          //  .sorted { $0.dueDate ?? "" < $1.dueDate ?? "" }
+            .sorted { $0.dueDate ?? "" < $1.dueDate ?? "" }
         
         return [
             ChoreSection(type: .upNext, chores: upNext),
