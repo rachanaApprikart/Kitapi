@@ -32,7 +32,7 @@ class ImagePickerViewController: UIViewController {
 //MARK: ---- IMAGE PICEKR ------
 
 extension ImagePickerViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     private func openCamera() {
         
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
@@ -45,7 +45,7 @@ extension ImagePickerViewController: UIImagePickerControllerDelegate, UINavigati
         picker.allowsEditing = true
         present(picker, animated: true)
     }
-
+    
     private func openGallery() {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
@@ -53,24 +53,34 @@ extension ImagePickerViewController: UIImagePickerControllerDelegate, UINavigati
         picker.allowsEditing = true
         present(picker, animated: true)
     }
-
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         
-        guard let image = info[.originalImage] as? UIImage else {
-            MessageManager.shared.show(message: "No image found")
-            return
-        }
         
-        if let data = image.jpegData(compressionQuality: 0.8) {
-            
-            if data.count <= (4000000) {
-                self.delegate?.didSelectProfileImage(imageData: data, image: image)
-            } else {
-                MessageManager.shared.show(message: "Image size cannot exceed 5MB")
-            }
-        }
+        guard let image = (info[.editedImage] as? UIImage) ?? (info[.originalImage] as? UIImage) else {
+            picker.dismiss(animated: true) {
+                MessageManager.shared.show(message: "No image found") }
+            return }
+        
+        // Compress image
+        
+        guard let data = image.jpegData(compressionQuality: 0.8) else {
+            picker.dismiss(animated: true) {
+                MessageManager.shared.show(message: "Unable to process image")}
+            return }
+        
+        // 5 MB
+        let maxSize = 5 * 1024 * 1024
+        guard data.count <= maxSize else {
+            picker.dismiss(animated: true) {
+                MessageManager.shared.show(message: "Image size cannot exceed 5MB")}
+            return }
+        
+        // Dismiss picker first, then pass image to the parent VC
+        picker.dismiss(animated: true) { [weak self] in
+            self?.delegate?.didSelectProfileImage(imageData: data, image: image ) }
     }
-
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }

@@ -248,7 +248,7 @@ extension ChildProfileViewController {
     private func openDatePickerVC() {
         guard let contentVC = VCManager.openDatePickerVC() else { return }
         contentVC.delegate = self
-        self.presentFloatingPanel(with: contentVC, layout: FloatingPanelCustomLayout(state: .half, inset: 0.6)
+        self.presentFloatingPanel(with: contentVC, layout: FloatingPanelCustomLayout(state: .half, inset: 0.55)
         )
     }
 

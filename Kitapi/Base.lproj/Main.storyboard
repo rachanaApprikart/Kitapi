@@ -1484,7 +1484,7 @@
                                 </constraints>
                             </datePicker>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="iSZ-qw-vAH">
-                                <rect key="frame" x="20" y="364.33333333333331" width="390" height="50"/>
+                                <rect key="frame" x="20" y="838" width="390" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAg-DR-1iH">
                                         <rect key="frame" x="0.0" y="0.0" width="185" height="50"/>
@@ -1517,8 +1517,8 @@
                             <constraint firstItem="ziA-fO-IX4" firstAttribute="trailing" secondItem="g6U-Pe-2EF" secondAttribute="trailing" id="6BR-P6-NgY"/>
                             <constraint firstItem="iSZ-qw-vAH" firstAttribute="leading" secondItem="ziA-fO-IX4" secondAttribute="leading" constant="20" id="CUA-AE-MkZ"/>
                             <constraint firstItem="g6U-Pe-2EF" firstAttribute="centerX" secondItem="C5a-7I-MS8" secondAttribute="centerX" id="VFe-EO-Cat"/>
-                            <constraint firstItem="iSZ-qw-vAH" firstAttribute="top" secondItem="iBX-IG-IPC" secondAttribute="bottom" constant="15" id="XG7-7B-fUi"/>
                             <constraint firstItem="iBX-IG-IPC" firstAttribute="trailing" secondItem="ziA-fO-IX4" secondAttribute="trailing" id="XWO-0U-Q9r"/>
+                            <constraint firstItem="ziA-fO-IX4" firstAttribute="bottom" secondItem="iSZ-qw-vAH" secondAttribute="bottom" constant="10" id="cW6-cH-9bP"/>
                             <constraint firstItem="iBX-IG-IPC" firstAttribute="leading" secondItem="ziA-fO-IX4" secondAttribute="leading" id="i9J-n7-XWP"/>
                             <constraint firstItem="iBX-IG-IPC" firstAttribute="top" secondItem="g6U-Pe-2EF" secondAttribute="bottom" constant="10" id="t98-M5-NMX"/>
                             <constraint firstItem="g6U-Pe-2EF" firstAttribute="leading" secondItem="ziA-fO-IX4" secondAttribute="leading" id="tll-p9-6Gx"/>

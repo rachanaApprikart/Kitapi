@@ -5,7 +5,9 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We use mic to record chore decription</string>
 	<key>NSCameraUsageDescription</key>
-	<string>We use camera to capture your photo</string>
+	<string>Kitapi needs camera access to take a profile photo.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Kitapi needs photo library access to select a profile photo.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
