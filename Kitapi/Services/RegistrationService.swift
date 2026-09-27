@@ -58,6 +58,8 @@ struct RegistrationService {
         let url = RegisterEndPoint.getParentDetails.getFullPath()
         return await APIClient.callAPIWithRawData(url: url, method: .get)
     }
+    
+    
 }
 
 enum RegisterEndPoint {
@@ -71,6 +73,7 @@ enum RegisterEndPoint {
     case googleLogin
     case updateUser
     case getParentDetails
+    case logout
     
     
     private func getURLPath() -> String {
@@ -102,6 +105,9 @@ enum RegisterEndPoint {
             
         case .getParentDetails:
             return "/api/parent/detail"
+            
+        case .logout:
+            return "/api/parent/logout"
             
         }
     }

@@ -3,7 +3,7 @@
 //  Kitapi
 //
 //  Created by Suneel on 06/05/26.
-// 08-06
+// 08-06, 28-09
 
 import UIKit
 
@@ -11,31 +11,58 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet weak var appBGView: UIView!
     
+    @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var createChildProfileButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
     
+    private let profileViewModel = ProfileViewModel()
+
   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setProfileScreenUI()
+        self.bindViewModel()
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        self.tabBarController?.tabBar.isHidden = false
-//    }
     
     @IBAction func createChildProfileAction(_ sender: UIButton) {
         self.openCreateChildProfileVC()
     }
     
     @IBAction func logoutAction(_ sender: UIButton) {
-        AppUserDefaults.authorizationToken = nil
-        AppUserDefaults.customerDetails = nil
-        self.navigateToLogin()
+        self.logoutUser()
     }
   
+    private func bindViewModel() {
+        
+        self.profileViewModel.onLoadingChanged = { [weak self] isLoadings in
+            guard let self = self else { return }
+            isLoadings ? self.showActivityIndicator() : self.hideActivityIndicator()
+        }
+        
+        self.profileViewModel.onLogoutError = { [weak self] errorMessage in
+            MessageManager.shared.show(message: errorMessage)
+        }
+        
+        self.profileViewModel.onLogoutSuccess = { [weak self] logoutDetails in
+            guard let self = self else { return }
+            
+            AppUserDefaults.authorizationToken = nil
+            AppUserDefaults.customerDetails = nil
+            AppUserDefaults.childModeExpiryDate = nil
+            AppUserDefaults.isChildMode = false
+            self.navigateToLogin()
+        }
+ 
+    }
+    
+    private func logoutUser() {
+        Task {
+            await self.profileViewModel.performLogout()
+        }
+    }
     
     private func openCreateChildProfileVC() {
         guard let vc = VCManager.openCreateChildProfileVC() else { return }
@@ -61,7 +88,7 @@ extension ProfileViewController {
     
     private func setProfileScreenUI() {
         self.appBGView.setGradientBackground()
-        
+        self.hideActivityIndicator()
         self.headerLabel.text = "Profile"
         self.headerLabel.textAlignment = .left
         self.headerLabel.font = UIFont(name: Fonts.urbanistBold, size: 28)
@@ -82,6 +109,18 @@ extension ProfileViewController {
         self.createChildProfileButton.layer.borderColor = UIColor.borderColor.cgColor
         self.createChildProfileButton.layer.borderWidth = 1
         
+    }
+    
+    private func showActivityIndicator() {
+        self.activityView.isHidden = false
+        self.activityIndicatorView.startAnimating()
+        self.view.bringSubviewToFront(self.activityView)
+    }
+    
+    private func hideActivityIndicator() {
+        self.activityView.isHidden = true
+        self.activityIndicatorView.stopAnimating()
+        self.view.sendSubviewToBack(self.activityView)
     }
 }
 

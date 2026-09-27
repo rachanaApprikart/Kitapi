@@ -229,7 +229,7 @@ extension HomeViewController {
         guard let contentVC = VCManager.openMPINVC() else { return }
         contentVC.delegate = self
         contentVC.mode = .create
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.52)
+        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.57)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     

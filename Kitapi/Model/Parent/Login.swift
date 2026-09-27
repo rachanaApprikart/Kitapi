@@ -53,3 +53,9 @@ struct GoogleLoginRequest: Codable {
     let deviceType: String
     let deviceVersion: String?
 }
+
+
+struct LogoutResponse: Codable {
+    let success: Bool?
+    let message: String?
+}

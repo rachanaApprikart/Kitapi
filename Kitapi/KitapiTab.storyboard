@@ -3508,6 +3508,33 @@
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6aO-VB-Kf6">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V6A-sk-zN8">
+                                        <rect key="frame" x="156.66666666666666" y="386" width="80" height="80"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="twB-Mu-1SH">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="twB-Mu-1SH" secondAttribute="bottom" id="1E0-6R-65V"/>
+                                            <constraint firstItem="twB-Mu-1SH" firstAttribute="leading" secondItem="V6A-sk-zN8" secondAttribute="leading" id="4KV-dp-Zpc"/>
+                                            <constraint firstAttribute="height" constant="80" id="4rT-DX-gJH"/>
+                                            <constraint firstItem="twB-Mu-1SH" firstAttribute="top" secondItem="V6A-sk-zN8" secondAttribute="top" id="XrF-0V-w8Z"/>
+                                            <constraint firstAttribute="trailing" secondItem="twB-Mu-1SH" secondAttribute="trailing" id="mVn-b3-7Gu"/>
+                                            <constraint firstAttribute="width" constant="80" id="uPN-Nn-0Q5"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="V6A-sk-zN8" firstAttribute="centerX" secondItem="6aO-VB-Kf6" secondAttribute="centerX" id="MLX-bV-G0S"/>
+                                    <constraint firstItem="V6A-sk-zN8" firstAttribute="centerY" secondItem="6aO-VB-Kf6" secondAttribute="centerY" id="Rsr-15-2MK"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="V0j-KB-cew">
                                 <rect key="frame" x="0.0" y="129" width="393" height="150"/>
                                 <subviews>
@@ -3571,19 +3598,25 @@
                         <viewLayoutGuide key="safeArea" id="Vwg-h9-0dd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6aO-VB-Kf6" firstAttribute="trailing" secondItem="Vwg-h9-0dd" secondAttribute="trailing" id="2NB-Vx-khZ"/>
                             <constraint firstAttribute="bottom" secondItem="mec-42-O6w" secondAttribute="bottom" id="8CG-Q1-FeI"/>
+                            <constraint firstItem="6aO-VB-Kf6" firstAttribute="leading" secondItem="Vwg-h9-0dd" secondAttribute="leading" id="9JP-MQ-hZS"/>
                             <constraint firstItem="V0j-KB-cew" firstAttribute="leading" secondItem="Vwg-h9-0dd" secondAttribute="leading" id="SGd-6C-De2"/>
                             <constraint firstItem="T6Z-u1-s5g" firstAttribute="leading" secondItem="Vwg-h9-0dd" secondAttribute="leading" constant="20" id="SV5-5f-Haj"/>
+                            <constraint firstItem="6aO-VB-Kf6" firstAttribute="top" secondItem="eOy-KJ-b2Z" secondAttribute="top" id="SnM-8J-4Oa"/>
                             <constraint firstItem="mec-42-O6w" firstAttribute="top" secondItem="eOy-KJ-b2Z" secondAttribute="top" id="X6c-Vo-l8D"/>
                             <constraint firstItem="V0j-KB-cew" firstAttribute="top" secondItem="T6Z-u1-s5g" secondAttribute="bottom" constant="20" id="g6X-QI-kEF"/>
                             <constraint firstItem="T6Z-u1-s5g" firstAttribute="top" secondItem="Vwg-h9-0dd" secondAttribute="top" constant="20" id="gOX-HB-T02"/>
                             <constraint firstItem="mec-42-O6w" firstAttribute="leading" secondItem="Vwg-h9-0dd" secondAttribute="leading" id="hC7-jF-iTr"/>
                             <constraint firstItem="mec-42-O6w" firstAttribute="trailing" secondItem="Vwg-h9-0dd" secondAttribute="trailing" id="pXO-xO-XVc"/>
+                            <constraint firstAttribute="bottom" secondItem="6aO-VB-Kf6" secondAttribute="bottom" id="weN-NH-iGJ"/>
                             <constraint firstItem="V0j-KB-cew" firstAttribute="trailing" secondItem="Vwg-h9-0dd" secondAttribute="trailing" id="xqx-hc-sLc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ozf-G3-s1Y"/>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="twB-Mu-1SH" id="bl4-ez-HD7"/>
+                        <outlet property="activityView" destination="6aO-VB-Kf6" id="tZL-wS-1bJ"/>
                         <outlet property="appBGView" destination="mec-42-O6w" id="I7S-Ji-Xe3"/>
                         <outlet property="createChildProfileButton" destination="kht-gB-Sh5" id="cMt-w4-5RD"/>
                         <outlet property="headerLabel" destination="T6Z-u1-s5g" id="2vk-Zp-g18"/>
