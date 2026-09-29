@@ -18,7 +18,7 @@ class ChoreViewModel {
     
     func fetchAllChores(childId: String) async {
         
-        let requestBody = GetAllChoresRequest(page: "1", limit: "100", status: .all, childId: childId, sortOrder: "DESC")
+        let requestBody = GetAllChoresRequest(page: "1", limit: "100", status: .all, childId: childId, sortOrder: "ASC")
         
         // Show loading
         DispatchQueue.main.async { [weak self] in
@@ -42,8 +42,11 @@ class ChoreViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
-                    case .authenticationFailed(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Unable to retrieve"
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"
@@ -89,13 +92,13 @@ class ChoreViewModel {
         
         let completed = chores
             .filter { $0.status == .completed }
-            .sorted { $0.dueDate ?? "" > $1.dueDate ?? "" } // most recently completed first
+        //    .sorted { $0.dueDate ?? "" > $1.dueDate ?? "" } // most recently completed first
         
         // Everything else lands in the middle "All Chores" section:
         // pending, rejected, overdue
         let remaining = chores
             .filter { [.pending, .rejected, .overdue].contains($0.status) }
-            .sorted { $0.dueDate ?? "" < $1.dueDate ?? "" }
+           // .sorted { $0.dueDate ?? "" < $1.dueDate ?? "" }
         
         return [
             ChoreSection(type: .upNext, chores: upNext),

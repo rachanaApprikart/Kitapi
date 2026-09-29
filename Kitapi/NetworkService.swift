@@ -34,20 +34,20 @@ class APIClient {
             LogFile.debugMessage(debug: "token", value: tokenVal)
         }
         
-//        switch tokenScope {
-//            case .parent:
-//                if let tokenVal = AppUserDefaults.authorizationToken {
-//                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-//                    LogFile.debugMessage(debug: " parent token", value: tokenVal)
-//                }
-//            case .child:
-//                if let tokenVal = ChildSessionManager.shared.currentChildModeToken {
-//                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-//                    LogFile.debugMessage(debug: "child token", value: tokenVal)
-//                }
-//            case .none:
-//                break
-//            }
+        //        switch tokenScope {
+        //            case .parent:
+        //                if let tokenVal = AppUserDefaults.authorizationToken {
+        //                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+        //                    LogFile.debugMessage(debug: " parent token", value: tokenVal)
+        //                }
+        //            case .child:
+        //                if let tokenVal = ChildSessionManager.shared.currentChildModeToken {
+        //                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+        //                    LogFile.debugMessage(debug: "child token", value: tokenVal)
+        //                }
+        //            case .none:
+        //                break
+        //            }
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
@@ -70,6 +70,9 @@ class APIClient {
                 }
             } else if (statusCode == 401) || (statusCode == 403) {
                 let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
+                if AppUserDefaults.authorizationToken != nil {
+                    SessionManager.shared.handleAuthenticationFailure()
+                }
                 return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
                 
             } else {
@@ -150,6 +153,17 @@ class APIClient {
             }
             else if (statusCode == 401) || (statusCode == 403) {
                 let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
+                /*
+                 Only trigger the global session-expired flow
+                 if the Parent token still exists.
+                 
+                 This prevents an old/in-flight request from
+                 showing another alert after the user has already
+                 been logged out.
+                 */
+                if AppUserDefaults.authorizationToken != nil {
+                    SessionManager.shared.handleAuthenticationFailure()
+                }
                 return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
             } else {
                 // Try to decode error response

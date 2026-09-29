@@ -102,8 +102,11 @@ class CreateChoreViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
-                    case .authenticationFailed(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Chore creation failed"
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"
@@ -167,8 +170,11 @@ class CreateChoreViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
-                    case .authenticationFailed(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Chore creation failed"
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"

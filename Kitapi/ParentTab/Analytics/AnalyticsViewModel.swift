@@ -29,49 +29,55 @@ class AnalyticsViewModel {
     func getAnalyticsInfo(childId: String) async {
         
         let period: Period = .all
-           
-       DispatchQueue.main.async { [weak self] in
-           self?.onLoadingChanged?(true)
-       }
-       do {
-           let response = try await analyticsService.getAnalyticsInfoOfAChild(childID: childId, period: period)
-           
-           guard response.data?.success ?? false, let analyticsResp = response.data  else {
-
-               let errorMessage: String
-               
-               if let apiError = response.error {
-                   switch apiError {
-                   case .apiError(let errorResponse):
-                       errorMessage = errorResponse.message ?? "Unable to retrieve"
-                       
-                   case .requestFailed(let error):
-                       errorMessage = error.localizedDescription
-                       
-                   default:
-                       errorMessage = "Something went wrong"
-                   }
-               } else {
-                   errorMessage = "Unable to retrieve"
-               }
-           
-               DispatchQueue.main.async { [weak self] in
-                   self?.onLoadingChanged?(false)
-                   self?.onGetAnalyticsError?(errorMessage)
-               }
-               return
-           }
-           DispatchQueue.main.async { [weak self] in
-               self?.onLoadingChanged?(false)
-               self?.onGetAnalyticsSuccess?(analyticsResp)
-           }
-       } catch {
-           DispatchQueue.main.async { [weak self] in
-               self?.onLoadingChanged?(false)
-               self?.onGetAnalyticsError?(error.localizedDescription)
-           }
-       }
-   }
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.onLoadingChanged?(true)
+        }
+        do {
+            let response = try await analyticsService.getAnalyticsInfoOfAChild(childID: childId, period: period)
+            
+            guard response.data?.success ?? false, let analyticsResp = response.data  else {
+                
+                let errorMessage: String
+                
+                if let apiError = response.error {
+                    switch apiError {
+                    case .apiError(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Unable to retrieve"
+                        
+                    case .requestFailed(let error):
+                        errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
+                        
+                    default:
+                        errorMessage = "Something went wrong"
+                    }
+                } else {
+                    errorMessage = "Unable to retrieve"
+                }
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.onLoadingChanged?(false)
+                    self?.onGetAnalyticsError?(errorMessage)
+                }
+                return
+            }
+            DispatchQueue.main.async { [weak self] in
+                self?.onLoadingChanged?(false)
+                self?.onGetAnalyticsSuccess?(analyticsResp)
+            }
+        } catch {
+            DispatchQueue.main.async { [weak self] in
+                self?.onLoadingChanged?(false)
+                self?.onGetAnalyticsError?(error.localizedDescription)
+            }
+        }
+    }
 
     func checkMPINStatus() async {
            
@@ -92,6 +98,14 @@ class AnalyticsViewModel {
                        
                    case .requestFailed(let error):
                        errorMessage = error.localizedDescription
+                       
+                   case .authenticationFailed(_):
+                       
+                       DispatchQueue.main.async { [weak self] in
+                           self?.onLoadingChanged?(false)
+                       }
+                       return
+
                        
                    default:
                        errorMessage = "Something went wrong"

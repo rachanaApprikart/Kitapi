@@ -17,6 +17,7 @@
 		18260A56303DE435001C29B2 /* GoalTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18260A55303DE435001C29B2 /* GoalTypeViewController.swift */; };
 		18260A58303DE457001C29B2 /* MilestoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18260A57303DE457001C29B2 /* MilestoneViewController.swift */; };
 		18260A5A303DE46D001C29B2 /* AssignChoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18260A59303DE46D001C29B2 /* AssignChoreViewController.swift */; };
+		1826AB8E306ACC0000E3153D /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826AB8D306ACC0000E3153D /* SessionManager.swift */; };
 		182EB9952F8638440093A900 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182EB9942F8638440093A900 /* ResetPasswordViewController.swift */; };
 		182EB9972F8638660093A900 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182EB9962F8638660093A900 /* NewPasswordViewController.swift */; };
 		1831098A2F7B9C1500D5A4E5 /* KitapiFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183109892F7B9C1500D5A4E5 /* KitapiFonts.swift */; };
@@ -203,6 +204,7 @@
 		18260A55303DE435001C29B2 /* GoalTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTypeViewController.swift; sourceTree = "<group>"; };
 		18260A57303DE457001C29B2 /* MilestoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewController.swift; sourceTree = "<group>"; };
 		18260A59303DE46D001C29B2 /* AssignChoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChoreViewController.swift; sourceTree = "<group>"; };
+		1826AB8D306ACC0000E3153D /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		182EB9942F8638440093A900 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		182EB9962F8638660093A900 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		183109892F7B9C1500D5A4E5 /* KitapiFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitapiFonts.swift; sourceTree = "<group>"; };
@@ -988,6 +990,7 @@
 				185B09872FE2855300126A09 /* ChoreTime.swift */,
 				1849AE853021DBE40088681C /* MPINManager.swift */,
 				1846821E304D5C92009EF05B /* ChildManager.swift */,
+				1826AB8D306ACC0000E3153D /* SessionManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1416,6 +1419,7 @@
 				1857E1192FB7389F00E63CD0 /* AvatarCVCell.swift in Sources */,
 				1855BB9F304E6FC90036E17D /* PlayGameViewController.swift in Sources */,
 				18260A58303DE457001C29B2 /* MilestoneViewController.swift in Sources */,
+				1826AB8E306ACC0000E3153D /* SessionManager.swift in Sources */,
 				186283D62FAB385D00BB07DF /* Children.swift in Sources */,
 				18C6946A2EFAB0E5001F8440 /* VideoPlayerCVCell.swift in Sources */,
 				184D82AA2FEAFDC40011EBEC /* ChoreTemplateService.swift in Sources */,

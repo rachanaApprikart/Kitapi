@@ -176,7 +176,7 @@ class ChoreListCVCell: UICollectionViewCell {
             
         case .completed:
             self.choreStatusButton.removeDashedCircle()
-
+            
             self.choreStatusButton.backgroundColor = .greenPrimaryColor
             self.choreStatusButton.setImage(AppImages.check, for: .normal)
             

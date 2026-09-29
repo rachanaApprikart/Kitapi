@@ -36,8 +36,11 @@ class AssignChoreViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
-                    case .authenticationFailed(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Unable to retrieve"
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"

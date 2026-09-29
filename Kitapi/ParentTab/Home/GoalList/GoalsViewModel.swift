@@ -113,8 +113,11 @@ class GoalsViewModel {
             case .requestFailed(let error):
                 return error.localizedDescription
                 
-            case .authenticationFailed(let errorResponse):
-                return errorResponse.message ?? "Unable to retrieve"
+            case .authenticationFailed(_):
+                DispatchQueue.main.async { [weak self] in
+                    self?.onLoadingChanged?(false)
+                }
+                return ""
                 
             default:
                 return "Something went wrong"

@@ -164,6 +164,7 @@ extension SelectTemplateImageViewController {
         self.chooseIconCV.delegate = self
         self.chooseIconCV.dataSource = self
         self.chooseIconCV.register(PhotoPickerCVCell.nibFile, forCellWithReuseIdentifier: PhotoPickerCVCell.reUseIdentifier)
+        self.chooseIconCV.showsVerticalScrollIndicator = false
     }
     
     private func showActivityIndicator() {

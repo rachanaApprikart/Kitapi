@@ -51,8 +51,7 @@ class ProfileViewController: UIViewController {
             
             AppUserDefaults.authorizationToken = nil
             AppUserDefaults.customerDetails = nil
-            AppUserDefaults.childModeExpiryDate = nil
-            AppUserDefaults.isChildMode = false
+            ChildManager.shared.clearChildMode()
             self.navigateToLogin()
         }
  

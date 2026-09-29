@@ -136,7 +136,7 @@ extension SetTimerViewController {
         guard let contentVC = VCManager.openMPINVC() else { return }
         contentVC.mode = .enable
         contentVC.selectedMinute = self.selectedMinute
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.52)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.6)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     

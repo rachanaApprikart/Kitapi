@@ -133,7 +133,7 @@ class HomeViewController: UIViewController {
             if MPINManager.shared.isSetup {
                 self.showSetTimerPanel()
             } else {
-                self.showMPINPanel()
+                self.showCreateMPINPanel()
             }
         } else {
             self.getMPINStatus()
@@ -214,7 +214,7 @@ extension HomeViewController {
     
     private func showSetTimerPanel() {
         guard let contentVC = VCManager.opensetTimerVC() else { return }
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.52)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.57)
         
         contentVC.onSkip = { [weak self] in
             guard let self = self else { return }
@@ -225,11 +225,11 @@ extension HomeViewController {
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     
-    private func showMPINPanel() {
+    private func showCreateMPINPanel() {
         guard let contentVC = VCManager.openMPINVC() else { return }
         contentVC.delegate = self
         contentVC.mode = .create
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.57)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.7)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     

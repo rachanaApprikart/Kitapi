@@ -105,8 +105,11 @@ class MPINViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
-                    case .authenticationFailed(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Failed to enable child mode"
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"
@@ -158,6 +161,12 @@ class MPINViewModel {
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"

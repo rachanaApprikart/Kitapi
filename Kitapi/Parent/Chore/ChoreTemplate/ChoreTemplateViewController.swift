@@ -13,6 +13,9 @@ class ChoreTemplateViewController: UIViewController {
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var appBGView: UIView!
     
+    @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     @IBOutlet weak var choreTemplateView: UIView!
     @IBOutlet weak var templateSearchBar: UISearchBar!
     @IBOutlet weak var choreTemplateCV: UICollectionView!
@@ -43,6 +46,11 @@ class ChoreTemplateViewController: UIViewController {
     }
     
     private func bindViewModel() {
+        
+        self.choreTemplateViewModel.onLoadingChanged = { [weak self] isLoding in
+            guard let self = self else { return }
+            isLoding ? self.showActivityIndicator() : self.hideActivityIndicator()
+        }
         
         self.choreTemplateViewModel.onError = { [weak self] errorMessage in
             MessageManager.shared.show(message: errorMessage)
@@ -369,6 +377,17 @@ extension ChoreTemplateViewController {
     
         self.floatingPanel = fpc
         self.present(fpc, animated: true)
+    }
+    
+    private func showActivityIndicator() {
+        self.activityView.isHidden = false
+        self.activityIndicator.startAnimating()
+        self.view.bringSubviewToFront(self.activityView)
+    }
+    private func hideActivityIndicator() {
+        self.activityView.isHidden = true
+        self.view.sendSubviewToBack(self.activityView)
+        self.activityIndicator.stopAnimating()
     }
 }
 
