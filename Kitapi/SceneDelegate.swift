@@ -2,13 +2,13 @@
 //  SceneDelegate.swift
 //  Kitapi
 //
-//  Created by Suneel on 21/12/25.
+//  Created by Suneel Apprikart on 15/09/26.
 //
 
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
 
 

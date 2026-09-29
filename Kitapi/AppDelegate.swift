@@ -2,31 +2,25 @@
 //  AppDelegate.swift
 //  Kitapi
 //
-//  Created by Suneel on 21/12/25.
+//  Created by Suneel Apprikart on 15/09/26.
 //
 
 import UIKit
+import IQKeyboardToolbarManager
 import IQKeyboardManagerSwift
-import Kingfisher
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-      
-        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.isEnabled = true
         IQKeyboardManager.shared.enableAutoToolbar = true
-     
         return true
     }
-    
-    
-//    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-//        
-//        guard let token = fcmToken else { return }
-//        print("🔥 FCM Token:", token)
-//    }
 
+    // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
