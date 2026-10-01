@@ -10,10 +10,20 @@ import Foundation
 struct CreateChoreRequest: Codable {
     let taskTemplateId: String
     let childId: String
-    let description: String
+    let description: String?
     let startTime, endTime: String
     let recurrence: String
     let recurrenceDates: [String]
+}
+
+struct CreateChoreAudioRequest {
+    let taskTemplateId: String
+    let childId: String
+    let startTime: String
+    let endTime: String
+    let recurrence: String
+    let recurrenceDates: [String]
+    let audioDescriptionURL: URL
 }
 
 struct CreateChoreResponse: Codable {
@@ -21,7 +31,6 @@ struct CreateChoreResponse: Codable {
     let message: String
     let data: ChoreData
 }
-
 
 struct ChoreData: Codable {
     let taskTemplateID, title: String
@@ -51,7 +60,7 @@ struct TaskData: Codable {
     let title: String?
     let image: ProfilePicture?
     let video: ProfilePicture?
-    let audioDescription: ProfilePicture?
+    let audioDescription: AudioDescription?
     let taskTemplateId, parentId, childId: String?
     let rewardCoins: Int?
     let isRecurring: Bool?
@@ -76,6 +85,13 @@ struct TaskData: Codable {
     }
 }
 
+struct AudioDescription: Codable {
+    let url: String
+    let filename: String
+    let originalName: String
+    let size: Int
+    let mimetype: String
+}
 
 struct GetAllChoresRequest: Codable {
     let page: String

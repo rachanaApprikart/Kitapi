@@ -9,6 +9,12 @@ import Foundation
 import SwiftMessages
 import UIKit
 
+enum MessageType {
+    case success
+    case error
+    case warning
+    case info
+}
 
 final class MessageManager {
     
@@ -16,8 +22,7 @@ final class MessageManager {
     private init() {}
     
     func show(message: String,
-              type: Theme = .error,
-              duration: SwiftMessages.Duration = .automatic) {
+              type: MessageType = .error) {
         
         let view = MessageView.viewFromNib(layout: .cardView)
         view.titleLabel?.text = "Kitapi"
@@ -43,7 +48,7 @@ final class MessageManager {
         
         var config = SwiftMessages.Config()
         config.presentationStyle = .top
-        config.duration = duration
+        config.duration = .automatic
         config.presentationContext = .window(windowLevel: .normal)
         config.interactiveHide = true
         

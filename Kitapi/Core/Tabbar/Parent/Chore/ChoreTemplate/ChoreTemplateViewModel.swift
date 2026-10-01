@@ -11,11 +11,16 @@ class ChoreTemplateViewModel {
     
     var onError: ((String) -> Void)?
     var onGetChoreTemplates: ((ChoreTemplateResponse) -> Void)?
-    
+    var onLoadingChanged: ((Bool) -> Void)?
+
     private let choreTemplateService = ChoreTemplateService()
         
     
     func getAllChoreTemplates() async {
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.onLoadingChanged?(true)
+        }
         do {
             // Make async API call
             let response = try await choreTemplateService.getChoreTemplates(page: "1", limit: "30")
@@ -33,6 +38,11 @@ class ChoreTemplateViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                     default:
                         errorMessage = "Something went wrong"
                     }
@@ -41,6 +51,7 @@ class ChoreTemplateViewModel {
                 }
                 
                 DispatchQueue.main.async { [weak self] in
+                    self?.onLoadingChanged?(false)
                     self?.onError?(errorMessage)
                 }
                 return
@@ -48,12 +59,14 @@ class ChoreTemplateViewModel {
             
             // Success
             DispatchQueue.main.async { [weak self] in
+                self?.onLoadingChanged?(false)
                 self?.onGetChoreTemplates?(templates)
             }
             
         } catch {
             // Network/Unknown Error
             DispatchQueue.main.async { [weak self] in
+                self?.onLoadingChanged?(false)
                 self?.onError?(error.localizedDescription)
             }
         }

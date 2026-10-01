@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import UIKit
 import Kingfisher
-
+import UIKit
 
 class ChildHeaderView: UIView {
     

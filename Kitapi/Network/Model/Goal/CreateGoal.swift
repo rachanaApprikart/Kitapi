@@ -47,8 +47,8 @@ struct GoalData: Codable {
     let child: Child?
     let parent: Parent?
     let tasks: [TaskData]?
-    let tasksCount: Int?
-    let completedTasksCount: Int?
+  //  let tasksCount: Int?
+    let completedTaskCount: Int?
     let progressPercentage: Double?
     let progressDetails: GoalProgressDetails?
     let currentCoins: Int?

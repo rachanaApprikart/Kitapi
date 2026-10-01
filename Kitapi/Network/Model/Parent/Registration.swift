@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 struct RegistrationResponse: Codable {
     let success: Bool?
@@ -21,8 +21,9 @@ struct User: Codable {
     let email, name: String
     let gender, phone, countryCode: String?
     let preferredLanguage, lastActiveAt: String?
-    let image, mpin, lastLoginAt, deviceType: String?
+    let mpin, lastLoginAt, deviceType: String?
     let fcmToken, deviceVersion: String?
+    let image: ProfilePicture?
 }
 
 // Request Model

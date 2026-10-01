@@ -31,13 +31,18 @@ class ReAuthViewModel {
             let errorMessage: String
             
             if let apiError = response.error {
+                
                 switch apiError {
+                    
                 case .apiError(let errorResponse):
                     errorMessage = errorResponse.message ?? "Failed to reauthenticate"
+                    
                 case .requestFailed(let error):
                     errorMessage = error.localizedDescription
+                    
                 case .authenticationFailed:
                     errorMessage = "Incorrect MPIN"
+                    
                 default:
                     errorMessage = "Something went wrong"
                 }

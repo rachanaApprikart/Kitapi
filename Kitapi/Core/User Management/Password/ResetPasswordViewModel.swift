@@ -66,10 +66,13 @@ class ResetPasswordViewModel {
                 if let apiError = response.error {
                     switch apiError {
                     case .apiError(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Registration failed"
+                        errorMessage = errorResponse.message ?? "Failed to send OTP"
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
+                       
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Failed to send OTP"
                         
                     default:
                         errorMessage = "Something went wrong"

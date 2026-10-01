@@ -13,10 +13,12 @@ class LoginViewModel {
     var loginEmail: String = ""
     var loginPassword: String = ""
     var deviceVersion: String = ""
+    var fcmToken: String = ""
     
     var onLoadingChanged: ((Bool) -> Void)?
     var onLoginError: ((String) -> Void)?
     var onLoginSuccess: ((LoginResponse) -> Void)?
+    var onGoogleLoginSuccess: ((VerificationResponse) -> Void)?
     var onGetParentDetailsSuccess: ((ParentDetails) -> Void)?
     var onLoginValidationError: ((ValidationError) -> Void)?
     
@@ -56,7 +58,7 @@ class LoginViewModel {
         let requestBody = LoginRequest(
             email: self.loginEmail,
             password: self.loginPassword,
-            fcmToken: "emNDa2uvS7eCNtbs3VieJq:APA91bEiPapQi8VJTUHKXYneR6Z3Ot2pPVlhHns9FGV2n3rpGdiJ2Y9incMPN6F8HWU20dwAHLGCncym6YX6iPYpO_xHaEVM2NYg0EZ2oim8e0KK0CUnUy4",
+            fcmToken: self.fcmToken,
             deviceType: "iOS", deviceVersion: self.deviceVersion)
         
         DispatchQueue.main.async { [weak self] in
@@ -79,6 +81,9 @@ class LoginViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Login failed"
+                        
                     default:
                         errorMessage = "Something went wrong"
                     }
@@ -95,6 +100,63 @@ class LoginViewModel {
             DispatchQueue.main.async { [weak self] in
                 self?.onLoadingChanged?(false)
                 self?.onLoginSuccess?(loginResponse)
+            }
+            
+        } catch {
+            // Network/Unknown Error
+            DispatchQueue.main.async { [weak self] in
+                self?.onLoadingChanged?(false)
+                self?.onLoginError?(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func performGoogleLogin() async {
+       
+        let requestBody = GoogleLoginRequest(
+         fcmToken: self.fcmToken,
+         deviceType: "iOS",
+         deviceVersion: self.deviceVersion)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.onLoadingChanged?(true)
+        }
+        
+        do {
+            // Make async API call
+            let response = try await loginService.loggedInUsingGoogle(loginRequest: requestBody)
+            
+            guard response.data?.success ?? false, let googleLoginResponse = response.data else {
+                // API Error
+                let errorMessage: String
+                
+                if let apiError = response.error {
+                    switch apiError {
+                    case .apiError(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Login failed"
+                        
+                    case .requestFailed(let error):
+                        errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Login failed"
+                        
+                    default:
+                        errorMessage = "Something went wrong"
+                    }
+                } else {
+                    errorMessage = response.data?.message ?? "Login failed"
+                }
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.onLoadingChanged?(false)
+                    self?.onLoginError?(errorMessage)
+                }
+                return
+            }
+            DispatchQueue.main.async { [weak self] in
+                self?.onLoadingChanged?(false)
+                self?.onGoogleLoginSuccess?(googleLoginResponse)
             }
             
         } catch {
@@ -127,6 +189,9 @@ class LoginViewModel {
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Login failed"
                         
                     default:
                         errorMessage = "Something went wrong"

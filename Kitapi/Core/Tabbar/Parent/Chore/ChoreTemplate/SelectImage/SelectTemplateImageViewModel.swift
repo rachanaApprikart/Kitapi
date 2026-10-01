@@ -33,10 +33,16 @@ class SelectTemplateImageViewModel {
                 if let apiError = response.error {
                     switch apiError {
                     case .apiError(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Registration failed"
+                        errorMessage = errorResponse.message ?? "Unable to create chore template"
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"

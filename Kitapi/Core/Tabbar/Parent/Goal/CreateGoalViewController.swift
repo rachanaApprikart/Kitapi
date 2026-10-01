@@ -7,7 +7,6 @@
 
 import UIKit
 import FloatingPanel
-import SwiftMessages
 
 class CreateGoalViewController: UIViewController {
 

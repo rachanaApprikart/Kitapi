@@ -7,7 +7,6 @@
 
 
 import UIKit
-import SwiftMessages
 
 class VerifyOTPViewController: UIViewController {
     

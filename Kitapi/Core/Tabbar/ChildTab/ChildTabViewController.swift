@@ -68,21 +68,20 @@ private extension ChildTabViewController {
             object: nil
         )
     }
-
-    @objc
-    func handleChildModeTimerExpired() {
+    
+// This is called when the Child Mode timer reaches zero while the app is running.
+    @objc func handleChildModeTimerExpired() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {
                 return
             }
 
-            // MPIN panel is already visible.
+         //  "If the ReAuth/FloatingPanel is already being displayed, don't display another one."
             guard self.floatingPanel == nil else {
                 return
             }
 
-            // If a game is active, let PlayGameViewController
-            // end the game first.
+            // If a game is active, let PlayGameViewController end the game first.
             if ChildSessionManager.shared.isGameActive {
                 self.waitingForActiveGameToEnd = true
                 return
@@ -110,7 +109,13 @@ private extension ChildTabViewController {
             self.showReAuthMPINPanel()
         }
     }
-
+//    Child Mode
+//       ↓
+//    Timer expires
+//       ↓
+//    App gets killed / terminated
+//       ↓
+//    User opens app again
     func checkForExpiredChildMode() {
         let sessionManager = ChildSessionManager.shared
 
@@ -160,7 +165,7 @@ private extension ChildTabViewController {
             return
         }
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .half,inset: 0.52)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.6)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
 
@@ -241,3 +246,59 @@ extension ChildTabViewController: FloatingPanelControllerDelegate {
 //                             │
 //                             ▼
 //                        Parent Mode
+
+//                 Child Mode
+//│
+//▼
+//Game running
+//│
+//▼
+//Timer reaches 0
+//│
+//▼
+//handleChildModeTimerExpired()
+//│
+//▼
+//isGameActive?
+///       \
+//YES        NO
+//│          │
+//▼          ▼
+//waitingForActiveGame   Show ReAuth
+//= true
+//│
+//▼
+//Game continues/ends
+//│
+//▼
+//handleActiveGameEndedAfterExpiry()
+//│
+//▼
+//Show ReAuth MPIN
+
+//CHILD MODE EXPIRES
+//       │
+//┌────────────┴────────────┐
+//│                         │
+//App is running             App relaunched
+//│                         │
+//▼                         ▼
+//handleChildModeTimerExpired()   checkForExpiredChildMode()
+//│                         │
+//▼                         ▼
+//Game active?              Game active?
+///     \                    /     \
+//YES      NO                YES      NO
+//│        │                 │        │
+//▼        ▼                 ▼        ▼
+//Wait     ReAuth             Wait     ReAuth
+//│                          │
+//▼                          │
+//Game finishes                     │
+//│                          │
+//└──────────┬───────────────┘
+//▼
+//handleActiveGameEndedAfterExpiry()
+//│
+//▼
+//ReAuth

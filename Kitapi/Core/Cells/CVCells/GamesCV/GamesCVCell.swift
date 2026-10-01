@@ -8,7 +8,6 @@
 import UIKit
 import Kingfisher
 
-
 class GamesCVCell: UICollectionViewCell {
 
     @IBOutlet weak var bgView: UIView!

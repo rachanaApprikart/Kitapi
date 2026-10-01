@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftMessages
 
 class ResetPasswordViewController: UIViewController {
     

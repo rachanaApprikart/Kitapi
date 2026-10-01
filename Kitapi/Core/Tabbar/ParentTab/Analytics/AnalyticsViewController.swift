@@ -38,6 +38,10 @@ class AnalyticsViewController: UIViewController {
         super.viewDidLoad()
         self.setAnalyticsScreenUI()
         self.bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.getAnalyticsInfo()
         self.updateUIForSelectedChild()
     }
@@ -391,7 +395,7 @@ extension AnalyticsViewController {
     private func showMPINPanel() {
         guard let contentVC = VCManager.openMPINVC() else { return }
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.52)
+        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.6)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     

@@ -7,7 +7,6 @@
 
 import UIKit
 import FloatingPanel
-import SwiftMessages
 
 class ChildProfileViewController: UIViewController {
     
@@ -39,7 +38,6 @@ class ChildProfileViewController: UIViewController {
     static var sbIdentifier: String {
         return String(describing: ChildProfileViewController.self)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,10 +129,14 @@ extension ChildProfileViewController: AvatarPickerDelegate, DatePickerDelegate {
     }
     
     func didSelectDOB(date: String) {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
         self.dobTextFieldView.customTextField.text = date
     }
     
     func didSelectProfileImage(imageData: Data, image: UIImage) {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
         self.addProfileImageView.image = UIImage(data: imageData)
         self.viewModel.profilePicture = image
     }
@@ -237,15 +239,15 @@ extension ChildProfileViewController {
         self.genderDropDown.selectionAction = { [weak self] index, item in
             self?.genderTextFieldView.customTextField.text = item
             self?.viewModel.childGender = item.lowercased()
-            
             self?.genderTextFieldView.hideErrorMessage()
+            self?.viewModel.profilePicture = index == 0 ? AppImages.boy_avatar_1 : AppImages.girl_avatar_1
         }
     }
     
     private func openDatePickerVC() {
         guard let contentVC = VCManager.openDatePickerVC() else { return }
         contentVC.delegate = self
-        self.presentFloatingPanel(with: contentVC, layout: FloatingPanelCustomLayout(state: .half, inset: 0.5)
+        self.presentFloatingPanel(with: contentVC, layout: FloatingPanelCustomLayout(state: .half, inset: 0.55)
         )
     }
 

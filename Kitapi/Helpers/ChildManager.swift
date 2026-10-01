@@ -16,10 +16,7 @@ final class ChildManager {
     
     var selectedChild: Child? {
         didSet {
-            NotificationCenter.default.post(
-                name: .childDidChange,
-                object: selectedChild
-            )
+            NotificationCenter.default.post(name: .childDidChange, object: selectedChild)
         }
     }
     
@@ -27,14 +24,9 @@ final class ChildManager {
         get {
             AppUserDefaults.isChildMode
         }
-
         set {
             AppUserDefaults.isChildMode = newValue
-
-            NotificationCenter.default.post(
-                name: .childModeDidChange,
-                object: newValue
-            )
+            NotificationCenter.default.post(name: .childModeDidChange, object: newValue)
         }
     }
     
@@ -46,7 +38,6 @@ final class ChildManager {
         guard let expiryDate = childModeExpiryDate else {
             return false
         }
-
         return Date() >= expiryDate
     }
     
@@ -75,5 +66,5 @@ extension Notification.Name {
     static let childModeTimerExpired = Notification.Name("childModeTimerExpired")
     static let activeGameEndedAfterChildModeExpiry = Notification.Name("activeGameEndedAfterChildModeExpiry")
     static let childModeAboutToExpire = Notification.Name("childModeAboutToExpire") // NEW
-
+    static let sessionExpired = Notification.Name("sessionExpired")
 }

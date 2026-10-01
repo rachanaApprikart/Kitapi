@@ -7,7 +7,7 @@
 
 import UIKit
 import FloatingPanel
-import SwiftMessages
+import AVFoundation
 
 class CreateChoreViewController: UIViewController {
     
@@ -23,6 +23,12 @@ class CreateChoreViewController: UIViewController {
     @IBOutlet weak var toTimeTextField: CustomTextField!
     @IBOutlet weak var oftenTitleLabel: UILabel!
     
+    @IBOutlet weak var descriptionTitleLabel: UILabel!
+    @IBOutlet weak var audioDescriptionView: UIView!
+    @IBOutlet weak var mainAudioView: UIView!
+    @IBOutlet weak var playButton: UIButton!
+    
+    @IBOutlet weak var audioWaveformImage: UIImageView!
     @IBOutlet weak var frequencySegmentedControl: UISegmentedControl!
     @IBOutlet weak var frequencyCV: UICollectionView!
     
@@ -36,6 +42,10 @@ class CreateChoreViewController: UIViewController {
     private var weekDays: [WeekDay] = []
     private var recurrenceType: RepeatType = .once 
     private var recurrenceDates: [Date] = []
+    
+    private var audioPlayer: AVAudioPlayer?
+    private var recordedAudioURL: URL?
+    private var isPlayingAudio: Bool = false
     
     private let viewModel = CreateChoreViewModel()
     
@@ -56,6 +66,10 @@ class CreateChoreViewController: UIViewController {
         self.toTime = self.fromTime.adding(minutes: 15)
         self.updateTimers()
         self.bindViewModel()
+    }
+    
+    @IBAction func playAudioAction(_ sender: UIButton) {
+        self.toggleAudioPlayback()
     }
     
     @IBAction func changeRecurranceAction(_ sender: UISegmentedControl) {
@@ -141,9 +155,7 @@ class CreateChoreViewController: UIViewController {
         self.fromTimeTextField.customTextField.text = self.fromTime.displayTextIn12HourFormat
         self.toTimeTextField.customTextField.text = self.toTime.displayTextIn12HourFormat
     }
-    
-   
-    
+        
     private func generateCurrentWeek() {
         
         self.weekDays.removeAll()
@@ -177,12 +189,61 @@ class CreateChoreViewController: UIViewController {
             )
         }
     }
+    
+    //MARK: AUDIO FUNCTIONS
+    
+    private func toggleAudioPlayback() {
+        self.isPlayingAudio ? self.stopAudioPlayback() : self.playRecordedAudio()
+    }
+    
+    private func playRecordedAudio() {
+
+        guard let url = self.recordedAudioURL else {
+            return
+        }
+
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try session.setActive(true)
+
+            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+            self.audioPlayer?.delegate = self
+            self.audioPlayer?.volume = 1.0
+            self.audioPlayer?.play()
+            self.isPlayingAudio = true
+            self.startWaveformAnimation()
+            self.refreshPlayButtonIcon()
+
+        } catch {
+            print("Failed to play voice note: \(error.localizedDescription)")
+        }
+    }
+    
+    private func stopAudioPlayback() {
+        self.audioPlayer?.stop()
+        self.audioPlayer = nil
+        self.isPlayingAudio = false
+        self.stopWaveformAnimation()
+        self.refreshPlayButtonIcon()
+    }
 }
     
 
 //MARK: -- PROTOCOLS AND DELEGATES ---
 
 extension CreateChoreViewController: RecordVoiceNoteDelegate, TimePickerDelegate, CalendarVCDelegate {
+    
+    func voiceNoteDidRecord(audioURL: URL) {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
+        self.recordedAudioURL = audioURL
+        self.choreDescpTextField.customTextField.text = nil  // ← clear any typed text
+        self.choreDescpTextField.isHidden = true
+        self.audioDescriptionView.isHidden = false
+        self.viewModel.audioDescriptionURL = audioURL
+        self.viewModel.choreDescription = ""
+    }
     
     func calendarVCDidDismiss() {
         self.floatingPanel?.dismiss(animated: true)
@@ -380,7 +441,7 @@ extension CreateChoreViewController: UICollectionViewDelegate, UICollectionViewD
         calendarVC.selectedDates = recurrenceDates
         calendarVC.delegate = self
 
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.75)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.8)
         self.presentFloatingPanel(with: calendarVC, layout: layout)
     }
 }
@@ -419,6 +480,19 @@ extension CreateChoreViewController {
         self.choreDescpTextField.placeHolderLabel.text = APPConstants.choreDescpTitle
         self.choreDescpTextField.customTextField.tag = 1
         self.choreDescpTextField.showRightMicView()
+        self.audioDescriptionView.isHidden = true
+        self.choreDescpTextField.isHidden = false
+
+        self.descriptionTitleLabel.text = APPConstants.choreDescpTitle
+        self.descriptionTitleLabel.textColor = .labelPlaceholderColor
+        self.descriptionTitleLabel.textAlignment = .left
+        self.descriptionTitleLabel.numberOfLines = 1
+        self.descriptionTitleLabel.font = UIFont(name: Fonts.urbanistRegular, size: 14)
+        
+        self.mainAudioView.layer.cornerRadius = 17
+        self.mainAudioView.layer.borderWidth = 0.5
+        self.mainAudioView.layer.borderColor = UIColor.borderColor.cgColor
+        self.playButton.layer.cornerRadius = 15
         
         self.fromTimeTextField.customTextField.delegate = self
         self.fromTimeTextField.customTextField.setPlaceholder(text: APPConstants.timePlaceholder)
@@ -491,7 +565,7 @@ extension CreateChoreViewController {
     
     @objc private func micTapped() {
         guard let contentVC = VCManager.openRecordVoiceNoteVC() else { return }
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.5)
+        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.55)
         contentVC.delegate = self
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
@@ -538,14 +612,54 @@ extension CreateChoreViewController {
         self.activityIndicator.startAnimating()
         self.view.bringSubviewToFront(self.activityView)
     }
-    
     private func hideActivityIndicator() {
         self.activityView.isHidden = true
         self.view.sendSubviewToBack(self.activityView)
         self.activityIndicator.stopAnimating()
     }
-    
+}
 
+
+//MARK: - AUDIO PLAYER DELEGATES
+
+extension CreateChoreViewController: AVAudioPlayerDelegate {
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.isPlayingAudio = false
+            self?.stopWaveformAnimation()
+            self?.refreshPlayButtonIcon()
+        }
+    }
+    
+    private func refreshPlayButtonIcon() {
+        let symbolName = isPlayingAudio ? "stop.fill" : "play.fill"
+        let config     = UIImage.SymbolConfiguration(pointSize: 13, weight: .semibold)
+        let image      = UIImage(systemName: symbolName, withConfiguration: config)?
+            .withRenderingMode(.alwaysTemplate)
+        self.playButton.setImage(image, for: .normal)
+        self.playButton.tintColor = .white
+    }
+    
+    private func startWaveformAnimation() {
+        let animation = CABasicAnimation(keyPath: "transform.scale.x")
+        animation.fromValue = 1.0
+        animation.toValue = 1.08
+        animation.duration = 0.4
+        animation.autoreverses = true
+        animation.repeatCount = .infinity
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        self.audioWaveformImage.layer.add(animation, forKey: "waveform")
+    }
+
+    private func stopWaveformAnimation() {
+        self.audioWaveformImage.layer.removeAnimation(forKey: "waveform")
+    }
+}
+
+//MARK: TEXTFIELD DELEGATES
+
+extension CreateChoreViewController: UITextFieldDelegate {
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
         
@@ -560,12 +674,13 @@ extension CreateChoreViewController {
               break
           }
     }
-    
     private func clearAllErrors() {
         self.choreTextField.hideErrorMessage()
         self.choreDescpTextField.hideError()
     }
 }
+
+//MARK: - FLOATING PANEL DELEGATES
 
 extension CreateChoreViewController: FloatingPanelControllerDelegate {
     
@@ -617,6 +732,4 @@ protocol ChoreUpdateDelegate: AnyObject {
     func choreUpdatedSuccessfully()
 }
 
-extension CreateChoreViewController: UITextFieldDelegate {
-    
-}
+

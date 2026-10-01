@@ -35,6 +35,9 @@ struct AppImages {
     
     static let mic = UIImage(named: "mic")!
     static let schedule = UIImage(named: "schedule")!
+    static let play = UIImage(named: "play_arrow")!
+
+    
     
     //29-06
     static let chore_template_icon_1 = UIImage(named: "chore_template_icon_1")!

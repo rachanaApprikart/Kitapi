@@ -8,7 +8,6 @@
 import UIKit
 import WebKit
 import FloatingPanel
-import SwiftMessages
 
 class PlayGameViewController: UIViewController {
     
@@ -40,8 +39,8 @@ class PlayGameViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // Safety check:
-        // If the timer expired before this controller
-        // became visible, handle it immediately.
+        // If the timer expired before this controller became visible, handle it immediately.
+        
         if ChildSessionManager.shared.isChildModeExpired {
             self.handleChildModeTimerExpired()
         } else if ChildSessionManager.shared.remainingSeconds <= 3 {
@@ -174,14 +173,21 @@ class PlayGameViewController: UIViewController {
     // a couple of seconds and popping early would look abrupt.
     private func finishTimerExpiredFlow() {
         ChildSessionManager.shared.setGameActive(false)
-        
-        if ChildSessionManager.shared.isChildModeExpired {
-            NotificationCenter.default.post(name: .activeGameEndedAfterChildModeExpiry, object: nil)
-            self.navigationController?.popViewController(animated: true)
+
+        guard ChildSessionManager.shared.isChildModeExpired else {
+            return
         }
-        // else: real expiry hasn't hit yet — handleChildModeTimerExpired()
-        // will run shortly and, seeing isGameActive == false now, will
-        // just post + pop cleanly without attempting end-game again.
+
+        self.navigationController?.popViewController(animated: true)
+
+        DispatchQueue.main.async { [weak self] in
+            guard self != nil else { return }
+
+            NotificationCenter.default.post(
+                name: .activeGameEndedAfterChildModeExpiry,
+                object: nil
+            )
+        }
     }
     
     deinit {
@@ -239,11 +245,11 @@ extension PlayGameViewController: FloatingPanelControllerDelegate {
     }
     
     // Tracks why endGame was triggered, so the shared success/error
-        // closures can react appropriately without duplicating API logic.
-        private enum EndGameReason {
-            case manualQuit
-            case timerExpired
-        }
+    // closures can react appropriately without duplicating API logic.
+    private enum EndGameReason {
+        case manualQuit
+        case timerExpired
+    }
 }
 
 

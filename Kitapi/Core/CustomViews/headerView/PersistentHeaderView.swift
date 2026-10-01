@@ -5,8 +5,8 @@
 //  Created by Suneel on 25/05/26.
 //
 
-import UIKit
 import Kingfisher
+import UIKit
 
 class PersistentHeaderView: UIView {
     

@@ -19,7 +19,7 @@ struct APIError: Codable {
 
 enum NetworkError: Error {
     case invalidURL
-    case authenticationFailed
+    case authenticationFailed(APIError)
     case requestFailed(Error)
     case invalidResponse
     case decodingFailed

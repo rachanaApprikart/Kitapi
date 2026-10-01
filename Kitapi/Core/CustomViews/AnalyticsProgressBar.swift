@@ -13,7 +13,8 @@ class AnalyticsProgressBar: UIView {
     private let progressView = UIView()
     
     private var progressWidthConstraint: NSLayoutConstraint!
-    
+    private var currentPercentage: CGFloat = 0
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupUI()
@@ -26,11 +27,12 @@ class AnalyticsProgressBar: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.progressView.layer.cornerRadius = bounds.height / 2
-
         self.layer.cornerRadius = bounds.height / 2
-        self.trackView.layer.cornerRadius = bounds.height / 2
 
+        self.progressView.layer.cornerRadius = bounds.height / 2
+        self.trackView.layer.cornerRadius = bounds.height / 2
+        self.progressWidthConstraint.constant =
+            bounds.width * (currentPercentage / 100)
     }
     
     private func setupUI() {
@@ -41,38 +43,24 @@ class AnalyticsProgressBar: UIView {
         self.trackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            self.trackView.leadingAnchor.constraint(
-                equalTo: leadingAnchor
-            ),
-            self.trackView.trailingAnchor.constraint(
-                equalTo: trailingAnchor
-            ),
-            self.trackView.topAnchor.constraint(
-                equalTo: topAnchor
-            ),
-            self.trackView.bottomAnchor.constraint(
-                equalTo: bottomAnchor
-            )
+            self.trackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            self.trackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            self.trackView.topAnchor.constraint(equalTo: topAnchor),
+            self.trackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
         // Completed portion
         self.trackView.addSubview(progressView)
         
         self.progressView.translatesAutoresizingMaskIntoConstraints = false
-        self.progressWidthConstraint = progressView.widthAnchor.constraint(
+        self.progressWidthConstraint = self.progressView.widthAnchor.constraint(
             equalToConstant: 0
         )
         
         NSLayoutConstraint.activate([
-            self.progressView.leadingAnchor.constraint(
-                equalTo: trackView.leadingAnchor
-            ),
-            self.progressView.topAnchor.constraint(
-                equalTo: trackView.topAnchor
-            ),
-            self.progressView.bottomAnchor.constraint(
-                equalTo: trackView.bottomAnchor
-            ),
+            self.progressView.leadingAnchor.constraint(equalTo: trackView.leadingAnchor),
+            self.progressView.topAnchor.constraint(equalTo: trackView.topAnchor),
+            self.progressView.bottomAnchor.constraint(equalTo: trackView.bottomAnchor),
             self.progressWidthConstraint
         ])
     }
@@ -83,10 +71,8 @@ class AnalyticsProgressBar: UIView {
         self.trackView.backgroundColor = status.trackColor
         self.progressView.backgroundColor = status.progressColor
         
-        let clampedPercentage = min(max(percentage, 0), 100)
-        
-        self.progressWidthConstraint.constant = self.bounds.width * CGFloat(clampedPercentage / 100)
-        layoutIfNeeded()
+        self.currentPercentage = CGFloat(min(max(percentage, 0), 100))
+        setNeedsLayout()
     }
     
     func configureMilestoneProgress(status: MilestoneAmount, percentage: Double) {
@@ -94,10 +80,8 @@ class AnalyticsProgressBar: UIView {
         self.trackView.backgroundColor = status.trackColor
         self.progressView.backgroundColor = status.progressColor
         
-        let clampedPercentage = min(max(percentage, 0), 100)
-        
-        self.progressWidthConstraint.constant = self.bounds.width * CGFloat(clampedPercentage / 100)
-        layoutIfNeeded()
+        self.currentPercentage = CGFloat(min(max(percentage, 0), 100))
+        setNeedsLayout()
     }
 }
 

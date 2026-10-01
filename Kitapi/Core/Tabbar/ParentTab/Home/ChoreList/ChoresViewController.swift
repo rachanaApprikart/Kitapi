@@ -38,6 +38,10 @@ class ChoresViewController: UIViewController {
         super.viewDidLoad()
         self.setChoresVCUI()        // 1. UI setup + registers .childDidChange observer
         self.bindViewModel()        // 2. wire up viewModel callbacks BEFORE any fetch can fire
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.updateUIForSelectedChild()       // 3. update labels immediately (name may already be available)
         self.fetchChoresForSelectedChild()
     }
@@ -101,7 +105,7 @@ class ChoresViewController: UIViewController {
     private func showCreatChoreVC() {
         guard let contentVC = VCManager.openCreateChoresVC() else { return }
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.9)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.95)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     
@@ -109,7 +113,7 @@ class ChoresViewController: UIViewController {
         guard let contentVC = VCManager.openChoreDetailsVC() else { return }
         contentVC.choreId = cID
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.8)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.85)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
    

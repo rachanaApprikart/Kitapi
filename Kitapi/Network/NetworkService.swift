@@ -12,7 +12,6 @@ import UIKit
 
 class APIClient {
     
-    
     static func callAPIWithRawData<T: Decodable> (url: String, method: HTTPMethod = .get, body: Data? = nil, headers: [String: String] = [:], tokenScope: TokenScope = .parent)  async -> (APIResponse<T>) {
         
         guard let url = URL(string: url) else {
@@ -30,25 +29,25 @@ class APIClient {
             print("Request Body:", String(data: body, encoding: .utf8) ?? "")
         }
         
-//        if let tokenVal = AppUserDefaults.authorizationToken {
-//            request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-//            LogFile.debugMessage(debug: "token", value: tokenVal)
-//        }
+        if let tokenVal = AppUserDefaults.authorizationToken {
+            request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+            LogFile.debugMessage(debug: "token", value: tokenVal)
+        }
         
-        switch tokenScope {
-            case .parent:
-                if let tokenVal = AppUserDefaults.authorizationToken {
-                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-                    LogFile.debugMessage(debug: " parent token", value: tokenVal)
-                }
-            case .child:
-                if let tokenVal = ChildSessionManager.shared.currentChildModeToken {
-                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-                    LogFile.debugMessage(debug: "child token", value: tokenVal)
-                }
-            case .none:
-                break
-            }
+        //        switch tokenScope {
+        //            case .parent:
+        //                if let tokenVal = AppUserDefaults.authorizationToken {
+        //                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+        //                    LogFile.debugMessage(debug: " parent token", value: tokenVal)
+        //                }
+        //            case .child:
+        //                if let tokenVal = ChildSessionManager.shared.currentChildModeToken {
+        //                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+        //                    LogFile.debugMessage(debug: "child token", value: tokenVal)
+        //                }
+        //            case .none:
+        //                break
+        //            }
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
@@ -70,7 +69,12 @@ class APIClient {
                     return APIResponse(data: nil, error: .decodingFailed, statusCode: statusCode)
                 }
             } else if (statusCode == 401) || (statusCode == 403) {
-                return APIResponse(data: nil, error: .authenticationFailed, statusCode: statusCode)
+                let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
+                if AppUserDefaults.authorizationToken != nil {
+                    SessionManager.shared.handleAuthenticationFailure()
+                }
+                return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
+                
             } else {
                 // Try to decode the error response
                 do {
@@ -148,7 +152,19 @@ class APIClient {
                 }
             }
             else if (statusCode == 401) || (statusCode == 403) {
-                return APIResponse(data: nil, error: .authenticationFailed, statusCode: statusCode)
+                let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
+                /*
+                 Only trigger the global session-expired flow
+                 if the Parent token still exists.
+                 
+                 This prevents an old/in-flight request from
+                 showing another alert after the user has already
+                 been logged out.
+                 */
+                if AppUserDefaults.authorizationToken != nil {
+                    SessionManager.shared.handleAuthenticationFailure()
+                }
+                return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
             } else {
                 // Try to decode error response
                 do {
@@ -179,6 +195,15 @@ class APIClient {
                 body.append("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(key).jpg\"\r\n")
                 body.append("Content-Type: image/jpeg\r\n\r\n")
                 body.append(imageData)
+                body.append("\r\n")
+            }
+            else if let fileURL = value as? URL, let fileData = try? Data(contentsOf: fileURL) {
+                let filename = fileURL.lastPathComponent
+                let mimeType = fileURL.pathExtension == "m4a" ? "audio/m4a" : "audio/mpeg"
+                body.append("--\(boundary)\r\n")
+                body.append("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(filename)\"\r\n")
+                body.append("Content-Type: \(mimeType)\r\n\r\n")
+                body.append(fileData)
                 body.append("\r\n")
             }
             // ✅ NEW: Handle arrays — one part per element, same field name
@@ -227,13 +252,9 @@ enum HTTPMethod: String {
     case patch = "PATCH"
 }
 
-enum ContentType {
-    case json
-    case formData
-}
-
 enum TokenScope {
     case parent
     case child
     case none
 }
+

@@ -30,8 +30,15 @@ class PlayGameViewModel {
                       switch apiError {
                       case .apiError(let errorResponse):
                           errorMessage = errorResponse.message ?? "Unable to retrieve"
+                          
                       case .requestFailed(let error):
                           errorMessage = error.localizedDescription
+                          
+                      case .authenticationFailed(_):
+                          DispatchQueue.main.async { [weak self] in
+                              self?.onLoadingChanged?(false)
+                          }
+                          return
                       default:
                           errorMessage = "Something went wrong"
                       }

@@ -94,7 +94,7 @@ class GameViewController: UIViewController {
         guard let vc = VCManager.openPlayGameVC() else {
             return
         }
-        vc.hidesBottomBarWhenPushed = false
+        vc.hidesBottomBarWhenPushed = true
         vc.gameRequest = gameRequest
         vc.gameURL = self.gameURL
         self.navigationController?.pushViewController(vc, animated: true)
@@ -212,7 +212,7 @@ extension GameViewController {
         guard let contentVC = VCManager.openMPINVC() else { return }
         contentVC.disableDelegate = self
         contentVC.mode = .disable
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.52)
+        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.6)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     
