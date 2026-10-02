@@ -13,12 +13,12 @@ extension String {
         do {
             let regex = try NSRegularExpression(pattern: ".*[0-9].*", options: [])
             if regex.firstMatch(in: self, options: [], range: NSMakeRange(0, self.count)) != nil {
-                return false
+                return true
             }
         } catch {
             // print("ERROR")
         }
-        return true
+        return false
     }
         
     func allowOnlyCharcters() -> Bool {
@@ -117,6 +117,10 @@ extension String {
         
         return (countyCode: countryCodeVal, phoneNumber: phoneNumberVal)
     }
+    
+//    func allowOnlyDigits() -> Bool {
+//        return self.allSatisfy { $0.isNumber }
+//    }
     
 }
 

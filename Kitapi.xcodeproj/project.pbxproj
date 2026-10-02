@@ -164,6 +164,8 @@
 		187B3E6D2F99F984000E5174 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187B3E6C2F99F984000E5174 /* Password.swift */; };
 		187B3E6F2F9A134A000E5174 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187B3E6E2F9A134A000E5174 /* LoginService.swift */; };
 		187B3E722F9A1550000E5174 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187B3E712F9A1550000E5174 /* LoginViewModel.swift */; };
+		187DE062306EA480006818B4 /* UpdateMPINViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187DE061306EA480006818B4 /* UpdateMPINViewController.swift */; };
+		187DE064306EA4B3006818B4 /* UpdateMPINViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187DE063306EA4B3006818B4 /* UpdateMPINViewModel.swift */; };
 		188A4D763002AB0D001218AA /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188A4D753002AB0D001218AA /* CalenderViewController.swift */; };
 		18973FF82FEB9F0200C16F08 /* ChoreTemplateCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18973FF62FEB9F0200C16F08 /* ChoreTemplateCVCell.swift */; };
 		18973FF92FEB9F0200C16F08 /* ChoreTemplateCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18973FF72FEB9F0200C16F08 /* ChoreTemplateCVCell.xib */; };
@@ -349,6 +351,8 @@
 		187B3E6C2F99F984000E5174 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
 		187B3E6E2F9A134A000E5174 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		187B3E712F9A1550000E5174 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		187DE061306EA480006818B4 /* UpdateMPINViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMPINViewController.swift; sourceTree = "<group>"; };
+		187DE063306EA4B3006818B4 /* UpdateMPINViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMPINViewModel.swift; sourceTree = "<group>"; };
 		188A4D753002AB0D001218AA /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
 		18973FF62FEB9F0200C16F08 /* ChoreTemplateCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreTemplateCVCell.swift; sourceTree = "<group>"; };
 		18973FF72FEB9F0200C16F08 /* ChoreTemplateCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoreTemplateCVCell.xib; sourceTree = "<group>"; };
@@ -477,6 +481,7 @@
 		183E20B62FD9A8E900B7B363 /* Parent */ = {
 			isa = PBXGroup;
 			children = (
+				187DE060306EA43C006818B4 /* ChangeMPIN */,
 				1865DDDF303C917100FCFE9B /* Goal */,
 				18390DBE3020C54900EA12EE /* ChildMode */,
 				18390DBD3020C53400EA12EE /* Chore */,
@@ -962,6 +967,15 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		187DE060306EA43C006818B4 /* ChangeMPIN */ = {
+			isa = PBXGroup;
+			children = (
+				187DE061306EA480006818B4 /* UpdateMPINViewController.swift */,
+				187DE063306EA4B3006818B4 /* UpdateMPINViewModel.swift */,
+			);
+			path = ChangeMPIN;
+			sourceTree = "<group>";
+		};
 		18973FF52FEB9EC100C16F08 /* Template */ = {
 			isa = PBXGroup;
 			children = (
@@ -1337,6 +1351,7 @@
 				1857E1122FB71FA200E63CD0 /* AvatarPickerViewController.swift in Sources */,
 				1831098A2F7B9C1500D5A4E5 /* KitapiFonts.swift in Sources */,
 				1842D888304AA90A003612F3 /* OverviewViewController.swift in Sources */,
+				187DE062306EA480006818B4 /* UpdateMPINViewController.swift in Sources */,
 				1874F13A3047F97C00211414 /* ChoreDetails.swift in Sources */,
 				183E20B82FD9B0E900B7B363 /* RecordVoiceNoteViewController.swift in Sources */,
 				185057CF2FB8798F00657490 /* PhotoPickerCVCell.swift in Sources */,
@@ -1381,6 +1396,7 @@
 				1845848C2FC8241700F05E49 /* Image extension.swift in Sources */,
 				185F40C72FBF17250073669D /* GoalsViewController.swift in Sources */,
 				1831B6402F83925400C89E68 /* OTPInputView.swift in Sources */,
+				187DE064306EA4B3006818B4 /* UpdateMPINViewModel.swift in Sources */,
 				185B09882FE2855300126A09 /* ChoreTime.swift in Sources */,
 				18468222304D68EA009EF05B /* ReAuthViewController.swift in Sources */,
 				184DBCB82FE132CC00E61AD0 /* TimePickerViewController.swift in Sources */,

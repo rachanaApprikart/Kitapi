@@ -3568,56 +3568,6 @@
                                     <constraint firstItem="V6A-sk-zN8" firstAttribute="centerY" secondItem="6aO-VB-Kf6" secondAttribute="centerY" id="Rsr-15-2MK"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="V0j-KB-cew">
-                                <rect key="frame" x="0.0" y="129" width="393" height="150"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yu9-i5-FTP">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="67.666666666666671"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kht-gB-Sh5">
-                                                <rect key="frame" x="10" y="0.0" width="373" height="67.666666666666671"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="Profile"/>
-                                                <connections>
-                                                    <action selector="createChildProfileAction:" destination="vih-P6-yNE" eventType="touchUpInside" id="bsw-Ay-kyF"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="kht-gB-Sh5" secondAttribute="bottom" id="22N-SF-AB8"/>
-                                            <constraint firstAttribute="trailing" secondItem="kht-gB-Sh5" secondAttribute="trailing" constant="10" id="B3K-gx-fKf"/>
-                                            <constraint firstItem="kht-gB-Sh5" firstAttribute="top" secondItem="Yu9-i5-FTP" secondAttribute="top" id="BSa-88-1Hn"/>
-                                            <constraint firstItem="kht-gB-Sh5" firstAttribute="leading" secondItem="Yu9-i5-FTP" secondAttribute="leading" constant="10" id="RLi-1s-6T8"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7HR-H8-EOc">
-                                        <rect key="frame" x="0.0" y="82.666666666666657" width="393" height="67.333333333333343"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5m-0q-Xa5">
-                                                <rect key="frame" x="10" y="0.0" width="373" height="67.333333333333329"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="Profile"/>
-                                                <connections>
-                                                    <action selector="logoutAction:" destination="vih-P6-yNE" eventType="touchUpInside" id="ffj-cL-Uq1"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="Q5m-0q-Xa5" secondAttribute="bottom" id="4gK-u9-k80"/>
-                                            <constraint firstAttribute="trailing" secondItem="Q5m-0q-Xa5" secondAttribute="trailing" constant="10" id="Ij2-xx-Cx7"/>
-                                            <constraint firstItem="Q5m-0q-Xa5" firstAttribute="leading" secondItem="7HR-H8-EOc" secondAttribute="leading" constant="10" id="RBX-gK-rwO"/>
-                                            <constraint firstItem="Q5m-0q-Xa5" firstAttribute="top" secondItem="7HR-H8-EOc" secondAttribute="top" id="dxD-D7-PuY"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="eZT-I6-C16"/>
-                                </constraints>
-                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6Z-u1-s5g">
                                 <rect key="frame" x="20.000000000000004" y="79" width="41.333333333333343" height="30"/>
                                 <constraints>
@@ -3627,6 +3577,164 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="V0j-KB-cew">
+                                <rect key="frame" x="0.0" y="129" width="393" height="390"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbE-Ns-PgA">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="66"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2Q-PL-Dxg">
+                                                <rect key="frame" x="10" y="0.0" width="373" height="66"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="titleEdgeInsets" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="15" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="Profile"/>
+                                                <connections>
+                                                    <action selector="editParentProfileAction:" destination="vih-P6-yNE" eventType="touchUpInside" id="7zX-bH-sOs"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_drop_down" translatesAutoresizingMaskIntoConstraints="NO" id="jq5-fa-cDD">
+                                                <rect key="frame" x="348" y="20.666666666666657" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="25" id="N32-bC-YIS"/>
+                                                    <constraint firstAttribute="height" constant="25" id="y26-iC-Klj"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="C2Q-PL-Dxg" secondAttribute="trailing" constant="10" id="E04-u3-my5"/>
+                                            <constraint firstAttribute="trailing" secondItem="jq5-fa-cDD" secondAttribute="trailing" constant="20" id="dA5-fA-C4z"/>
+                                            <constraint firstItem="jq5-fa-cDD" firstAttribute="centerY" secondItem="vbE-Ns-PgA" secondAttribute="centerY" id="f0j-d4-Zgn"/>
+                                            <constraint firstItem="C2Q-PL-Dxg" firstAttribute="top" secondItem="vbE-Ns-PgA" secondAttribute="top" id="lvj-7F-Alj"/>
+                                            <constraint firstItem="C2Q-PL-Dxg" firstAttribute="leading" secondItem="vbE-Ns-PgA" secondAttribute="leading" constant="10" id="m0r-dT-BfU"/>
+                                            <constraint firstAttribute="bottom" secondItem="C2Q-PL-Dxg" secondAttribute="bottom" id="zh3-i6-2r1"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yu9-i5-FTP">
+                                        <rect key="frame" x="0.0" y="81" width="393" height="66"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kht-gB-Sh5">
+                                                <rect key="frame" x="10" y="0.0" width="373" height="66"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="titleEdgeInsets" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="15" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="Profile"/>
+                                                <connections>
+                                                    <action selector="createChildProfileAction:" destination="vih-P6-yNE" eventType="touchUpInside" id="bsw-Ay-kyF"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_drop_down" translatesAutoresizingMaskIntoConstraints="NO" id="DMy-HG-LDY">
+                                                <rect key="frame" x="348" y="20.666666666666657" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="25" id="cLR-Da-oQv"/>
+                                                    <constraint firstAttribute="height" constant="25" id="gt8-XQ-8g3"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="kht-gB-Sh5" secondAttribute="bottom" id="22N-SF-AB8"/>
+                                            <constraint firstAttribute="trailing" secondItem="kht-gB-Sh5" secondAttribute="trailing" constant="10" id="B3K-gx-fKf"/>
+                                            <constraint firstItem="kht-gB-Sh5" firstAttribute="top" secondItem="Yu9-i5-FTP" secondAttribute="top" id="BSa-88-1Hn"/>
+                                            <constraint firstAttribute="trailing" secondItem="DMy-HG-LDY" secondAttribute="trailing" constant="20" id="Frv-tM-tWy"/>
+                                            <constraint firstItem="DMy-HG-LDY" firstAttribute="centerY" secondItem="Yu9-i5-FTP" secondAttribute="centerY" id="INb-Ab-GMA"/>
+                                            <constraint firstItem="kht-gB-Sh5" firstAttribute="leading" secondItem="Yu9-i5-FTP" secondAttribute="leading" constant="10" id="RLi-1s-6T8"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EXV-eN-r3C">
+                                        <rect key="frame" x="0.0" y="162" width="393" height="66"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tT-2d-lIX">
+                                                <rect key="frame" x="10" y="0.0" width="373" height="66"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="titleEdgeInsets" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="15" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="Profile"/>
+                                                <connections>
+                                                    <action selector="viewAllChildrenAction:" destination="vih-P6-yNE" eventType="touchUpInside" id="JfP-RY-LN8"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_drop_down" translatesAutoresizingMaskIntoConstraints="NO" id="uTG-Ki-fhv">
+                                                <rect key="frame" x="348" y="20.666666666666686" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="25" id="Pir-S0-6PA"/>
+                                                    <constraint firstAttribute="height" constant="25" id="yxb-Wa-OeJ"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="1tT-2d-lIX" firstAttribute="top" secondItem="EXV-eN-r3C" secondAttribute="top" id="1eq-7f-qZQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="1tT-2d-lIX" secondAttribute="bottom" id="6UF-FV-rZv"/>
+                                            <constraint firstAttribute="trailing" secondItem="1tT-2d-lIX" secondAttribute="trailing" constant="10" id="7Xf-sX-fLA"/>
+                                            <constraint firstItem="1tT-2d-lIX" firstAttribute="leading" secondItem="EXV-eN-r3C" secondAttribute="leading" constant="10" id="Abd-Kp-lqt"/>
+                                            <constraint firstItem="uTG-Ki-fhv" firstAttribute="centerY" secondItem="EXV-eN-r3C" secondAttribute="centerY" id="LWI-e0-aDN"/>
+                                            <constraint firstAttribute="trailing" secondItem="uTG-Ki-fhv" secondAttribute="trailing" constant="20" id="eNL-A2-pzd"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fwS-hV-UjN">
+                                        <rect key="frame" x="0.0" y="243" width="393" height="66"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xo-So-c6C">
+                                                <rect key="frame" x="10" y="0.0" width="373" height="66"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="titleEdgeInsets" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="15" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="Profile"/>
+                                                <connections>
+                                                    <action selector="changeMPINAction:" destination="vih-P6-yNE" eventType="touchUpInside" id="uch-AQ-emK"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_drop_down" translatesAutoresizingMaskIntoConstraints="NO" id="cSV-EW-P7a">
+                                                <rect key="frame" x="348" y="20.666666666666686" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="25" id="3yU-sg-ugz"/>
+                                                    <constraint firstAttribute="height" constant="25" id="App-Uw-rQx"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="4xo-So-c6C" secondAttribute="trailing" constant="10" id="23o-pT-BiN"/>
+                                            <constraint firstItem="4xo-So-c6C" firstAttribute="leading" secondItem="fwS-hV-UjN" secondAttribute="leading" constant="10" id="3xR-tH-euA"/>
+                                            <constraint firstItem="4xo-So-c6C" firstAttribute="top" secondItem="fwS-hV-UjN" secondAttribute="top" id="97q-L0-N9K"/>
+                                            <constraint firstAttribute="bottom" secondItem="4xo-So-c6C" secondAttribute="bottom" id="LWD-6K-KYA"/>
+                                            <constraint firstItem="cSV-EW-P7a" firstAttribute="centerY" secondItem="fwS-hV-UjN" secondAttribute="centerY" id="pBJ-ry-lfi"/>
+                                            <constraint firstAttribute="trailing" secondItem="cSV-EW-P7a" secondAttribute="trailing" constant="20" id="tHm-Fu-UDX"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7HR-H8-EOc">
+                                        <rect key="frame" x="0.0" y="324" width="393" height="66"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5m-0q-Xa5">
+                                                <rect key="frame" x="10" y="0.0" width="373" height="66"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="titleEdgeInsets" minX="25" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="15" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="Profile"/>
+                                                <connections>
+                                                    <action selector="logoutAction:" destination="vih-P6-yNE" eventType="touchUpInside" id="ffj-cL-Uq1"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_drop_down" translatesAutoresizingMaskIntoConstraints="NO" id="4lW-CU-bZd">
+                                                <rect key="frame" x="348" y="20.666666666666686" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="o0t-tU-9Eo"/>
+                                                    <constraint firstAttribute="width" constant="25" id="u9E-G1-Yye"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Q5m-0q-Xa5" secondAttribute="bottom" id="4gK-u9-k80"/>
+                                            <constraint firstAttribute="trailing" secondItem="Q5m-0q-Xa5" secondAttribute="trailing" constant="10" id="Ij2-xx-Cx7"/>
+                                            <constraint firstItem="Q5m-0q-Xa5" firstAttribute="leading" secondItem="7HR-H8-EOc" secondAttribute="leading" constant="10" id="RBX-gK-rwO"/>
+                                            <constraint firstItem="Q5m-0q-Xa5" firstAttribute="top" secondItem="7HR-H8-EOc" secondAttribute="top" id="dxD-D7-PuY"/>
+                                            <constraint firstAttribute="trailing" secondItem="4lW-CU-bZd" secondAttribute="trailing" constant="20" id="hwW-qD-amN"/>
+                                            <constraint firstItem="4lW-CU-bZd" firstAttribute="centerY" secondItem="7HR-H8-EOc" secondAttribute="centerY" id="zJ8-ev-QAx"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="390" id="eZT-I6-C16"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Vwg-h9-0dd"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -3651,9 +3759,12 @@
                         <outlet property="activityIndicatorView" destination="twB-Mu-1SH" id="bl4-ez-HD7"/>
                         <outlet property="activityView" destination="6aO-VB-Kf6" id="tZL-wS-1bJ"/>
                         <outlet property="appBGView" destination="mec-42-O6w" id="I7S-Ji-Xe3"/>
+                        <outlet property="changeMPINButton" destination="4xo-So-c6C" id="Ak5-SE-bIW"/>
                         <outlet property="createChildProfileButton" destination="kht-gB-Sh5" id="cMt-w4-5RD"/>
+                        <outlet property="editParentProfile" destination="C2Q-PL-Dxg" id="MIr-iL-b0Q"/>
                         <outlet property="headerLabel" destination="T6Z-u1-s5g" id="2vk-Zp-g18"/>
                         <outlet property="logoutButton" destination="Q5m-0q-Xa5" id="d4g-XN-HUt"/>
+                        <outlet property="viewAllChildren" destination="1tT-2d-lIX" id="kgR-Fa-DLa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Wa-Wz-2bv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3670,6 +3781,7 @@
         <image name="Home" width="24" height="24"/>
         <image name="Profile" width="23.666666030883789" height="23.666666030883789"/>
         <image name="analytics_selected" width="24" height="24"/>
+        <image name="arrow_drop_down" width="14" height="20"/>
         <image name="check" width="20" height="20"/>
         <image name="close" width="20" height="20"/>
         <image name="coins" width="20" height="20"/>

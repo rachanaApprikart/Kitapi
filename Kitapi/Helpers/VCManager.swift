@@ -35,6 +35,10 @@ struct VCManager {
         return storyBoard.instantiateViewController(identifier: ImagePickerViewController.sbIdentifier) as? ImagePickerViewController
     }
     
+    static func openUpdateMPINVC() -> UpdateMPINViewController? {
+        return storyBoard.instantiateViewController(identifier: UpdateMPINViewController.sbIdentifier) as? UpdateMPINViewController
+    }
+    
     static func openVerifyOTPVC() -> VerifyOTPViewController? {
         return storyBoard.instantiateViewController(identifier: VerifyOTPViewController.sbIdentifier) as? VerifyOTPViewController
     }

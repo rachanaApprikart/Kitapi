@@ -6,6 +6,7 @@
 // 08-06, 28-09
 
 import UIKit
+import FloatingPanel
 
 class ProfileViewController: UIViewController {
 
@@ -15,20 +16,34 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     @IBOutlet weak var headerLabel: UILabel!
+    
+    @IBOutlet weak var editParentProfile: UIButton!
+    @IBOutlet weak var changeMPINButton: UIButton!
+    @IBOutlet weak var viewAllChildren: UIButton!
     @IBOutlet weak var createChildProfileButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
     
     private let profileViewModel = ProfileViewModel()
+    private var floatingPanel: FloatingPanelController?
 
-  
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setProfileScreenUI()
         self.bindViewModel()
     }
     
+    @IBAction func editParentProfileAction(_ sender: UIButton) {
+    }
+    
     @IBAction func createChildProfileAction(_ sender: UIButton) {
         self.openCreateChildProfileVC()
+    }
+    
+    @IBAction func changeMPINAction(_ sender: UIButton) {
+        self.showChangeMPINVC()
+    }
+    
+    @IBAction func viewAllChildrenAction(_ sender: UIButton) {
     }
     
     @IBAction func logoutAction(_ sender: UIButton) {
@@ -81,6 +96,13 @@ class ProfileViewController: UIViewController {
     }
 }
 
+extension ProfileViewController: UpdateMPINDelegate {
+    func mpinChangedSuccessfully() {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
+    }
+}
+
 //MARK: ---------- ui ---------
 
 extension ProfileViewController {
@@ -101,6 +123,27 @@ extension ProfileViewController {
         self.logoutButton.layer.borderColor = UIColor.borderColor.cgColor
         self.logoutButton.layer.borderWidth = 1
         
+        self.editParentProfile.setTitle("Edit Parent Profile", for: .normal)
+        self.editParentProfile.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 18)
+        self.editParentProfile.setTitleColor(.headerLabekColor, for: .normal)
+        self.editParentProfile.layer.cornerRadius = 15
+        self.editParentProfile.layer.borderColor = UIColor.borderColor.cgColor
+        self.editParentProfile.layer.borderWidth = 1
+        
+        self.changeMPINButton.setTitle("Change MPIN", for: .normal)
+        self.changeMPINButton.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 18)
+        self.changeMPINButton.setTitleColor(.headerLabekColor, for: .normal)
+        self.changeMPINButton.layer.cornerRadius = 15
+        self.changeMPINButton.layer.borderColor = UIColor.borderColor.cgColor
+        self.changeMPINButton.layer.borderWidth = 1
+        
+        self.viewAllChildren.setTitle("View Child Profiles", for: .normal)
+        self.viewAllChildren.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 18)
+        self.viewAllChildren.setTitleColor(.headerLabekColor, for: .normal)
+        self.viewAllChildren.layer.cornerRadius = 15
+        self.viewAllChildren.layer.borderColor = UIColor.borderColor.cgColor
+        self.viewAllChildren.layer.borderWidth = 1
+        
         self.createChildProfileButton.setTitle(APPConstants.createChidAcc, for: .normal)
         self.createChildProfileButton.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 18)
         self.createChildProfileButton.setTitleColor(.headerLabekColor, for: .normal)
@@ -108,6 +151,30 @@ extension ProfileViewController {
         self.createChildProfileButton.layer.borderColor = UIColor.borderColor.cgColor
         self.createChildProfileButton.layer.borderWidth = 1
         
+    }
+    
+    private func showChangeMPINVC() {
+        guard let contentVC = VCManager.openUpdateMPINVC() else { return }
+        contentVC.delegate = self
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.55)
+        self.presentFloatingPanel(with: contentVC, layout: layout)
+    }
+    
+    private func presentFloatingPanel(with contentVC: UIViewController, layout: FloatingPanelLayout) {
+        guard floatingPanel == nil else { return }
+        
+        let fpc = FloatingPanelController()
+        fpc.delegate = self
+        fpc.set(contentViewController: contentVC)
+        
+        fpc.surfaceView.appearance.cornerRadius = 25
+        fpc.surfaceView.grabberHandle.isHidden = false
+        fpc.layout = layout
+        fpc.isRemovalInteractionEnabled = true
+        fpc.backdropView.dismissalTapGestureRecognizer.isEnabled = true
+    
+        self.floatingPanel = fpc
+        self.present(fpc, animated: true)
     }
     
     private func showActivityIndicator() {
@@ -123,3 +190,12 @@ extension ProfileViewController {
     }
 }
 
+extension ProfileViewController: FloatingPanelControllerDelegate, UITextFieldDelegate {
+    
+    func floatingPanelDidRemove(_ fpc: FloatingPanelController) {
+        self.floatingPanel = nil
+    }
+    func floatingPanelDidDismiss(_ fpc: FloatingPanelController) {
+        self.floatingPanel = nil
+    }
+}

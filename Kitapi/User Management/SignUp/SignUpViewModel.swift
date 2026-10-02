@@ -156,6 +156,8 @@ enum ValidationField {
     case choreTitle
     case choreDescription
     case giftName
+    case currentMPIN
+    case newMPIN
 }
 
 struct ValidationError: Error {
