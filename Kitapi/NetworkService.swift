@@ -126,6 +126,7 @@ class APIClient {
         
         if let tokenVal = AppUserDefaults.authorizationToken {
             request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
+            LogFile.debugMessage(debug: "token", value: tokenVal)
         }
         
         LogFile.debugMessage(debug: "Request Body:", value: String(data: request.httpBody ?? Data(), encoding: .utf8) ?? "")

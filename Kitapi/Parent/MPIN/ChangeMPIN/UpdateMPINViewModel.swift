@@ -73,6 +73,9 @@ class UpdateMPINViewModel {
                     case .authenticationFailed(let errorResponse):
                         errorMessage = errorResponse.message ?? "Change MPIN failed"
                         
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
                     default:
                         errorMessage = "Something went wrong"
                     }

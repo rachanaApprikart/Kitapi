@@ -33,6 +33,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func editParentProfileAction(_ sender: UIButton) {
+        self.openEditParentProfileVC()
     }
     
     @IBAction func createChildProfileAction(_ sender: UIButton) {
@@ -82,6 +83,12 @@ class ProfileViewController: UIViewController {
         guard let vc = VCManager.openCreateChildProfileVC() else { return }
         vc.hidesBottomBarWhenPushed = true
         vc.IS_COMING_FROM_PROFILE_SCREEN = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func openEditParentProfileVC() {
+        guard let vc = VCManager.openEditParentDetailsVC() else { return }
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

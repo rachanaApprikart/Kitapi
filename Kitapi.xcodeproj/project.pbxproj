@@ -20,6 +20,8 @@
 		1826AB8E306ACC0000E3153D /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826AB8D306ACC0000E3153D /* SessionManager.swift */; };
 		182EB9952F8638440093A900 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182EB9942F8638440093A900 /* ResetPasswordViewController.swift */; };
 		182EB9972F8638660093A900 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182EB9962F8638660093A900 /* NewPasswordViewController.swift */; };
+		1830DC3930714B34003F9FF4 /* EditParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830DC3830714B34003F9FF4 /* EditParentViewController.swift */; };
+		1830DC3B30714B4D003F9FF4 /* EditParentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830DC3A30714B4D003F9FF4 /* EditParentViewModel.swift */; };
 		1831098A2F7B9C1500D5A4E5 /* KitapiFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183109892F7B9C1500D5A4E5 /* KitapiFonts.swift */; };
 		1831098C2F7B9EA100D5A4E5 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1831098B2F7B9EA100D5A4E5 /* AppConstants.swift */; };
 		18319A822F7D5B870062A5FA /* Tapgesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18319A812F7D5B870062A5FA /* Tapgesture.swift */; };
@@ -209,6 +211,8 @@
 		1826AB8D306ACC0000E3153D /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		182EB9942F8638440093A900 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		182EB9962F8638660093A900 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
+		1830DC3830714B34003F9FF4 /* EditParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditParentViewController.swift; sourceTree = "<group>"; };
+		1830DC3A30714B4D003F9FF4 /* EditParentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditParentViewModel.swift; sourceTree = "<group>"; };
 		183109892F7B9C1500D5A4E5 /* KitapiFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitapiFonts.swift; sourceTree = "<group>"; };
 		1831098B2F7B9EA100D5A4E5 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		18319A812F7D5B870062A5FA /* Tapgesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tapgesture.swift; sourceTree = "<group>"; };
@@ -420,6 +424,44 @@
 			path = Goal;
 			sourceTree = "<group>";
 		};
+		1830DC3330713B00003F9FF4 /* MPIN */ = {
+			isa = PBXGroup;
+			children = (
+				1848FEE3302311AB00E9082D /* SetTimerViewController.swift */,
+				18390DBF3020C58000EA12EE /* MPINViewController.swift */,
+				1848FEE530231AAE00E9082D /* MPINViewModel.swift */,
+				187DE060306EA43C006818B4 /* ChangeMPIN */,
+			);
+			path = MPIN;
+			sourceTree = "<group>";
+		};
+		1830DC3530713BBA003F9FF4 /* CreateProfile */ = {
+			isa = PBXGroup;
+			children = (
+				186283D12FAB27D100BB07DF /* ChildProfileViewController.swift */,
+				186283D32FAB280800BB07DF /* ChildProfileViewModel.swift */,
+				18433BCA2FB4C08800F475A0 /* DatePickerViewController.swift */,
+				1857E1112FB71FA200E63CD0 /* AvatarPickerViewController.swift */,
+			);
+			path = CreateProfile;
+			sourceTree = "<group>";
+		};
+		1830DC3630713BD4003F9FF4 /* UpdateProfile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UpdateProfile;
+			sourceTree = "<group>";
+		};
+		1830DC3730713CB0003F9FF4 /* UpdateParent */ = {
+			isa = PBXGroup;
+			children = (
+				1830DC3830714B34003F9FF4 /* EditParentViewController.swift */,
+				1830DC3A30714B4D003F9FF4 /* EditParentViewModel.swift */,
+			);
+			path = UpdateParent;
+			sourceTree = "<group>";
+		};
 		1831B63E2F83920C00C89E68 /* OTPInputView */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,16 +493,6 @@
 			path = Chore;
 			sourceTree = "<group>";
 		};
-		18390DBE3020C54900EA12EE /* ChildMode */ = {
-			isa = PBXGroup;
-			children = (
-				18390DBF3020C58000EA12EE /* MPINViewController.swift */,
-				1848FEE530231AAE00E9082D /* MPINViewModel.swift */,
-				1848FEE3302311AB00E9082D /* SetTimerViewController.swift */,
-			);
-			path = ChildMode;
-			sourceTree = "<group>";
-		};
 		18390F553025E0140028A7AC /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -481,9 +513,9 @@
 		183E20B62FD9A8E900B7B363 /* Parent */ = {
 			isa = PBXGroup;
 			children = (
-				187DE060306EA43C006818B4 /* ChangeMPIN */,
+				1830DC3730713CB0003F9FF4 /* UpdateParent */,
+				1830DC3330713B00003F9FF4 /* MPIN */,
 				1865DDDF303C917100FCFE9B /* Goal */,
-				18390DBE3020C54900EA12EE /* ChildMode */,
 				18390DBD3020C53400EA12EE /* Chore */,
 			);
 			path = Parent;
@@ -785,10 +817,8 @@
 		18608B402FC9639C0021172D /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				186283D12FAB27D100BB07DF /* ChildProfileViewController.swift */,
-				186283D32FAB280800BB07DF /* ChildProfileViewModel.swift */,
-				18433BCA2FB4C08800F475A0 /* DatePickerViewController.swift */,
-				1857E1112FB71FA200E63CD0 /* AvatarPickerViewController.swift */,
+				1830DC3630713BD4003F9FF4 /* UpdateProfile */,
+				1830DC3530713BBA003F9FF4 /* CreateProfile */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1407,6 +1437,7 @@
 				18E4F4362EF7D4DA003A103F /* AppDelegate.swift in Sources */,
 				18260A54303DD9DC001C29B2 /* CreateGoal.swift in Sources */,
 				184D82A32FEAC39E0011EBEC /* ChoreTemplateViewModel.swift in Sources */,
+				1830DC3B30714B4D003F9FF4 /* EditParentViewModel.swift in Sources */,
 				183960052F7CFACF0032D37C /* Reachability.swift in Sources */,
 				1840423F2F09511B0030B071 /* LoginViewController.swift in Sources */,
 				186B5959304C60F500D79CC7 /* Games.swift in Sources */,
@@ -1434,6 +1465,7 @@
 				1861C2E52F9B6B4500EC6507 /* NewPasswordViewModel.swift in Sources */,
 				1857E1192FB7389F00E63CD0 /* AvatarCVCell.swift in Sources */,
 				1855BB9F304E6FC90036E17D /* PlayGameViewController.swift in Sources */,
+				1830DC3930714B34003F9FF4 /* EditParentViewController.swift in Sources */,
 				18260A58303DE457001C29B2 /* MilestoneViewController.swift in Sources */,
 				1826AB8E306ACC0000E3153D /* SessionManager.swift in Sources */,
 				186283D62FAB385D00BB07DF /* Children.swift in Sources */,

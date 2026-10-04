@@ -36,7 +36,7 @@ struct ParentDetails: Codable {
 
 struct LoggedInParent: Codable {
     let id, name, email: String
-    let image: Date?
+    let image: ProfilePicture?
     let gender: String
     let countryCode, phone: String?
     let isActive, isEmailVerified, biometricEnabled: Bool?

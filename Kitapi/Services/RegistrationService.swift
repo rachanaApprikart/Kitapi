@@ -10,11 +10,9 @@ import UIKit
 
 let BASE_URL: String = "https://kidswallet.apprikart.in"
 
-
-
 struct RegistrationService {
     
-    func register(request: RegisterRequest, profilePicture: UIImage?) async throws -> APIResponse<RegistrationResponse> {
+    func register(request: RegisterRequest) async throws -> APIResponse<RegistrationResponse> {
         let url = RegisterEndPoint.createUser.getFullPath()
         
         let parameters: [String: Any] = [
@@ -24,7 +22,7 @@ struct RegistrationService {
             "gender": request.gender,
             "email": request.email,
             "password": request.password,
-            "image": profilePicture as Any
+            "image": request.image as Any
         ]
         return await APIClient.callAPIWithFormData(url: url, method: .post, parameters: parameters)
     }
@@ -59,7 +57,20 @@ struct RegistrationService {
         return await APIClient.callAPIWithRawData(url: url, method: .get)
     }
     
-    
+    func updateParentDetails(request: UpdateParentRequest) async throws -> APIResponse<ParentDetails> {
+        let url = RegisterEndPoint.updateParent.getFullPath()
+
+        let parameters: [String: Any] = [
+            "name": request.name,
+            "countryCode": request.countryCode,
+            "phone": request.phone ?? "",
+            "gender": request.gender,
+            "country": request.country ?? "",
+            "currency": request.currency ?? "",
+            "image": request.image as Any
+        ]
+        return await APIClient.callAPIWithFormData(url: url, method: .put, parameters: parameters)
+    }
 }
 
 enum RegisterEndPoint {
@@ -71,8 +82,8 @@ enum RegisterEndPoint {
     case forgotPassword
     case resetPassword
     case googleLogin
-    case updateUser
     case getParentDetails
+    case updateParent
     case logout
     
     
@@ -97,14 +108,14 @@ enum RegisterEndPoint {
         case .resetPassword:
             return "/api/parent/reset-password"
             
-        case .updateUser:
-            return "/api/v1/user/updateUser"
-            
         case .googleLogin:
             return "/api/parent/auth/google_signin"
             
         case .getParentDetails:
             return "/api/parent/detail"
+            
+        case .updateParent:
+            return "/api/parent/update/detail"
             
         case .logout:
             return "/api/parent/logout"

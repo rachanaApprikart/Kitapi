@@ -35,6 +35,10 @@ struct VCManager {
         return storyBoard.instantiateViewController(identifier: ImagePickerViewController.sbIdentifier) as? ImagePickerViewController
     }
     
+    static func openEditParentDetailsVC() -> EditParentViewController? {
+        return storyBoard.instantiateViewController(identifier: EditParentViewController.sbIdentifier) as? EditParentViewController
+    }
+    
     static func openUpdateMPINVC() -> UpdateMPINViewController? {
         return storyBoard.instantiateViewController(identifier: UpdateMPINViewController.sbIdentifier) as? UpdateMPINViewController
     }

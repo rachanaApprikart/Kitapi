@@ -27,11 +27,23 @@ struct User: Codable {
 }
 
 // Request Model
-struct RegisterRequest: Codable {
+
+struct RegisterRequest {
     let name: String
     let countryCode: String
     let phone: String?
     let gender: String
     let email: String
     let password: String
+    let image: UIImage?
+}
+
+struct UpdateParentRequest {
+    let name: String
+    let country: String?
+    let currency: String?
+    let countryCode: String
+    let phone: String?
+    let gender: String
+    let image: UIImage?
 }

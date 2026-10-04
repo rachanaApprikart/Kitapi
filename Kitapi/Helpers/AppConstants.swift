@@ -31,6 +31,8 @@ struct APPConstants {
     static let whatsappTitle: String = "Whatsapp"
     
     static let createParentAcc: String = "Create parent account"
+    static let editParentAcc: String = "Edit parent account"
+
     static let fullNameTitle: String = "Full Name"
     static let fullNamePlaceholder: String = "Enter your full name"
     
