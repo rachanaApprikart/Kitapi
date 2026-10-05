@@ -45,10 +45,11 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func viewAllChildrenAction(_ sender: UIButton) {
+        self.openViewAlleChildProfilseVC()
     }
     
     @IBAction func logoutAction(_ sender: UIButton) {
-        self.logoutUser()
+        self.showActionSheetVC()
     }
   
     private func bindViewModel() {
@@ -70,7 +71,19 @@ class ProfileViewController: UIViewController {
             ChildManager.shared.clearChildMode()
             self.navigateToLogin()
         }
- 
+        
+        self.profileViewModel.onDeleteUserError = { [weak self] errorMessage in
+            MessageManager.shared.show(message: errorMessage)
+        }
+        
+        self.profileViewModel.onDeleteUserSuccess = { [weak self] logoutDetails in
+            guard let self = self else { return }
+            
+            AppUserDefaults.authorizationToken = nil
+            AppUserDefaults.customerDetails = nil
+            ChildManager.shared.clearChildMode()
+            self.navigateToLogin()
+        }
     }
     
     private func logoutUser() {
@@ -79,10 +92,22 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    private func deleteUser() {
+        Task {
+            await self.profileViewModel.deleteUser()
+        }
+    }
+    
     private func openCreateChildProfileVC() {
         guard let vc = VCManager.openCreateChildProfileVC() else { return }
         vc.hidesBottomBarWhenPushed = true
         vc.IS_COMING_FROM_PROFILE_SCREEN = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func openViewAlleChildProfilseVC() {
+        guard let vc = VCManager.openViewAllChildProfilesVC() else { return }
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -103,11 +128,26 @@ class ProfileViewController: UIViewController {
     }
 }
 
-extension ProfileViewController: UpdateMPINDelegate {
+extension ProfileViewController: UpdateMPINDelegate, AccountActionSheetDelegate {
+    
+    func didTapLogout() {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
+        self.logoutUser()
+    }
+    
+    func didTapDeleteAccount() {
+        self.floatingPanel?.dismiss(animated: true)
+        self.floatingPanel = nil
+        self.deleteUser()
+    }
+    
+    
     func mpinChangedSuccessfully() {
         self.floatingPanel?.dismiss(animated: true)
         self.floatingPanel = nil
     }
+    
 }
 
 //MARK: ---------- ui ---------
@@ -123,7 +163,7 @@ extension ProfileViewController {
         self.headerLabel.textColor = .headerLabekColor
         self.headerLabel.numberOfLines = 1
         
-        self.logoutButton.setTitle("Logout", for: .normal)
+        self.logoutButton.setTitle("Account", for: .normal)
         self.logoutButton.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 18)
         self.logoutButton.setTitleColor(.headerLabekColor, for: .normal)
         self.logoutButton.layer.cornerRadius = 15
@@ -164,6 +204,14 @@ extension ProfileViewController {
         guard let contentVC = VCManager.openUpdateMPINVC() else { return }
         contentVC.delegate = self
         let layout = FloatingPanelCustomLayout(state: .full, inset: 0.55)
+        self.presentFloatingPanel(with: contentVC, layout: layout)
+    }
+    
+    private func showActionSheetVC() {
+        guard let contentVC = VCManager.openActionSheetVC() else { return }
+        contentVC.actionSheetType = .account
+        contentVC.accountDelegate = self
+        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.35)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     

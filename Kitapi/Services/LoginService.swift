@@ -36,10 +36,5 @@ struct LoginService {
         }
         return await APIClient.callAPIWithRawData(url: url, method: .post, body: data)
     }
-    
-    func logoutUser() async throws -> APIResponse<LogoutResponse> {
-        
-        let url = RegisterEndPoint.logout.getFullPath()
-        return await APIClient.callAPIWithRawData(url: url, method: .post)
-    }
+
 }

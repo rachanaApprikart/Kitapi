@@ -14,7 +14,10 @@ class ProfileViewModel {
     var onLogoutError: ((String) -> Void)?
     var onLogoutSuccess: ((LogoutResponse) -> Void)?
   
-    let loginService = LoginService()
+    var onDeleteUserError: ((String) -> Void)?
+    var onDeleteUserSuccess: ((LogoutResponse) -> Void)?
+  
+    private let registrationService = RegistrationService()
         
      func performLogout() async {
         
@@ -24,9 +27,9 @@ class ProfileViewModel {
         
         do {
             // Make async API call
-            let response = try await loginService.logoutUser()
+            let response = try await registrationService.logoutUser()
             
-            guard response.data?.success ?? false, let loginResponse = response.data else {
+            guard response.data?.success ?? false, let logoutResp = response.data else {
                 // API Error
                 let errorMessage: String
                 
@@ -59,7 +62,7 @@ class ProfileViewModel {
             }
             DispatchQueue.main.async { [weak self] in
                 self?.onLoadingChanged?(false)
-                self?.onLogoutSuccess?(loginResponse)
+                self?.onLogoutSuccess?(logoutResp)
             }
             
         } catch {
@@ -70,4 +73,59 @@ class ProfileViewModel {
             }
         }
     }
+    
+    func deleteUser() async {
+       
+       DispatchQueue.main.async { [weak self] in
+           self?.onLoadingChanged?(true)
+       }
+       
+       do {
+           // Make async API call
+           let response = try await registrationService.deleteUser()
+           
+           guard response.data?.success ?? false, let deleteResp = response.data else {
+               // API Error
+               let errorMessage: String
+               
+               if let apiError = response.error {
+                   switch apiError {
+                   case .apiError(let errorResponse):
+                       errorMessage = errorResponse.message ?? "Delete user failed"
+                       
+                   case .requestFailed(let error):
+                       errorMessage = error.localizedDescription
+                       
+                   case .authenticationFailed(_):
+                       DispatchQueue.main.async { [weak self] in
+                           self?.onLoadingChanged?(false)
+                       }
+                       return
+                       
+                   default:
+                       errorMessage = "Something went wrong"
+                   }
+               } else {
+                   errorMessage = response.data?.message ?? "Delete user failed"
+               }
+               
+               DispatchQueue.main.async { [weak self] in
+                   self?.onLoadingChanged?(false)
+                   self?.onDeleteUserError?(errorMessage)
+               }
+               return
+           }
+           DispatchQueue.main.async { [weak self] in
+               self?.onLoadingChanged?(false)
+               self?.onDeleteUserSuccess?(deleteResp)
+           }
+           
+       } catch {
+           // Network/Unknown Error
+           DispatchQueue.main.async { [weak self] in
+               self?.onLoadingChanged?(false)
+               self?.onDeleteUserError?(error.localizedDescription)
+           }
+       }
+   }
 }

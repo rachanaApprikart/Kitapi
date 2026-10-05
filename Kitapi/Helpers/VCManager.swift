@@ -39,6 +39,14 @@ struct VCManager {
         return storyBoard.instantiateViewController(identifier: EditParentViewController.sbIdentifier) as? EditParentViewController
     }
     
+    static func openViewAllChildProfilesVC() -> ViewAllChildProfilesVC? {
+        return storyBoard.instantiateViewController(identifier: ViewAllChildProfilesVC.sbIdentifier) as? ViewAllChildProfilesVC
+    }
+    
+    static func openActionSheetVC() -> ActionSheetViewController? {
+        return storyBoard.instantiateViewController(identifier: ActionSheetViewController.sbIdentifier) as? ActionSheetViewController
+    }
+    
     static func openUpdateMPINVC() -> UpdateMPINViewController? {
         return storyBoard.instantiateViewController(identifier: UpdateMPINViewController.sbIdentifier) as? UpdateMPINViewController
     }

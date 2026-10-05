@@ -18,6 +18,8 @@
 		18260A58303DE457001C29B2 /* MilestoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18260A57303DE457001C29B2 /* MilestoneViewController.swift */; };
 		18260A5A303DE46D001C29B2 /* AssignChoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18260A59303DE46D001C29B2 /* AssignChoreViewController.swift */; };
 		1826AB8E306ACC0000E3153D /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1826AB8D306ACC0000E3153D /* SessionManager.swift */; };
+		1829B4D230729F2200FD6AFB /* ViewAllChildProfilesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1829B4D130729F2200FD6AFB /* ViewAllChildProfilesVC.swift */; };
+		1829B4D43072A0E900FD6AFB /* ViewAllChildProfilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1829B4D33072A0E900FD6AFB /* ViewAllChildProfilesViewModel.swift */; };
 		182EB9952F8638440093A900 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182EB9942F8638440093A900 /* ResetPasswordViewController.swift */; };
 		182EB9972F8638660093A900 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182EB9962F8638660093A900 /* NewPasswordViewController.swift */; };
 		1830DC3930714B34003F9FF4 /* EditParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1830DC3830714B34003F9FF4 /* EditParentViewController.swift */; };
@@ -38,6 +40,7 @@
 		183764E52FED090E00AD6319 /* Header2CVReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183764E32FED090E00AD6319 /* Header2CVReusableView.xib */; };
 		18376BD22F97433D0079318A /* Verification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18376BD12F97433D0079318A /* Verification.swift */; };
 		183779773040899D00C58FC2 /* CreateGoalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183779763040899D00C58FC2 /* CreateGoalViewModel.swift */; };
+		1838C6A230737DD100FAD47A /* ActionSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1838C6A130737DD100FAD47A /* ActionSheetViewController.swift */; };
 		18390DC03020C58000EA12EE /* MPINViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18390DBF3020C58000EA12EE /* MPINViewController.swift */; };
 		18390F573025E0590028A7AC /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18390F563025E0590028A7AC /* Analytics.swift */; };
 		183960032F7CFAAF0032D37C /* String+PhoneNumberValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183960022F7CFAAF0032D37C /* String+PhoneNumberValidation.swift */; };
@@ -209,6 +212,8 @@
 		18260A57303DE457001C29B2 /* MilestoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneViewController.swift; sourceTree = "<group>"; };
 		18260A59303DE46D001C29B2 /* AssignChoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignChoreViewController.swift; sourceTree = "<group>"; };
 		1826AB8D306ACC0000E3153D /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		1829B4D130729F2200FD6AFB /* ViewAllChildProfilesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllChildProfilesVC.swift; sourceTree = "<group>"; };
+		1829B4D33072A0E900FD6AFB /* ViewAllChildProfilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllChildProfilesViewModel.swift; sourceTree = "<group>"; };
 		182EB9942F8638440093A900 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		182EB9962F8638660093A900 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		1830DC3830714B34003F9FF4 /* EditParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditParentViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +232,7 @@
 		183764E32FED090E00AD6319 /* Header2CVReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Header2CVReusableView.xib; sourceTree = "<group>"; };
 		18376BD12F97433D0079318A /* Verification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verification.swift; sourceTree = "<group>"; };
 		183779763040899D00C58FC2 /* CreateGoalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGoalViewModel.swift; sourceTree = "<group>"; };
+		1838C6A130737DD100FAD47A /* ActionSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewController.swift; sourceTree = "<group>"; };
 		18390DBF3020C58000EA12EE /* MPINViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPINViewController.swift; sourceTree = "<group>"; };
 		18390F563025E0590028A7AC /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		183960022F7CFAAF0032D37C /* String+PhoneNumberValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+PhoneNumberValidation.swift"; sourceTree = "<group>"; };
@@ -449,6 +455,8 @@
 		1830DC3630713BD4003F9FF4 /* UpdateProfile */ = {
 			isa = PBXGroup;
 			children = (
+				1829B4D130729F2200FD6AFB /* ViewAllChildProfilesVC.swift */,
+				1829B4D33072A0E900FD6AFB /* ViewAllChildProfilesViewModel.swift */,
 			);
 			path = UpdateProfile;
 			sourceTree = "<group>";
@@ -887,6 +895,7 @@
 			children = (
 				186283CC2FAB26FC00BB07DF /* ProfileViewController.swift */,
 				186283CE2FAB272900BB07DF /* ProfileViewModel.swift */,
+				1838C6A130737DD100FAD47A /* ActionSheetViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1347,6 +1356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1838C6A230737DD100FAD47A /* ActionSheetViewController.swift in Sources */,
 				1861C2E22F9B59CC00EC6507 /* PasswordService.swift in Sources */,
 				1849AE843021D0B90088681C /* MPINService.swift in Sources */,
 				185A85382F8E18EA00A4D4B9 /* RegistrationService.swift in Sources */,
@@ -1369,6 +1379,7 @@
 				186283C32FAB264300BB07DF /* HomeViewController.swift in Sources */,
 				186283C82FAB269D00BB07DF /* AnalyticsViewController.swift in Sources */,
 				183764E42FED090E00AD6319 /* Header2CVReusableView.swift in Sources */,
+				1829B4D43072A0E900FD6AFB /* ViewAllChildProfilesViewModel.swift in Sources */,
 				183960072F7CFAF70032D37C /* AppImages.swift in Sources */,
 				18640C4630223335009675DF /* MPINView.swift in Sources */,
 				1841F41B30125A4A000191C7 /* ChoreListCVCell.swift in Sources */,
@@ -1389,6 +1400,7 @@
 				185A852F2F8E035800A4D4B9 /* ErrorModel.swift in Sources */,
 				186283CA2FAB26CF00BB07DF /* AnalyticsViewModel.swift in Sources */,
 				1855BBA3304E87AA0036E17D /* QuitGameViewController.swift in Sources */,
+				1829B4D230729F2200FD6AFB /* ViewAllChildProfilesVC.swift in Sources */,
 				1861BBAF3029E01000A607EC /* AnalyticsService.swift in Sources */,
 				186428432FC4289900602DAE /* PersistentHeaderView.swift in Sources */,
 				18BFB4E62FCD930600C887B6 /* ChildSessionManager.swift in Sources */,

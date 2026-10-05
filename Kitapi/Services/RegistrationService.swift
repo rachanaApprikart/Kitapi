@@ -71,6 +71,16 @@ struct RegistrationService {
         ]
         return await APIClient.callAPIWithFormData(url: url, method: .put, parameters: parameters)
     }
+    
+    func logoutUser() async throws -> APIResponse<LogoutResponse> {
+        let url = RegisterEndPoint.logout.getFullPath()
+        return await APIClient.callAPIWithRawData(url: url, method: .post)
+    }
+    
+    func deleteUser() async throws -> APIResponse<LogoutResponse> {
+        let url = RegisterEndPoint.deleteUser.getFullPath()
+        return await APIClient.callAPIWithRawData(url: url, method: .delete)
+    }
 }
 
 enum RegisterEndPoint {
@@ -85,6 +95,7 @@ enum RegisterEndPoint {
     case getParentDetails
     case updateParent
     case logout
+    case deleteUser
     
     
     private func getURLPath() -> String {
@@ -119,6 +130,9 @@ enum RegisterEndPoint {
             
         case .logout:
             return "/api/parent/logout"
+            
+        case .deleteUser:
+            return "/api/parent/delete/detail"
             
         }
     }
