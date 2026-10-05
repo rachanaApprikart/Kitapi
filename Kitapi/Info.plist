@@ -7,6 +7,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Kitapi needs camera access so you can take a profile picture.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Kitapi needs microphone access so you can record voice notes for chores.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Kitapi needs photo library access so you can choose a profile picture.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Urbanist-Black.ttf</string>
