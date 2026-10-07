@@ -27,6 +27,16 @@ struct MPINService {
         return await APIClient.callAPIWithRawData(url: url, method: .post, body: data)
     }
     
+    func changeMPINRequest(request: ChangeMPINRequest) async throws -> APIResponse<MPINResponse> {
+        
+        let url = MPINEndPoint.changeMPIN.getFullPath()
+        
+        guard let data = request.toData() else {
+            return await APIClient.callAPIWithRawData(url: url, method: .put)
+        }
+        return await APIClient.callAPIWithRawData(url: url, method: .put, body: data)
+    }
+    
     func enableChildMode(request: EnableChildModeRequest) async throws -> APIResponse<EnableChildModeResponse> {
         
         let url = MPINEndPoint.enableChildModeWithMPIN.getFullPath()
@@ -52,6 +62,7 @@ enum MPINEndPoint {
     
     case getMPINStatus
     case createMPIN
+    case changeMPIN
     case enableChildModeWithMPIN
     case disableChildModeWithMPIN
     
@@ -63,6 +74,9 @@ enum MPINEndPoint {
             
         case .createMPIN:
             return "/api/child-mode/parent/mpin/setup"
+            
+        case .changeMPIN:
+            return "/api/child-mode/parent/mpin/change"
             
         case .enableChildModeWithMPIN:
             return "/api/child-mode/enable"

@@ -1,51 +1,52 @@
 //
-//  ChildProfileViewModel.swift
+//  EditParentViewModel.swift
 //  Kitapi
 //
-//  Created by Suneel on 06/05/26.
+//  Created by Suneel on 03/10/26.
 //
 
 import Foundation
 import UIKit
 
-//18-05
 
-class ChildProfileViewModel {
+class EditParentViewModel {
     
-    var childName: String = ""
-    var childGender: String = ""
-    var childDob: String = ""
+    var name: String = ""
+    var phone: String = ""
+    var gender: String = ""
+    var country: String = "India"
+    var currency: String = "INR"
     var profilePicture: UIImage? = nil
-    
+
     var onLoadingChanged: ((Bool) -> Void)?
-    var onError: ((String) -> Void)?
-    var onCreateChildProfileSuccess: ((ChildProfileResponse) -> Void)?
+    var onUpdateError: ((String) -> Void)?
+    var onUpdateSuccess: ((ParentDetails) -> Void)?
     var onValidationError: ((ValidationError) -> Void)?
     
-   private let childrenService = ChildrenService()
+    let registrationService = RegistrationService()
     
-    
+
     private func validateInputs() -> Result<Void, ValidationError> {
-        if childName.isEmpty {
+        
+        if self.name.isEmpty {
             return .failure(ValidationError(field: .nameField, message: "Name is required"))
         }
-        if childDob.isEmpty {
-           return .failure(ValidationError(field: .dobField, message: "Date of birth is required"))
-        }
-        if childGender.isEmpty {
+        if gender.isEmpty {
             return .failure(ValidationError(field: .genderField, message: "Gender is required"))
         }
         return .success(())
     }
     
     func register() async {
-        let validation = validateInputs()
+
+        let validation = self.validateInputs()
         
         switch validation {
         case .success:
-            await createChildProfile()
+            await self.updateParentDetails()
             
         case .failure(let error):
+            // Validation failed, notify on main thread
             DispatchQueue.main.async { [weak self] in
                 self?.onValidationError?(error)
             }
@@ -53,12 +54,16 @@ class ChildProfileViewModel {
         }
     }
     
-    private func createChildProfile() async {
-        let requestBody = ChildProfileRequest(
-            name: childName,
-            dateOfBirth: childDob,
-            gender: childGender,
-            profilePicture: profilePicture)
+    private func updateParentDetails() async {
+        
+        let requestBody = UpdateParentRequest(
+            name: self.name,
+            country: self.country,
+            currency: self.currency,
+            countryCode: self.phone.isEmpty ? "" : "+91",
+            phone: self.phone,
+            gender: self.gender,
+            image: self.profilePicture)
         
         // Show loading
         DispatchQueue.main.async { [weak self] in
@@ -67,9 +72,9 @@ class ChildProfileViewModel {
         
         do {
             // Make async API call
-            let response = try await childrenService.createChildProfile(request: requestBody)
+            let response = try await registrationService.updateParentDetails(request: requestBody)
             
-
+            // Validate response
             guard response.data?.success ?? false, let userData = response.data else {
                 // API Error
                 let errorMessage: String
@@ -82,8 +87,11 @@ class ChildProfileViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
-                    case .authenticationFailed(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Registration failed"
+                    case .authenticationFailed(_):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"
@@ -94,25 +102,21 @@ class ChildProfileViewModel {
                 
                 DispatchQueue.main.async { [weak self] in
                     self?.onLoadingChanged?(false)
-                    self?.onError?(errorMessage)
+                    self?.onUpdateError?(errorMessage)
                 }
                 return
             }
             
-            // Success
             DispatchQueue.main.async { [weak self] in
                 self?.onLoadingChanged?(false)
-                self?.onCreateChildProfileSuccess?(userData)
+                self?.onUpdateSuccess?(userData)
             }
             
         } catch {
             DispatchQueue.main.async { [weak self] in
                 self?.onLoadingChanged?(false)
-                self?.onError?(error.localizedDescription)
+                self?.onUpdateError?(error.localizedDescription)
             }
         }
     }
 }
-
-
-

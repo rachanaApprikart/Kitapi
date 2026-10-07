@@ -35,4 +35,9 @@ struct ChildProfileResponse: Codable {
     let data: Child
 }
 
+struct UpdateChildProfileResponse: Codable {
+    let success: Bool
+    let message: String
+    let child: Child
+}
 

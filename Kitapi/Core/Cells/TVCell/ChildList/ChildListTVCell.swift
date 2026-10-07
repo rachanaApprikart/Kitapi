@@ -55,6 +55,16 @@ extension ChildListTVCell {
     private func setChildListUI() {
         self.selectionStyle = .none
         
+//
+//        backgroundColor = .clear
+          contentView.backgroundColor = .clear
+
+           // Card
+           bgView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+           bgView.layer.cornerRadius = 15
+           bgView.layer.masksToBounds = true
+
+        
         self.childNameLabel.textColor = .textColor
         self.childNameLabel.textAlignment = .left
         self.childNameLabel.numberOfLines = 1

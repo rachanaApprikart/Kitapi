@@ -31,6 +31,8 @@ struct APPConstants {
     static let whatsappTitle: String = "Whatsapp"
     
     static let createParentAcc: String = "Create parent account"
+    static let editParentAcc: String = "Edit parent account"
+
     static let fullNameTitle: String = "Full Name"
     static let fullNamePlaceholder: String = "Enter your full name"
     
@@ -163,5 +165,17 @@ struct APPConstants {
     static let giftNamePlaceholder: String = "Gift name"
     static let assignChores: String = "Assign chores"
     static let earnCoinsGoalTitle = "Earn coins"
+    
+    //05-10
+    
+    static let currentMPINTitle: String = "Current MPIN"
+    static let currentMPINPlaceholder: String = "Enter your current MPIN"
+    
+    static let newMPINTitle: String = "New MPIN"
+    static let newMPINPlaceholder: String = "Enter your new MPIN"
+    
+    static let changeMPINTitle: String = "Change MPIN"
+    static let updateMPINTitle: String = "Update MPIN"
+
     
 }

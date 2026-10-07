@@ -1,25 +1,27 @@
 //
-//  ProfileViewModel.swift
+//  ViewAllChildProfilesViewModel.swift
 //  Kitapi
 //
-//  Created by Suneel on 06/05/26.
-// 28-09
+//  Created by Suneel on 04/10/26.
+//
 
 import Foundation
 
 
-class ProfileViewModel {
+class ViewAllChildProfilesViewModel {
     
     var onLoadingChanged: ((Bool) -> Void)?
-    var onLogoutError: ((String) -> Void)?
-    var onLogoutSuccess: ((LogoutResponse) -> Void)?
-  
-    var onDeleteUserError: ((String) -> Void)?
-    var onDeleteUserSuccess: ((LogoutResponse) -> Void)?
-  
-    private let registrationService = RegistrationService()
-        
-     func performLogout() async {
+    var onGetChildDetailsError: ((String) -> Void)?
+    var onGetChildDetailsSuccess: ((ChildrenDetails) -> Void)?
+    
+    var onDeleteChildProfileError: ((String) -> Void)?
+    var onDeleteChildProfileSuccess: ((DeleteChildProfileResponse) -> Void)?
+    
+    private let childrenService = ChildrenService()
+
+     func getDetailsOfChildren() async {
+     
+        let requestBody = ChildrenDetailsRequest(page: "0", limit: "10", sortOrder: "ASC")
         
         DispatchQueue.main.async { [weak self] in
             self?.onLoadingChanged?(true)
@@ -27,16 +29,17 @@ class ProfileViewModel {
         
         do {
             // Make async API call
-            let response = try await registrationService.logoutUser()
+            let response = try await childrenService.getChildrenDetails(request: requestBody)
             
-            guard response.data?.success ?? false, let logoutResp = response.data else {
+            // Validate response
+            guard response.data?.success ?? false, let childDetails = response.data  else {
                 // API Error
                 let errorMessage: String
                 
                 if let apiError = response.error {
                     switch apiError {
                     case .apiError(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Logout failed"
+                        errorMessage = errorResponse.message ?? "Unable to retrieve"
                         
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
@@ -46,35 +49,37 @@ class ProfileViewModel {
                             self?.onLoadingChanged?(false)
                         }
                         return
-                        
+
                     default:
                         errorMessage = "Something went wrong"
                     }
                 } else {
-                    errorMessage = response.data?.message ?? "Logout failed"
+                    errorMessage = "Unable to retrieve"
                 }
-                
+            
                 DispatchQueue.main.async { [weak self] in
                     self?.onLoadingChanged?(false)
-                    self?.onLogoutError?(errorMessage)
+                    self?.onGetChildDetailsError?(errorMessage)
                 }
                 return
             }
+            
+            // Success
             DispatchQueue.main.async { [weak self] in
                 self?.onLoadingChanged?(false)
-                self?.onLogoutSuccess?(logoutResp)
+                self?.onGetChildDetailsSuccess?(childDetails)
             }
             
         } catch {
             // Network/Unknown Error
             DispatchQueue.main.async { [weak self] in
                 self?.onLoadingChanged?(false)
-                self?.onLogoutError?(error.localizedDescription)
+                self?.onGetChildDetailsError?(error.localizedDescription)
             }
         }
     }
     
-    func deleteUser() async {
+    func deleteChildProfile(childId: String) async {
        
        DispatchQueue.main.async { [weak self] in
            self?.onLoadingChanged?(true)
@@ -82,16 +87,17 @@ class ProfileViewModel {
        
        do {
            // Make async API call
-           let response = try await registrationService.deleteUser()
+           let response = try await childrenService.deleteChildProfile(childId: childId)
            
-           guard response.data?.success ?? false, let deleteResp = response.data else {
+           // Validate response
+           guard let childDetails = response.data  else {
                // API Error
                let errorMessage: String
                
                if let apiError = response.error {
                    switch apiError {
                    case .apiError(let errorResponse):
-                       errorMessage = errorResponse.message ?? "Delete user failed"
+                       errorMessage = errorResponse.message ?? "Unable to delete"
                        
                    case .requestFailed(let error):
                        errorMessage = error.localizedDescription
@@ -101,31 +107,34 @@ class ProfileViewModel {
                            self?.onLoadingChanged?(false)
                        }
                        return
-                       
+
                    default:
                        errorMessage = "Something went wrong"
                    }
                } else {
-                   errorMessage = response.data?.message ?? "Delete user failed"
+                   errorMessage = "Unable to delete"
                }
-               
+           
                DispatchQueue.main.async { [weak self] in
                    self?.onLoadingChanged?(false)
-                   self?.onDeleteUserError?(errorMessage)
+                   self?.onDeleteChildProfileError?(errorMessage)
                }
                return
            }
+           
+           // Success
            DispatchQueue.main.async { [weak self] in
                self?.onLoadingChanged?(false)
-               self?.onDeleteUserSuccess?(deleteResp)
+               self?.onDeleteChildProfileSuccess?(childDetails)
            }
            
        } catch {
            // Network/Unknown Error
            DispatchQueue.main.async { [weak self] in
                self?.onLoadingChanged?(false)
-               self?.onDeleteUserError?(error.localizedDescription)
+               self?.onDeleteChildProfileError?(error.localizedDescription)
            }
        }
    }
 }
+

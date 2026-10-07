@@ -22,7 +22,6 @@ class ChildrenListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setChildListUI()
-        // Do any additional setup after loading the view.
     }
 }
 
@@ -53,9 +52,6 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
 }
 
 
-  
-
-
 //MARK: ------- UI --------
 
 //30-5
@@ -73,7 +69,6 @@ extension ChildrenListViewController {
         self.childListTV.dataSource = self
         self.childListTV.separatorStyle = .none
         self.childListTV.register(ChildListTVCell.nibFile, forCellReuseIdentifier: ChildListTVCell.reUseIdentifier)
-    
       
     }
 }

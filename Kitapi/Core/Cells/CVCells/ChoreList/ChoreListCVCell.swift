@@ -52,7 +52,26 @@ class ChoreListCVCell: UICollectionViewCell {
     
     func configure(with chore: TaskData, sectionType: ChoreSectionType) {
         
-        self.choreNameLabel.text = chore.title
+        
+        let shouldStrikeThrough: Bool = {
+               switch chore.status {
+               case .completed, .overdue:
+                   return true
+               default:
+                   return false
+               }
+           }()
+
+           self.choreNameLabel.attributedText = NSAttributedString(
+            string: chore.title ?? "",
+               attributes: [
+                   .strikethroughStyle: shouldStrikeThrough
+                       ? NSUnderlineStyle.single.rawValue
+                       : 0
+               ]
+           )
+
+      //  self.choreNameLabel.text = chore.title
         self.rewardCoinsLabel.text = "\(String(describing: chore.rewardCoins ?? 0))"
         
         let shouldShowSchedule = (sectionType == .upNext)

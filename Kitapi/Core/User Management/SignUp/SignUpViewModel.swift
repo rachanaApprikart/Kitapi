@@ -85,7 +85,8 @@ class RegisterViewModel {
             phone: phone,
             gender: gender.lowercased(),
             email: email,
-            password: password
+            password: password,
+            image: profilePicture
         )
         
         // Show loading
@@ -95,7 +96,7 @@ class RegisterViewModel {
         
         do {
             // Make async API call
-            let response = try await registrationService.register(request: requestBody, profilePicture: self.profilePicture)
+            let response = try await registrationService.register(request: requestBody)
             
             // Validate response
             guard response.data?.success ?? false, let userData = response.data?.user else {
@@ -156,6 +157,8 @@ enum ValidationField {
     case choreTitle
     case choreDescription
     case giftName
+    case currentMPIN
+    case newMPIN
 }
 
 struct ValidationError: Error {

@@ -79,6 +79,7 @@ class HomeViewController: UIViewController {
             } else {
                 //Store in singleton — available to all tabs
                 ChildManager.shared.setChildren(parentDetails.children)
+                print("Abailable children-----", parentDetails.children)
             }
         }
         

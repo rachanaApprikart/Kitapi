@@ -37,7 +37,7 @@ struct VerificationResponse: Codable {
 struct VerifiedParent: Codable {
     let id, name, email: String
     let deviceType, deviceVersion: String?
-    let image: Data?
+    let image: ProfilePicture?
     let gender: String?
     let fcmToken, preferredLanguage: String?
     let isEmailVerified: Bool?

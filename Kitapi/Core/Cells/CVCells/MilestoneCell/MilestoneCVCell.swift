@@ -84,6 +84,7 @@ extension MilestoneCVCell {
         self.bgView.layer.borderWidth = 1
         self.bgView.layer.borderColor = UIColor.buttonBorderColor.cgColor
         self.bgView.layer.cornerRadius = 12
+        self.bgView.clipsToBounds = true
         
         self.milestoneProgessLabel.textAlignment = .center
         self.milestoneProgessLabel.numberOfLines = 1

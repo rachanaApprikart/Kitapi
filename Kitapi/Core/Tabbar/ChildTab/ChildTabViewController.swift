@@ -19,7 +19,6 @@ class ChildTabViewController: UITabBarController {
         return String(describing: ChildTabViewController.self)
     }
 
-    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {

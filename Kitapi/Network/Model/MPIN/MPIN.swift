@@ -26,6 +26,10 @@ struct MPINResponse: Codable {
     let message: String
 }
 
+struct ChangeMPINRequest: Codable {
+    let currentMpin: String
+    let newMpin: String
+}
 
 struct EnableChildModeRequest: Codable {
     let childId: String

@@ -56,24 +56,11 @@ class SplashScreenViewController: UIViewController {
 
         let childSessionManager = ChildSessionManager.shared
 
-        if ChildManager.shared.isChildMode ||
-            childSessionManager.hasChildModeSession {
+        if ChildManager.shared.isChildMode || childSessionManager.hasChildModeSession {
 
-            print(
-                "ChildManager.shared.isChildMode:",
-                ChildManager.shared.isChildMode
-            )
-
-            print(
-                "ChildSessionManager.shared.hasChildModeSession:",
-                childSessionManager.hasChildModeSession
-            )
-
-            print(
-                "ChildSessionManager.shared.isChildModeExpired:",
-                childSessionManager.isChildModeExpired
-            )
-
+            print("ChildManager.shared.isChildMode:", ChildManager.shared.isChildMode)
+            print("ChildSessionManager.shared.hasChildModeSession:", childSessionManager.hasChildModeSession)
+            print("ChildSessionManager.shared.isChildModeExpired:", childSessionManager.isChildModeExpired)
             return childTabBarVC
         }
 
@@ -118,3 +105,4 @@ extension SplashScreenViewController {
 //isChildModeExpired == true
 //        ↓
 //Re-auth MPIN
+
