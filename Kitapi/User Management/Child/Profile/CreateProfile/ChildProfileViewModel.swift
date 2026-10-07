@@ -18,9 +18,13 @@ class ChildProfileViewModel {
     var profilePicture: UIImage? = nil
     
     var onLoadingChanged: ((Bool) -> Void)?
-    var onError: ((String) -> Void)?
-    var onCreateChildProfileSuccess: ((ChildProfileResponse) -> Void)?
     var onValidationError: ((ValidationError) -> Void)?
+
+    var onCreateChildProfileError: ((String) -> Void)?
+    var onCreateChildProfileSuccess: ((ChildProfileResponse) -> Void)?
+    
+    var onUpdateChildProfileError: ((String) -> Void)?
+    var onUpdateChildProfileSuccess: ((UpdateChildProfileResponse) -> Void)?
     
    private let childrenService = ChildrenService()
     
@@ -39,11 +43,11 @@ class ChildProfileViewModel {
     }
     
     func register() async {
-        let validation = validateInputs()
+        let validation = self.validateInputs()
         
         switch validation {
         case .success:
-            await createChildProfile()
+            await self.createChildProfile()
             
         case .failure(let error):
             DispatchQueue.main.async { [weak self] in
@@ -83,7 +87,10 @@ class ChildProfileViewModel {
                         errorMessage = error.localizedDescription
                         
                     case .authenticationFailed(let errorResponse):
-                        errorMessage = errorResponse.message ?? "Registration failed"
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
                         
                     default:
                         errorMessage = "Something went wrong"
@@ -94,7 +101,7 @@ class ChildProfileViewModel {
                 
                 DispatchQueue.main.async { [weak self] in
                     self?.onLoadingChanged?(false)
-                    self?.onError?(errorMessage)
+                    self?.onCreateChildProfileError?(errorMessage)
                 }
                 return
             }
@@ -108,7 +115,85 @@ class ChildProfileViewModel {
         } catch {
             DispatchQueue.main.async { [weak self] in
                 self?.onLoadingChanged?(false)
-                self?.onError?(error.localizedDescription)
+                self?.onCreateChildProfileError?(error.localizedDescription)
+            }
+        }
+    }
+    
+    func registerToUpdate(childId: String) async {
+        let validation = self.validateInputs()
+        
+        switch validation {
+        case .success:
+            await self.updateChildProfile(childId: childId)
+            
+        case .failure(let error):
+            DispatchQueue.main.async { [weak self] in
+                self?.onValidationError?(error)
+            }
+            return
+        }
+    }
+    
+    private func updateChildProfile(childId: String) async {
+        let requestBody = ChildProfileRequest(
+            name: childName,
+            dateOfBirth: childDob,
+            gender: childGender,
+            profilePicture: profilePicture)
+        
+        // Show loading
+        DispatchQueue.main.async { [weak self] in
+            self?.onLoadingChanged?(true)
+        }
+        
+        do {
+            // Make async API call
+            let response = try await childrenService.updateChildProfile(request: requestBody, childId: childId)
+            
+
+            guard response.data?.success ?? false, let userData = response.data else {
+                // API Error
+                let errorMessage: String
+                
+                if let apiError = response.error {
+                    switch apiError {
+                    case .apiError(let errorResponse):
+                        errorMessage = errorResponse.message ?? "Registration failed"
+                        
+                    case .requestFailed(let error):
+                        errorMessage = error.localizedDescription
+                        
+                    case .authenticationFailed(let errorResponse):
+                        DispatchQueue.main.async { [weak self] in
+                            self?.onLoadingChanged?(false)
+                        }
+                        return
+                        
+                    default:
+                        errorMessage = "Something went wrong"
+                    }
+                } else {
+                    errorMessage = response.data?.message ?? "Registration failed"
+                }
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.onLoadingChanged?(false)
+                    self?.onUpdateChildProfileError?(errorMessage)
+                }
+                return
+            }
+            
+            // Success
+            DispatchQueue.main.async { [weak self] in
+                self?.onLoadingChanged?(false)
+                self?.onUpdateChildProfileSuccess?(userData)
+            }
+            
+        } catch {
+            DispatchQueue.main.async { [weak self] in
+                self?.onLoadingChanged?(false)
+                self?.onUpdateChildProfileError?(error.localizedDescription)
             }
         }
     }

@@ -14,6 +14,9 @@ class ViewAllChildProfilesViewModel {
     var onGetChildDetailsError: ((String) -> Void)?
     var onGetChildDetailsSuccess: ((ChildrenDetails) -> Void)?
     
+    var onDeleteChildProfileError: ((String) -> Void)?
+    var onDeleteChildProfileSuccess: ((DeleteChildProfileResponse) -> Void)?
+    
     private let childrenService = ChildrenService()
 
      func getDetailsOfChildren() async {
@@ -75,5 +78,63 @@ class ViewAllChildProfilesViewModel {
             }
         }
     }
+    
+    func deleteChildProfile(childId: String) async {
+       
+       DispatchQueue.main.async { [weak self] in
+           self?.onLoadingChanged?(true)
+       }
+       
+       do {
+           // Make async API call
+           let response = try await childrenService.deleteChildProfile(childId: childId)
+           
+           // Validate response
+           guard let childDetails = response.data  else {
+               // API Error
+               let errorMessage: String
+               
+               if let apiError = response.error {
+                   switch apiError {
+                   case .apiError(let errorResponse):
+                       errorMessage = errorResponse.message ?? "Unable to delete"
+                       
+                   case .requestFailed(let error):
+                       errorMessage = error.localizedDescription
+                       
+                   case .authenticationFailed(_):
+                       DispatchQueue.main.async { [weak self] in
+                           self?.onLoadingChanged?(false)
+                       }
+                       return
+
+                   default:
+                       errorMessage = "Something went wrong"
+                   }
+               } else {
+                   errorMessage = "Unable to delete"
+               }
+           
+               DispatchQueue.main.async { [weak self] in
+                   self?.onLoadingChanged?(false)
+                   self?.onDeleteChildProfileError?(errorMessage)
+               }
+               return
+           }
+           
+           // Success
+           DispatchQueue.main.async { [weak self] in
+               self?.onLoadingChanged?(false)
+               self?.onDeleteChildProfileSuccess?(childDetails)
+           }
+           
+       } catch {
+           // Network/Unknown Error
+           DispatchQueue.main.async { [weak self] in
+               self?.onLoadingChanged?(false)
+               self?.onDeleteChildProfileError?(error.localizedDescription)
+           }
+       }
+   }
 }
 

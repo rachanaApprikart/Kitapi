@@ -8,6 +8,7 @@
 import UIKit
 import DropDown
 import FloatingPanel
+import Kingfisher
 
 class ChildProfileViewController: UIViewController {
     
@@ -33,7 +34,9 @@ class ChildProfileViewController: UIViewController {
 
     private var floatingPanel: FloatingPanelController?
     private let viewModel = ChildProfileViewModel()
-    
+    private let formatter = DateFormatter()
+
+    var selectedChild: Child?
     var IS_COMING_FROM_PROFILE_SCREEN:Bool = false
     
     static var sbIdentifier: String {
@@ -43,6 +46,7 @@ class ChildProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setCreateChildProfileScreenUI()
+        self.setUpdateChildScreenUI()
         self.bindViewModel()
     }
     
@@ -54,6 +58,36 @@ class ChildProfileViewController: UIViewController {
         self.openAvatarPickerVC()
     }
     
+    private func setUpdateChildScreenUI() {
+
+        guard let childDetails = self.selectedChild else {
+            return
+        }
+
+        self.nameTextFieldView.customTextField.text = childDetails.name
+        self.genderTextFieldView.customTextField.text = childDetails.gender
+
+        let dateString = self.formatDate(childDetails.dateOfBirth ?? "")
+        self.dobTextFieldView.customTextField.text = dateString
+
+        if let imageURL = childDetails.profilePicture?.url,
+           let url = URL(string: imageURL) {
+
+            self.addProfileImageView.kf.setImage(with: url) { [weak self] result in
+
+                switch result {
+
+                case .success(let value):
+                    self?.viewModel.profilePicture = value.image
+
+                case .failure(let error):
+                    print("Failed to load profile image:", error)
+                }
+            }
+        }
+    }
+   
+    
     @IBAction func createChildProfileAction(_ sender: UIButton) {
         self.clearAllErrors()
         self.view.endEditing(true)
@@ -62,9 +96,12 @@ class ChildProfileViewController: UIViewController {
         self.viewModel.childGender = self.genderTextFieldView.customTextField.text?.lowercased() ?? ""
         self.viewModel.childDob = self.dobTextFieldView.customTextField.text ?? ""
         
-        Task {
-            await self.viewModel.register()
+        if let childId = self.selectedChild?.id {
+            self.updateChildProfile(childId: childId)
+        } else {
+            self.createChildProfile()
         }
+        
     }
     
     
@@ -98,7 +135,7 @@ class ChildProfileViewController: UIViewController {
             self.createChildProfileButton.alpha = isLoading ? 0.6 : 1.0
         }
         
-        self.viewModel.onError = { [weak self] errorMessage in
+        self.viewModel.onCreateChildProfileError = { [weak self] errorMessage in
             MessageManager.shared.show(message: errorMessage)
         }
       
@@ -106,6 +143,16 @@ class ChildProfileViewController: UIViewController {
             guard let self = self else { return }
             MessageManager.shared.show(message: user.message, type: .success)
             self.handleRegistrationSuccess()
+        }
+        
+        self.viewModel.onUpdateChildProfileError = { [weak self] errorMessage in
+            MessageManager.shared.show(message: errorMessage)
+        }
+      
+        self.viewModel.onUpdateChildProfileSuccess = { [weak self] user in
+            guard let self = self else { return }
+            MessageManager.shared.show(message: user.message, type: .success)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -117,6 +164,29 @@ class ChildProfileViewController: UIViewController {
     
     private func handleRegistrationSuccess() {
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    private func createChildProfile() {
+        Task {
+            await self.viewModel.register()
+        }
+    }
+    
+    private func updateChildProfile(childId: String) {
+        Task {
+            await self.viewModel.registerToUpdate(childId: childId)
+        }
+    }
+    
+    func formatDate(_ isoString: String) -> String {
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+        guard let date = isoFormatter.date(from: isoString) else { return isoString }
+
+        let displayFormatter = DateFormatter()
+        displayFormatter.dateFormat = "dd-MM-yyyy"
+        return displayFormatter.string(from: date)
     }
 }
 
@@ -153,8 +223,9 @@ extension ChildProfileViewController {
         self.backButton.isHidden = !self.IS_COMING_FROM_PROFILE_SCREEN
         
         self.appBGView.setGradientBackground()
-                
-        self.headerLabel.text = APPConstants.createChidAcc
+        let title = self.selectedChild != nil ? "Update child profile" : APPConstants.createChidAcc
+
+        self.headerLabel.text = title
         self.headerLabel.textAlignment = .center
         self.headerLabel.font = UIFont(name: Fonts.urbanistBold, size: 28)
         self.headerLabel.textColor = .headerLabekColor
@@ -166,7 +237,8 @@ extension ChildProfileViewController {
         
         self.addProfileImageView.layer.cornerRadius = 45
         
-        self.createChildProfileButton.setTitle(APPConstants.createChidAcc, for: .normal)
+        
+        self.createChildProfileButton.setTitle(title, for: .normal)
         self.createChildProfileButton.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 16)
         self.createChildProfileButton.setTitleColor(.white, for: .normal)
         self.createChildProfileButton.backgroundColor = .pinkPrimaryColor
@@ -241,9 +313,16 @@ extension ChildProfileViewController {
             self?.genderTextFieldView.customTextField.text = item
             self?.viewModel.childGender = item.lowercased()
             self?.genderTextFieldView.hideErrorMessage()
-            self?.viewModel.profilePicture = index == 0 ? AppImages.boy_avatar_1 : AppImages.girl_avatar_1
+            
+            // Set default avatar only if user hasn't selected a profile picture
+            if self?.viewModel.profilePicture == nil {
+                self?.viewModel.profilePicture = index == 0
+                ? AppImages.boy_avatar_1
+                : AppImages.girl_avatar_1
+            }
         }
     }
+    
     
     private func openDatePickerVC() {
         guard let contentVC = VCManager.openDatePickerVC() else { return }

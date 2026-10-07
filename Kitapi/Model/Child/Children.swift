@@ -38,6 +38,7 @@ struct Child: Codable {
     let goalsStats, tasksStats: Stats?
     let balanceBefore: Int?
     let coinsSpent: Int?
+    let parentId: String?
 }
 
 // MARK: - ProfilePicture
@@ -82,4 +83,8 @@ struct Pagination: Codable {
 // MARK: Summary
 struct Summary: Codable {
     let totalChildrenInDatabase, childrenOnCurrentPage, averageGoalCompletion, averageTaskCompletion: Int
+}
+
+struct DeleteChildProfileResponse: Codable {
+    let message: String
 }

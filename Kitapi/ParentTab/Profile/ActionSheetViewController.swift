@@ -14,6 +14,7 @@ class ActionSheetViewController: UIViewController {
     @IBOutlet weak var secondButton: UIButton!
     
     var actionSheetType: ActionSheetType = .account
+    var childDetails: Child?
     
     weak var accountDelegate: AccountActionSheetDelegate?
     weak var childProfileDelegate: ChildProfileActionSheetDelegate?
@@ -34,14 +35,14 @@ class ActionSheetViewController: UIViewController {
         switch actionSheetType {
             
         case .account:
-            self.titleLabel.text = "Account"
-            self.firstButton.setTitle("Logout", for: .normal)
+            self.titleLabel.text = "Account Settings"
+            self.firstButton.setTitle("Logout Account", for: .normal)
             self.secondButton.setTitle("Delete Account", for: .normal)
             
         case .childProfile:
             self.titleLabel.text = "Child Profile"
-            self.firstButton.setTitle("Edit", for: .normal)
-            self.secondButton.setTitle("Delete", for: .normal)
+            self.firstButton.setTitle("Edit Account", for: .normal)
+            self.secondButton.setTitle("Delete Account", for: .normal)
         }
     }
     
@@ -53,8 +54,7 @@ class ActionSheetViewController: UIViewController {
             self.showLogoutConfirmation()
             
         case .childProfile:
-            //self.childProfileDelegate?.didTapEditChild()
-            break
+            self.childProfileDelegate?.didTapEditChild(details: self.childDetails)
         }
     }
     
@@ -67,8 +67,7 @@ class ActionSheetViewController: UIViewController {
             self.showDeleteAccountConfirmation()
             
         case .childProfile:
-            //self.showDeleteChildConfirmation()
-            break
+            self.showDeleteChildConfirmation()
         }
     }
     
@@ -142,16 +141,21 @@ extension ActionSheetViewController {
     private func setActionSheeyScreenUI() {
                         
         self.titleLabel.textAlignment = .center
-        self.titleLabel.font = UIFont(name: Fonts.urbanistBold, size: 28)
+        self.titleLabel.font = UIFont(name: Fonts.urbanistBold, size: 22)
         self.titleLabel.textColor = .headerLabekColor
         self.titleLabel.numberOfLines = 1
         
         self.firstButton.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 15)
         self.firstButton.setTitleColor(.headerLabekColor, for: .normal)
+        self.firstButton.layer.cornerRadius = 25
+        self.firstButton.layer.borderColor = UIColor.buttonBorderColor.cgColor
+        self.firstButton.layer.borderWidth = 1
         
         self.secondButton.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 15)
-        self.secondButton.setTitleColor(.headerLabekColor, for: .normal)
-    
+        self.secondButton.setTitleColor(.redPrimaryColor, for: .normal)
+        self.secondButton.layer.cornerRadius = 25
+        self.secondButton.layer.borderColor = UIColor.redPrimaryColor.cgColor
+        self.secondButton.layer.borderWidth = 1
     }
 }
 
@@ -166,6 +170,6 @@ protocol AccountActionSheetDelegate: AnyObject {
 }
 
 protocol ChildProfileActionSheetDelegate: AnyObject {
-    func didTapEditChild()
+    func didTapEditChild(details: Child?)
     func didTapDeleteChild()
 }

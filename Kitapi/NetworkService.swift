@@ -70,7 +70,8 @@ class APIClient {
                 }
             } else if (statusCode == 401) || (statusCode == 403) {
                 let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
-                if AppUserDefaults.authorizationToken != nil {
+                // Only a 401 means the token itself is invalid.
+                if statusCode == 401, AppUserDefaults.authorizationToken != nil {
                     SessionManager.shared.handleAuthenticationFailure()
                 }
                 return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
@@ -154,15 +155,8 @@ class APIClient {
             }
             else if (statusCode == 401) || (statusCode == 403) {
                 let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
-                /*
-                 Only trigger the global session-expired flow
-                 if the Parent token still exists.
-                 
-                 This prevents an old/in-flight request from
-                 showing another alert after the user has already
-                 been logged out.
-                 */
-                if AppUserDefaults.authorizationToken != nil {
+                // Only a 401 means the token itself is invalid.
+                if statusCode == 401, AppUserDefaults.authorizationToken != nil {
                     SessionManager.shared.handleAuthenticationFailure()
                 }
                 return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)

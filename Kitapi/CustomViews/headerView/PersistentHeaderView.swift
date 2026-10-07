@@ -66,12 +66,17 @@ class PersistentHeaderView: UIView {
             name: .childModeDidChange,
             object: nil
         )
+        
+        // Same child, but details changed.
+        NotificationCenter.default.addObserver( self, selector: #selector(refresh), name: .childDetailsDidUpdate, object: nil )
     }
     
     @objc private func refresh() {
         
         DispatchQueue.main.async {
+            
             let child = ChildManager.shared.selectedChild
+            
             if let url = URL(string: child?.profilePicture?.url ?? "") {
                 self.childImageView.kf.indicatorType = .activity
                 self.childImageView.kf.setImage(with: url)

@@ -31,7 +31,7 @@ class EditParentViewController: UIViewController {
     
     @IBOutlet weak var countryCodeButton: UIButton!
     @IBOutlet weak var countryCodeLabel: UILabel!
-  
+    
     @IBOutlet weak var editProfileButton: UIButton!
     fileprivate let genderDropDown = DropDown()
     
@@ -49,7 +49,6 @@ class EditParentViewController: UIViewController {
         self.setEditParentProfileScreenUI()
         self.bindViewModel()
     }
-    
     
     @IBAction func backAction(_ sender: UIButton) {
         self.navigationController?.popToRootViewController(animated: true)
@@ -94,7 +93,6 @@ class EditParentViewController: UIViewController {
                 }
             }
         }
-        
     }
     
     private func bindViewModel() {
@@ -108,10 +106,10 @@ class EditParentViewController: UIViewController {
                 
             case .nameField:
                 self.nameTextFieldView.showError(message: error.message)
-          
+                
             case .genderField:
                 self.genderTextFieldView.showError(message: error.message)
-          
+                
             default:
                 break
             }
@@ -120,7 +118,7 @@ class EditParentViewController: UIViewController {
         self.viewModel.onLoadingChanged = { [weak self] isLoadings in
             guard let self = self else { return }
             isLoadings ? self.showActivityIndicator() : self.hideActivityIndicator()
-        
+            
             self.editProfileButton.isEnabled = !isLoadings
             self.editProfileButton.alpha = isLoadings ? 0.6 : 1.0
         }
@@ -136,12 +134,12 @@ class EditParentViewController: UIViewController {
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
-  
+    
     private func clearAllErrors() {
         self.nameTextFieldView.hideErrorMessage()
         self.phoneNumberTextFieldView.hideErrorMessage()
         self.genderTextFieldView.hideErrorMessage()
-       }
+    }
 }
 
 //MARK: IMAGE PICKER DDELEGATE

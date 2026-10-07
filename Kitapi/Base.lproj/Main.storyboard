@@ -2116,8 +2116,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Kmu-Sq-7ih">
-                                <rect key="frame" x="20" y="129.33333333333334" width="390" height="110"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Kmu-Sq-7ih">
+                                <rect key="frame" x="20" y="139.33333333333334" width="390" height="115"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sot-Tb-zKF">
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="50"/>
@@ -2127,7 +2127,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EYQ-Qr-v1I">
-                                        <rect key="frame" x="0.0" y="60" width="390" height="50"/>
+                                        <rect key="frame" x="0.0" y="65" width="390" height="50"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <connections>
                                             <action selector="secondButtonAction:" destination="jcV-Z0-eEL" eventType="touchUpInside" id="bAi-Pt-T8f"/>
@@ -2135,7 +2135,7 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="110" id="pQh-Y5-OgK"/>
+                                    <constraint firstAttribute="height" constant="115" id="pQh-Y5-OgK"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -2143,7 +2143,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="DZD-ex-3dq" firstAttribute="leading" secondItem="PRI-oS-OHV" secondAttribute="leading" id="7KH-hj-2cS"/>
-                            <constraint firstItem="Kmu-Sq-7ih" firstAttribute="top" secondItem="DZD-ex-3dq" secondAttribute="bottom" constant="20" id="7dh-eI-cbZ"/>
+                            <constraint firstItem="Kmu-Sq-7ih" firstAttribute="top" secondItem="DZD-ex-3dq" secondAttribute="bottom" constant="30" id="7dh-eI-cbZ"/>
                             <constraint firstItem="PRI-oS-OHV" firstAttribute="trailing" secondItem="Kmu-Sq-7ih" secondAttribute="trailing" constant="20" id="Rkg-jF-bbf"/>
                             <constraint firstItem="Kmu-Sq-7ih" firstAttribute="leading" secondItem="PRI-oS-OHV" secondAttribute="leading" constant="20" id="VaL-MG-t5m"/>
                             <constraint firstItem="PRI-oS-OHV" firstAttribute="trailing" secondItem="DZD-ex-3dq" secondAttribute="trailing" id="uCc-ka-hYk"/>
