@@ -20,6 +20,22 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Event Details View Controller-->
+        <scene sceneID="EVT-details-scene">
+            <objects>
+                <viewController storyboardIdentifier="EventDetailsViewController" id="EVT-details-vc" customClass="EventDetailsViewController" customModule="Kitapi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EVT-details-view">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="EVT-details-safe"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Event Details" id="EVT-details-nav"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EVT-details-responder" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2500" y="35"/>
+        </scene>
         <!--Event List View Controller-->
         <scene sceneID="LAN-aC-iLP">
             <objects>
@@ -27,21 +43,60 @@
                     <view key="view" contentMode="scaleToFill" id="B2i-vq-Ouf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TIO-E9-s7M">
+                                <rect key="frame" x="0.0" y="118" width="393" height="617"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aQx-8E-LhZ" customClass="PersistentHeaderView" customModule="Kitapi" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="70"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="GtI-90-42W"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ia-Mi-yHv">
+                                        <rect key="frame" x="0.0" y="70" width="393" height="547"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="aQx-8E-LhZ" firstAttribute="top" secondItem="TIO-E9-s7M" secondAttribute="top" id="9nv-2a-SKG"/>
+                                    <constraint firstAttribute="bottom" secondItem="4Ia-Mi-yHv" secondAttribute="bottom" id="NFw-hm-tDc"/>
+                                    <constraint firstItem="4Ia-Mi-yHv" firstAttribute="top" secondItem="aQx-8E-LhZ" secondAttribute="bottom" id="O6s-bf-6LT"/>
+                                    <constraint firstItem="aQx-8E-LhZ" firstAttribute="leading" secondItem="TIO-E9-s7M" secondAttribute="leading" id="Sqe-ba-aGZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Ia-Mi-yHv" secondAttribute="trailing" id="kwf-3p-cge"/>
+                                    <constraint firstItem="4Ia-Mi-yHv" firstAttribute="leading" secondItem="TIO-E9-s7M" secondAttribute="leading" id="rol-ty-LjP"/>
+                                    <constraint firstAttribute="trailing" secondItem="aQx-8E-LhZ" secondAttribute="trailing" id="tuj-3Z-r43"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="O6p-hr-e5l"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="O6p-hr-e5l" firstAttribute="trailing" secondItem="TIO-E9-s7M" secondAttribute="trailing" id="CQZ-Ap-uXy"/>
+                            <constraint firstItem="O6p-hr-e5l" firstAttribute="bottom" secondItem="TIO-E9-s7M" secondAttribute="bottom" id="Dkn-l0-W3w"/>
+                            <constraint firstItem="TIO-E9-s7M" firstAttribute="leading" secondItem="O6p-hr-e5l" secondAttribute="leading" id="JJZ-jy-dWz"/>
+                            <constraint firstItem="TIO-E9-s7M" firstAttribute="top" secondItem="O6p-hr-e5l" secondAttribute="top" id="onc-9Y-xn4"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lsL-nb-VjQ"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="appBgView" destination="TIO-E9-s7M" id="gVs-jQ-9fP"/>
+                        <outlet property="headerView" destination="aQx-8E-LhZ" id="Uoo-U0-0P4"/>
+                        <outlet property="mainView" destination="4Ia-Mi-yHv" id="J6y-Xk-Q9Y"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k9J-GC-vkR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1753" y="35"/>
+            <point key="canvasLocation" x="-1753.4351145038167" y="34.507042253521128"/>
         </scene>
         <!--Events-->
         <scene sceneID="txT-9f-aiA">
             <objects>
                 <navigationController title="Events" navigationBarHidden="YES" id="cdq-u5-c4j" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="xsb-bo-jMV"/>
+                    <tabBarItem key="tabBarItem" title="" image="event_unselected" selectedImage="event_selected" id="xsb-bo-jMV"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vfU-f9-POM">
                         <autoresizingMask key="autoresizingMask"/>
@@ -3992,6 +4047,8 @@
         <image name="close" width="20" height="20"/>
         <image name="coins" width="20" height="20"/>
         <image name="edit" width="11" height="11"/>
+        <image name="event_selected" width="24" height="24"/>
+        <image name="event_unselected" width="24" height="24"/>
         <image name="gold-coin-dollar-icon (1) 1" width="12" height="12"/>
         <image name="home_selected" width="24" height="24"/>
         <image name="kitapati" width="141.66667175292969" height="140"/>

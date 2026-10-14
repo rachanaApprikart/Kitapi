@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0857BF8307F8C3E006C4D47 /* RazorpayCheckout in Frameworks */ = {isa = PBXBuildFile; productRef = F0857BF7307F8C3E006C4D47 /* RazorpayCheckout */; };
+		F0857BFA307F8C3E006C4D47 /* RazorpayCustomUI in Frameworks */ = {isa = PBXBuildFile; productRef = F0857BF9307F8C3E006C4D47 /* RazorpayCustomUI */; };
 		F0FF8BBE3059293100B7C84F /* FloatingPanel in Frameworks */ = {isa = PBXBuildFile; productRef = F0FF8BBD3059293100B7C84F /* FloatingPanel */; };
 		F0FF8BC13059293C00B7C84F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F0FF8BC03059293C00B7C84F /* Kingfisher */; };
 		F0FF8BC43059299100B7C84F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F0FF8BC33059299100B7C84F /* FirebaseAnalytics */; };
@@ -23,7 +25,18 @@
 		F0FF8BDF30592A3400B7C84F /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = F0FF8BDE30592A3400B7C84F /* SVProgressHUD */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		EA0000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0FF8B9C305928B900B7C84F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F0FF8BA3305928B900B7C84F;
+			remoteInfo = Kitapi;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		EA0000000000000000000003 /* KitapiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KitapiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0FF8BA4305928B900B7C84F /* Kitapi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kitapi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -38,6 +51,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		EA0000000000000000000004 /* KitapiTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = KitapiTests;
+			sourceTree = "<group>";
+		};
 		F0FF8BA6305928B900B7C84F /* Kitapi */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -49,11 +67,19 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EA0000000000000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0FF8BA1305928B900B7C84F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F0FF8BCE3059299100B7C84F /* FirebaseMessaging in Frameworks */,
+				F0857BFA307F8C3E006C4D47 /* RazorpayCustomUI in Frameworks */,
 				F0FF8BC13059293C00B7C84F /* Kingfisher in Frameworks */,
 				F0FF8BBE3059293100B7C84F /* FloatingPanel in Frameworks */,
 				F0FF8BC43059299100B7C84F /* FirebaseAnalytics in Frameworks */,
@@ -66,6 +92,7 @@
 				F0FF8BDF30592A3400B7C84F /* SVProgressHUD in Frameworks */,
 				F0FF8BCA3059299100B7C84F /* FirebaseCore in Frameworks */,
 				F0FF8BC63059299100B7C84F /* FirebaseAnalyticsCore in Frameworks */,
+				F0857BF8307F8C3E006C4D47 /* RazorpayCheckout in Frameworks */,
 				F0FF8BD1305929B000B7C84F /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				F0FF8BA6305928B900B7C84F /* Kitapi */,
+				EA0000000000000000000004 /* KitapiTests */,
 				F0FF8BA5305928B900B7C84F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				F0FF8BA4305928B900B7C84F /* Kitapi.app */,
+				EA0000000000000000000003 /* KitapiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +121,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		EA0000000000000000000006 /* KitapiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA0000000000000000000007 /* Build configuration list for PBXNativeTarget "KitapiTests" */;
+			buildPhases = (
+				EA0000000000000000000008 /* Sources */,
+				EA0000000000000000000005 /* Frameworks */,
+				EA0000000000000000000009 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA0000000000000000000002 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EA0000000000000000000004 /* KitapiTests */,
+			);
+			name = KitapiTests;
+			productName = KitapiTests;
+			productReference = EA0000000000000000000003 /* KitapiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F0FF8BA3305928B900B7C84F /* Kitapi */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F0FF8BB7305928BB00B7C84F /* Build configuration list for PBXNativeTarget "Kitapi" */;
@@ -123,6 +173,8 @@
 				F0FF8BD830592A1100B7C84F /* IQKeyboardManagerSwift */,
 				F0FF8BDB30592A1F00B7C84F /* IQKeyboardToolbarManager */,
 				F0FF8BDE30592A3400B7C84F /* SVProgressHUD */,
+				F0857BF7307F8C3E006C4D47 /* RazorpayCheckout */,
+				F0857BF9307F8C3E006C4D47 /* RazorpayCustomUI */,
 			);
 			productName = Kitapi;
 			productReference = F0FF8BA4305928B900B7C84F /* Kitapi.app */;
@@ -161,6 +213,7 @@
 				F0FF8BD730592A1100B7C84F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				F0FF8BDA30592A1F00B7C84F /* XCRemoteSwiftPackageReference "IQKeyboardToolbarManager" */,
 				F0FF8BDD30592A3400B7C84F /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
+				F0857BF6307F8C3D006C4D47 /* XCRemoteSwiftPackageReference "razorpay-pod" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F0FF8BA5305928B900B7C84F /* Products */;
@@ -168,11 +221,19 @@
 			projectRoot = "";
 			targets = (
 				F0FF8BA3305928B900B7C84F /* Kitapi */,
+				EA0000000000000000000006 /* KitapiTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		EA0000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0FF8BA2305928B900B7C84F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -183,6 +244,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		EA0000000000000000000008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F0FF8BA0305928B900B7C84F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -192,7 +260,49 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		EA0000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F0FF8BA3305928B900B7C84F /* Kitapi */;
+			targetProxy = EA0000000000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		EA000000000000000000000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apprikart.KitapiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kitapi.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kitapi";
+			};
+			name = Debug;
+		};
+		EA000000000000000000000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apprikart.KitapiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kitapi.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kitapi";
+			};
+			name = Release;
+		};
 		F0FF8BB8305928BB00B7C84F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -211,7 +321,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -251,7 +361,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -326,7 +436,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -384,7 +494,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -397,6 +507,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EA0000000000000000000007 /* Build configuration list for PBXNativeTarget "KitapiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA000000000000000000000A /* Debug */,
+				EA000000000000000000000B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F0FF8B9F305928B900B7C84F /* Build configuration list for PBXProject "Kitapi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -418,6 +537,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F0857BF6307F8C3D006C4D47 /* XCRemoteSwiftPackageReference "razorpay-pod" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/razorpay/razorpay-pod";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.8;
+			};
+		};
 		F0FF8BBC3059293100B7C84F /* XCRemoteSwiftPackageReference "FloatingPanel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scenee/FloatingPanel";
@@ -485,6 +612,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F0857BF7307F8C3E006C4D47 /* RazorpayCheckout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0857BF6307F8C3D006C4D47 /* XCRemoteSwiftPackageReference "razorpay-pod" */;
+			productName = RazorpayCheckout;
+		};
+		F0857BF9307F8C3E006C4D47 /* RazorpayCustomUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0857BF6307F8C3D006C4D47 /* XCRemoteSwiftPackageReference "razorpay-pod" */;
+			productName = RazorpayCustomUI;
+		};
 		F0FF8BBD3059293100B7C84F /* FloatingPanel */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F0FF8BBC3059293100B7C84F /* XCRemoteSwiftPackageReference "FloatingPanel" */;

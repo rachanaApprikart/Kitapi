@@ -14,6 +14,10 @@ struct VCManager {
     static let kitapiTabStoryBoard = UIStoryboard(name: "KitapiTab", bundle: nil)
     static let childTabStoryBoard = UIStoryboard(name: "ChildTab", bundle: nil)
 
+    static func openEventDetailsVC() -> EventDetailsViewController? {
+        return kitapiTabStoryBoard.instantiateViewController(identifier: EventDetailsViewController.sbIdentifier) as? EventDetailsViewController
+    }
+
     
     static func openSplashScreenVC() -> SplashScreenViewController? {
         return splashStoryBoard.instantiateViewController(identifier: SplashScreenViewController.sbIdentifier) as? SplashScreenViewController

@@ -9,6 +9,9 @@ import Foundation
 
 
 struct APPConstants {
+    static let eventTermsURL = "https://kitapi.apprikart.in/termsAndConditions"
+    static let eventPrivacyURL = "https://kitapi.apprikart.in/privacyPolicy"
+    static let eventMediaPolicyURL = "https://kitapi.apprikart.in/mediaPolicy"
     
     static let nextTitle: String = "Next"
     static let nextVideoTitle: String = "Next  >>"
