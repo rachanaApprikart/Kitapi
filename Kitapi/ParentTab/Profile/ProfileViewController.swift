@@ -262,7 +262,7 @@ extension ProfileViewController {
     private func showChangeMPINVC() {
         guard let contentVC = VCManager.openUpdateMPINVC() else { return }
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.55)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.6)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     

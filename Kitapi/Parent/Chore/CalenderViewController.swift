@@ -332,6 +332,9 @@ extension CalenderViewController {
         self.datesCV.delegate = self
         self.datesCV.dataSource = self
         self.datesCV.register(DaysCVCell.nibFile, forCellWithReuseIdentifier: DaysCVCell.reUseIdentifier)
+        
+        self.previousMonthButton.isHidden = true
+        self.nextMonthButton.isHidden = true
     }
     
     private func updateCalendarUI() {

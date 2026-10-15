@@ -14,9 +14,6 @@ class SetTimerViewController: UIViewController {
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
 
-    @IBOutlet weak var hourView: UIView!
-    @IBOutlet weak var houeLabel: UILabel!
-
     @IBOutlet weak var minuteView: UIView!
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var minutesPickerView: UIPickerView!
@@ -107,7 +104,6 @@ extension SetTimerViewController {
         self.orLabel.textColor = .buttonTitleColor
         self.orLabel.numberOfLines = 1
         
-        self.houeLabel.textColor = .buttonTitleColor
         self.minLabel.textColor = .buttonTitleColor
         
         self.setTimerButton.setTitle(APPConstants.setTimerTitle, for: .normal)
@@ -123,9 +119,6 @@ extension SetTimerViewController {
         self.skipTimerButton.layer.cornerRadius = 25
         self.skipTimerButton.layer.borderWidth = 1
         self.skipTimerButton.layer.borderColor = UIColor.buttonBorderColor.cgColor
-        
-        self.hourView.layer.cornerRadius = 12
-        self.hourView.backgroundColor = .gradientColor1
         
         self.minuteView.layer.cornerRadius = 12
         self.minuteView.backgroundColor = .gradientColor1
