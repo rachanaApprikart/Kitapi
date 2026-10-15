@@ -3654,7 +3654,7 @@
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mCP-Ny-Fyj">
                                                                                 <rect key="frame" x="20" y="20" width="40" height="40"/>
                                                                                 <subviews>
-                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settings" translatesAutoresizingMaskIntoConstraints="NO" id="iPg-xM-eqk">
+                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="password" translatesAutoresizingMaskIntoConstraints="NO" id="iPg-xM-eqk">
                                                                                         <rect key="frame" x="10" y="10" width="20" height="20"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="height" constant="20" id="Iyv-In-cpM"/>
@@ -3704,7 +3704,7 @@
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VJH-Dk-9e4">
                                                                                 <rect key="frame" x="20" y="20" width="40" height="40"/>
                                                                                 <subviews>
-                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settings" translatesAutoresizingMaskIntoConstraints="NO" id="osl-JT-aCs">
+                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="child_profiles" translatesAutoresizingMaskIntoConstraints="NO" id="osl-JT-aCs">
                                                                                         <rect key="frame" x="10" y="10" width="20" height="20"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="height" constant="20" id="0Da-Ra-0PS"/>
@@ -3754,7 +3754,7 @@
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNM-R5-5Hx">
                                                                                 <rect key="frame" x="20" y="20" width="40" height="40"/>
                                                                                 <subviews>
-                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settings" translatesAutoresizingMaskIntoConstraints="NO" id="kui-3N-J4W">
+                                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kitapati" translatesAutoresizingMaskIntoConstraints="NO" id="kui-3N-J4W">
                                                                                         <rect key="frame" x="10" y="10" width="20" height="20"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="height" constant="20" id="aVk-y3-SWZ"/>
@@ -3934,6 +3934,7 @@
         <image name="analytics_selected" width="24" height="24"/>
         <image name="check" width="20" height="20"/>
         <image name="chevron_forward" width="6.6666665077209473" height="11.333333015441895"/>
+        <image name="child_profiles" width="28.333333969116211" height="19.333333969116211"/>
         <image name="close" width="20" height="20"/>
         <image name="coins" width="20" height="20"/>
         <image name="edit" width="11" height="11"/>
@@ -3943,6 +3944,7 @@
         <image name="left" width="16" height="16"/>
         <image name="mic" width="24" height="24"/>
         <image name="mic_white" width="24" height="24"/>
+        <image name="password" width="18" height="18"/>
         <image name="pause" width="24" height="24"/>
         <image name="play_arrow" width="24" height="24"/>
         <image name="right" width="16" height="16"/>

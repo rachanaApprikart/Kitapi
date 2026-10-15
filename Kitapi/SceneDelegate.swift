@@ -18,8 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         
         NotificationCenter.default.addObserver(self,selector: #selector(handleSessionExpired),name: .sessionExpired, object: nil)
-
-        
+    
         guard let splashVC = VCManager.openSplashScreenVC() else {
             return
         }
@@ -37,10 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                   return
               }
 
-              /*
-               Prevent presenting another alert if one
-               is already being displayed.
-               */
+              /* Prevent presenting another alert if one is already being displayed. */
               guard UIApplication.topViewController() != nil else {
                   return
               }
