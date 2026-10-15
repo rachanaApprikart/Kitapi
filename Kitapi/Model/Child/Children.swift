@@ -46,15 +46,17 @@ struct ProfilePicture: Codable {
     let url: String?
     let filename, originalName: String?
     let size: Int?
-    let mimetype: String?
+    let mimetype: Mimetype?
 }
 
 enum Mimetype: String, Codable {
     case imageJPEG = "image/jpeg"
+    case imageJPG = "image/jpg"
     case imagePNG = "image/png"
     case videoMp4 = "video/mp4"
     case webp = "image/webp"
     case gif = "image/gif"
+    case imageSVG = "image/svg+xml"
 }
 
 
