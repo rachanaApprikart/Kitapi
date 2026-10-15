@@ -50,13 +50,32 @@ struct ProfilePicture: Codable {
 }
 
 enum Mimetype: String, Codable {
+    // MARK: - Image
     case imageJPEG = "image/jpeg"
     case imageJPG = "image/jpg"
     case imagePNG = "image/png"
-    case videoMp4 = "video/mp4"
-    case webp = "image/webp"
-    case gif = "image/gif"
+    case imageWebP = "image/webp"
     case imageSVG = "image/svg+xml"
+
+    // MARK: - Video
+    case videoMP4 = "video/mp4"
+    case videoMPEG = "video/mpeg"
+    case videoQuickTime = "video/quicktime"
+    case videoXMSVideo = "video/x-msvideo"
+    case videoWebM = "video/webm"
+
+    // MARK: - Audio
+    case audioMPEG = "audio/mpeg"
+    case audioMP3 = "audio/mp3"
+    case audioWAV = "audio/wav"
+    case audioWAVE = "audio/wave"
+    case audioXWAV = "audio/x-wav"
+    case audioAAC = "audio/aac"
+    case audioM4A = "audio/m4a"
+    case audioXM4A = "audio/x-m4a"
+    case audioOGG = "audio/ogg"
+    case audioWebM = "audio/webm"
+    case audioFLAC = "audio/flac"
 }
 
 
