@@ -9,6 +9,7 @@ import UIKit
 import IQKeyboardToolbarManager
 import IQKeyboardManagerSwift
 
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         IQKeyboardManager.shared.isEnabled = true
-        IQKeyboardManager.shared.enableAutoToolbar = true
+        IQKeyboardToolbarManager.shared.isEnabled = true
         return true
     }
 
@@ -37,3 +38,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension UIApplication {
+    
+    static func topViewController(
+        base: UIViewController? = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first(where: { $0.isKeyWindow })?.rootViewController
+    ) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        }
+        if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return topViewController(base: selected)
+        }
+        if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+        return base
+    }
+}

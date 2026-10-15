@@ -96,7 +96,7 @@ final class EventDetailsTests: XCTestCase {
         let session = URLSession(configuration: config)
         defer { session.invalidateAndCancel() }
         var logs: [String] = []
-        let service = EventDetailsService(session: session, baseURL: "https://details.test", tokenProvider: { "test-secret" }, logger: { logs.append($0) })
+        let service = EventDetailsService(client: APIClient(session: session, baseURL: "https://details.test", tokenProvider: { "test-secret" }, logger: { logs.append($0) }))
         let result = try await service.registerFree(eventID: "e1", childID: "child1")
         XCTAssertEqual(result.childId, "child1")
         XCTAssertTrue(logs.contains { $0.contains("POST /api/events/parent/e1/register") })

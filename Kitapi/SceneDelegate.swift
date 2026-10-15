@@ -17,6 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
         
+        NotificationCenter.default.addObserver(self,selector: #selector(handleSessionExpired),name: .sessionExpired, object: nil)
+
+        
         guard let splashVC = VCManager.openSplashScreenVC() else {
             return
         }
@@ -26,15 +29,78 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.makeKeyAndVisible()
     }
     
-    func switchToChildMode() {
+    @objc private func handleSessionExpired() {
 
-        guard let childTabBarVC = VCManager.openChildTabBarVC() else {
+          DispatchQueue.main.async { [weak self] in
+
+              guard let self = self else {
+                  return
+              }
+
+              /*
+               Prevent presenting another alert if one
+               is already being displayed.
+               */
+              guard UIApplication.topViewController() != nil else {
+                  return
+              }
+
+              let alert = UIAlertController(
+                  title: "Session Expired",
+                  message: "Your session has expired. Please login again to continue.",
+                  preferredStyle: .alert
+              )
+
+              alert.addAction( UIAlertAction(title: "Login", style: .default) { [weak self] _ in
+                      self?.handleExpiredSessionLogin()
+                  }
+              )
+              UIApplication.topViewController()?.present(alert, animated: true)
+          }
+      }
+    
+    private func handleExpiredSessionLogin() {
+        
+        // No logout API call here.
+        // The token is already invalid.
+        AppUserDefaults.authorizationToken = nil
+        AppUserDefaults.customerDetails = nil
+        
+        // Clears Child Mode + ChildSessionManager data.
+        ChildManager.shared.clearChildMode()
+        SessionManager.shared.resetSessionExpirationState()
+        
+        guard let splashVC = VCManager.openSplashScreenVC() else {
             return
         }
-
-        self.window?.rootViewController = childTabBarVC
+        
+        let navVC = UINavigationController(rootViewController: splashVC)
+        navVC.setNavigationBarHidden(true, animated: false)
+        self.window?.rootViewController = navVC
         self.window?.makeKeyAndVisible()
     }
+    
+    func showLoginScreen() {
+        
+        guard let loginVC = VCManager.openLoginVC() else {
+            return
+        }
+        
+        let navVC = UINavigationController(rootViewController: loginVC)
+        navVC.setNavigationBarHidden(true, animated: false)
+        self.window?.rootViewController = navVC
+        self.window?.makeKeyAndVisible()
+    }
+    
+//    func switchToChildMode() {
+//
+//        guard let childTabBarVC = VCManager.openChildTabBarVC() else {
+//            return
+//        }
+//
+//        self.window?.rootViewController = childTabBarVC
+//        self.window?.makeKeyAndVisible()
+//    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

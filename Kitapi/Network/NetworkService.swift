@@ -8,180 +8,184 @@
 import Foundation
 import UIKit
 
+class APIClient: APIClientProtocol {
+    var session: URLSession
+    var baseURL: String
+    var tokenProvider: () -> String?
+    var logger: (String) -> Void
+    private let authenticationFailureHandler: () -> Void
 
-
-class APIClient {
-    
-    static func callAPIWithRawData<T: Decodable> (url: String, method: HTTPMethod = .get, body: Data? = nil, headers: [String: String] = [:], tokenScope: TokenScope = .parent)  async -> (APIResponse<T>) {
-        
-        guard let url = URL(string: url) else {
-            return APIResponse(data: nil, error: .invalidURL, statusCode: nil)
+    init(session: URLSession = .shared,
+         baseURL: String = BASE_URL,
+         tokenProvider: @escaping () -> String? = { AppUserDefaults.authorizationToken },
+         logger: @escaping (String) -> Void = { EventAPILog.write($0) },
+         authenticationFailureHandler: (() -> Void)? = nil) {
+        self.session = session
+        self.baseURL = baseURL
+        self.tokenProvider = tokenProvider
+        self.logger = logger
+        self.authenticationFailureHandler = authenticationFailureHandler ?? {
+            if AppUserDefaults.authorizationToken != nil {
+                SessionManager.shared.handleAuthenticationFailure()
+            }
         }
-        LogFile.debugMessage(debug: "URL--->", value: url)
+    }
+
+    nonisolated deinit {}
+
+    // MARK: - Endpoint API
+
+    func request(for endpoint: any APIEndpoint) throws -> URLRequest {
+        guard var components = URLComponents(string: baseURL + (try endpoint.path)) else { throw EventServiceError.invalidURL }
+        components.queryItems = endpoint.queryItems.isEmpty ? nil : endpoint.queryItems
+        guard let url = components.url, url.scheme == "https", url.host != nil else { throw EventServiceError.invalidURL }
+        guard let token = tokenProvider(), !token.isEmpty else { throw EventServiceError.signInRequired }
+        var request = URLRequest(url: url)
+        request.httpMethod = endpoint.method.rawValue
+        request.httpBody = try endpoint.body
+        request.timeoutInterval = 30
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("en", forHTTPHeaderField: "Accept-Language")
+        return request
+    }
+
+    func execute<Value: Decodable>(_ endpoint: any APIEndpoint, describeResult: ((Value) -> String)? = nil) async throws -> Value {
+        let context = "[EventAPI][\(UUID().uuidString.prefix(8))] \(endpoint.method.rawValue) \((try? endpoint.path) ?? "<invalid endpoint>")\(endpoint.logDetails)"
+        let start = ProcessInfo.processInfo.systemUptime
+        var status: Int?
+        logger("\(context) REQUEST")
+        do {
+            let request = try request(for: endpoint)
+            logger("\(context) URL \(request.url?.absoluteString ?? "<invalid>")")
+            let result: APIResponse<EventAPIEnvelope<Value>> = await performJSONRequest(
+                request,
+                acceptConflict: endpoint.acceptsConflictResponse,
+                forbiddenMeansAuthenticationFailure: false,
+                preserveDecodingErrors: true,
+                context: context
+            )
+            status = result.statusCode
+            if let error = result.error {
+                switch error {
+                case .invalidURL: throw EventServiceError.invalidURL
+                case .authenticationFailed: throw EventServiceError.signInRequired
+                case .apiError(let error): throw EventServiceError.server(error.message ?? endpoint.failureMessage)
+                case .requestFailed(let error): throw error
+                case .invalidResponse, .decodingFailed, .unknown: throw EventServiceError.invalidResponse
+                }
+            }
+            let acceptedConflict = endpoint.acceptsConflictResponse && status == 409
+            guard let envelope = result.data, envelope.success || acceptedConflict, let value = envelope.data else {
+                throw EventServiceError.server(result.data?.message ?? endpoint.failureMessage)
+            }
+            let description = describeResult?(value) ?? ""
+            logger("\(context) SUCCESS \(description.isEmpty ? "" : description + " ")durationMs=\(Int((ProcessInfo.processInfo.systemUptime - start) * 1000))")
+            return value
+        } catch {
+            let cancelled = error is CancellationError || (error as? URLError)?.code == .cancelled
+            logger("\(context) \(cancelled ? "CANCELLED" : "FAILED") status=\(status.map(String.init) ?? "none") durationMs=\(Int((ProcessInfo.processInfo.systemUptime - start) * 1000)) reason=\(EventAPILog.errorSummary(error))")
+            throw error
+        }
+    }
+
+    // MARK: - Existing JSON API (call sites remain compatible)
+
+    static func callAPIWithRawData<T: Decodable>(
+        url: String,
+        method: HTTPMethod = .get,
+        body: Data? = nil,
+        headers: [String: String] = [:],
+        tokenScope: TokenScope = .parent,
+        client: APIClient? = nil
+    ) async -> APIResponse<T> {
+        guard let url = URL(string: url) else { return APIResponse(data: nil, error: .invalidURL, statusCode: nil) }
+        let client = client ?? APIClient()
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
+        request.httpBody = body
         request.allHTTPHeaderFields = headers
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        if let body = body {
-            request.httpBody = body
-            print("Request Body:", String(data: body, encoding: .utf8) ?? "")
-        }
-        
-        if let tokenVal = AppUserDefaults.authorizationToken {
-            request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-            LogFile.debugMessage(debug: "token", value: tokenVal)
-        }
-        
-        //        switch tokenScope {
-        //            case .parent:
-        //                if let tokenVal = AppUserDefaults.authorizationToken {
-        //                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-        //                    LogFile.debugMessage(debug: " parent token", value: tokenVal)
-        //                }
-        //            case .child:
-        //                if let tokenVal = ChildSessionManager.shared.currentChildModeToken {
-        //                    request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-        //                    LogFile.debugMessage(debug: "child token", value: tokenVal)
-        //                }
-        //            case .none:
-        //                break
-        //            }
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                return APIResponse(data: nil, error: .invalidResponse, statusCode: nil)
-            }
-            LogFile.debugMessage(debug: "httpResponse", value: httpResponse)
-            let statusCode = httpResponse.statusCode
-            
-            if (200...299).contains(statusCode) {
-                let errorString = String(data: data, encoding: .utf8)
-                print("Backend Response:", errorString ?? "nil")
-                do {
-                    let decodedData = try JSONDecoder().decode(T.self, from: data)
-                    return APIResponse(data: decodedData, error: nil, statusCode: statusCode)
-                } catch let error {
-                    LogFile.debugMessage(debug: "Decodable issue --->", value: error)
-                    return APIResponse(data: nil, error: .decodingFailed, statusCode: statusCode)
-                }
-            } else if (statusCode == 401) || (statusCode == 403) {
-                let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
-                if AppUserDefaults.authorizationToken != nil {
-                    SessionManager.shared.handleAuthenticationFailure()
-                }
-                return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
-                
-            } else {
-                // Try to decode the error response
-                do {
-                    let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
-                    return APIResponse(data: nil, error: .apiError(errorResponse), statusCode: statusCode)
-                    
-                } catch {
-                    // If we can't decode the error, return a generic error
-                    let apiError = APIError(success: false, message: "Unknown API Error")
-                    return APIResponse(data: nil, error: .apiError(apiError), statusCode: statusCode)
-                }
-            }
-        } catch {
-            return APIResponse(data: nil, error: .requestFailed(error), statusCode: nil)
-        }
+        // Preserve the existing parent-token behavior for legacy call sites.
+        if let token = client.tokenProvider() { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
+        return await client.performJSONRequest(request)
     }
-    
-    
-    // MARK: - Form Data Method
-    
-    
+
+    // MARK: - Existing multipart API
+
     static func callAPIWithFormData<T: Decodable>(
         url: String,
         method: HTTPMethod = .post,
         parameters: [String: Any],
-        headers: [String: String] = [:]
-    ) async -> (APIResponse<T>) {
-        
-        guard let url = URL(string: url) else {
-            return APIResponse(data: nil, error: .invalidURL, statusCode: nil)
-        }
-        
-        LogFile.debugMessage(debug: "URL--->", value: url)
-        LogFile.debugMessage(debug: "Parameters--->", value: parameters)
-        
-        // Create boundary
+        headers: [String: String] = [:],
+        client: APIClient? = nil
+    ) async -> APIResponse<T> {
+        guard let url = URL(string: url) else { return APIResponse(data: nil, error: .invalidURL, statusCode: nil) }
+        let client = client ?? APIClient()
         let boundary = "Boundary-\(UUID().uuidString)"
-        
-        // Create request
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        for (key, value) in headers {
-            request.setValue(value, forHTTPHeaderField: key)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        for (key, value) in headers { request.setValue(value, forHTTPHeaderField: key) }
+        request.httpBody = createFormDataBody(parameters: parameters, boundary: boundary)
+        if let token = client.tokenProvider() { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
+        return await client.performJSONRequest(request, fallbackError: { "Server Error: \($0)" })
+    }
+
+    // MARK: - Shared transport and response decoding
+
+    private func performJSONRequest<T: Decodable>(
+        _ request: URLRequest,
+        acceptConflict: Bool = false,
+        forbiddenMeansAuthenticationFailure: Bool = true,
+        preserveDecodingErrors: Bool = false,
+        context: String? = nil,
+        fallbackError: (Int) -> String = { _ in "Unknown API Error" }
+    ) async -> APIResponse<T> {
+        let logContext = context ?? "[API][\(UUID().uuidString.prefix(8))] \(request.httpMethod ?? "GET") \(request.url?.path ?? "<invalid>")"
+        if context == nil {
+            logger("\(logContext) REQUEST URL \(request.url?.absoluteString ?? "<invalid>")")
+            #if DEBUG
+            // Multipart bodies may contain binary data. Never dump them or authorization headers.
+            if request.value(forHTTPHeaderField: "Content-Type") == "application/json", let body = request.httpBody {
+                logger("\(logContext) REQUEST BODY\n\(EventAPILog.responseBody(body))")
+            }
+            #endif
         }
-        
-        request.httpBody = self.createFormDataBody(parameters: parameters, boundary: boundary)
-        
-        if let tokenVal = AppUserDefaults.authorizationToken {
-            request.setValue("Bearer " + tokenVal, forHTTPHeaderField: "Authorization")
-        }
-        
-        LogFile.debugMessage(debug: "Request Body:", value: String(data: request.httpBody ?? Data(), encoding: .utf8) ?? "")
-        
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
+            let (data, response) = try await session.data(for: request)
+            try Task.checkCancellation()
+            guard let http = response as? HTTPURLResponse else {
                 return APIResponse(data: nil, error: .invalidResponse, statusCode: nil)
             }
-            
-            LogFile.debugMessage(debug: "httpResponse", value: httpResponse)
-            LogFile.debugMessage(debug: "Response Data", value: String(data: data, encoding: .utf8) ?? "")
-            
-            let statusCode = httpResponse.statusCode
-            
-            if (200...299).contains(statusCode) {
+            let status = http.statusCode
+            logger("\(logContext) RESPONSE status=\(status) bytes=\(data.count)")
+            #if DEBUG
+            logger("\(logContext) RESPONSE BODY\n\(EventAPILog.responseBody(data))")
+            #endif
+            if (200...299).contains(status) || (acceptConflict && status == 409) {
                 do {
-                    let decodedData = try JSONDecoder().decode(T.self, from: data)
-                    return APIResponse(data: decodedData, error: nil, statusCode: statusCode)
-                } catch let error {
-                    LogFile.debugMessage(debug: "Decoding Error --->", value: error)
-                    return APIResponse(data: nil, error: .decodingFailed, statusCode: statusCode)
-                }
-            }
-            else if (statusCode == 401) || (statusCode == 403) {
-                let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
-                /*
-                 Only trigger the global session-expired flow
-                 if the Parent token still exists.
-                 
-                 This prevents an old/in-flight request from
-                 showing another alert after the user has already
-                 been logged out.
-                 */
-                if AppUserDefaults.authorizationToken != nil {
-                    SessionManager.shared.handleAuthenticationFailure()
-                }
-                return APIResponse(data: nil, error: .authenticationFailed(errorResponse), statusCode: statusCode)
-            } else {
-                // Try to decode error response
-                do {
-                    let errorResponse = try JSONDecoder().decode(APIError.self, from: data)
-                    LogFile.debugMessage(debug: "erroeRespnse", value: errorResponse)
-                    return APIResponse(data: nil, error: .apiError(errorResponse), statusCode: statusCode)
+                    return APIResponse(data: try JSONDecoder().decode(T.self, from: data), error: nil, statusCode: status)
                 } catch {
-                    let apiError = APIError(success: false, message: "Server Error: \(statusCode)")
-                    return APIResponse(data: nil, error: .apiError(apiError), statusCode: statusCode)
+                    logger("\(logContext) FAILED decoding=\(EventAPILog.errorSummary(error))")
+                    return APIResponse(data: nil, error: preserveDecodingErrors ? .requestFailed(error) : .decodingFailed, statusCode: status)
                 }
             }
+            let error = (try? JSONDecoder().decode(APIError.self, from: data)) ?? APIError(success: false, message: fallbackError(status))
+            if status == 401 || (status == 403 && forbiddenMeansAuthenticationFailure) {
+                authenticationFailureHandler()
+                return APIResponse(data: nil, error: .authenticationFailed(error), statusCode: status)
+            }
+            return APIResponse(data: nil, error: .apiError(error), statusCode: status)
         } catch {
-            LogFile.debugMessage(debug: "Network Error --->", value: error)
+            logger("\(logContext) FAILED reason=\(EventAPILog.errorSummary(error))")
             return APIResponse(data: nil, error: .requestFailed(error), statusCode: nil)
         }
     }
-    
+
     //Modified on 28 may
     
     // MARK: - Helper: Create Form Data Body

@@ -141,7 +141,7 @@ import XCTest
         let session = URLSession(configuration: configuration)
         defer { session.invalidateAndCancel() }
         var logs: [String] = []
-        let service = EventPaymentService(network: EventDetailsService(session: session, baseURL: "https://payment.test", tokenProvider: { "test-token" }, logger: { logs.append($0) }))
+        let service = EventPaymentService(client: APIClient(session: session, baseURL: "https://payment.test", tokenProvider: { "test-token" }, logger: { logs.append($0) }))
         let draft = try await service.create(childID: "child1", batchID: "b1", grade: "Grade 3", school: "Little Stars")
         XCTAssertEqual(draft.id, "r1")
         let order = try await service.order(registrationID: draft.id)

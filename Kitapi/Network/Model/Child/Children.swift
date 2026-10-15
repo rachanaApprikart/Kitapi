@@ -53,6 +53,8 @@ enum Mimetype: String, Codable {
     case imageJPEG = "image/jpeg"
     case imagePNG = "image/png"
     case videoMp4 = "video/mp4"
+    case webp = "image/webp"
+    case gif = "image/gif"
 }
 
 

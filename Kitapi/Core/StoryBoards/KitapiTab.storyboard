@@ -20,7 +20,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Event Details View Controller-->
+        <!--Event Details-->
         <scene sceneID="EVT-details-scene">
             <objects>
                 <viewController storyboardIdentifier="EventDetailsViewController" id="EVT-details-vc" customClass="EventDetailsViewController" customModule="Kitapi" customModuleProvider="target" sceneMemberID="viewController">
@@ -1431,28 +1431,11 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qFl-kv-KJP">
                                 <rect key="frame" x="89" y="314.66666666666669" width="215" height="52"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6My-47-bfw">
-                                        <rect key="frame" x="0.0" y="0.0" width="97.666666666666671" height="52"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SqG-co-LW3">
-                                                <rect key="frame" x="73.666666666666657" y="0.0" width="14" height="52"/>
-                                                <fontDescription key="fontDescription" name="Urbanist-Regular" family="Urbanist" pointSize="14"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="SqG-co-LW3" secondAttribute="bottom" id="213-UJ-dqE"/>
-                                            <constraint firstAttribute="trailing" secondItem="SqG-co-LW3" secondAttribute="trailing" constant="10" id="4Jh-p6-HrC"/>
-                                            <constraint firstItem="SqG-co-LW3" firstAttribute="top" secondItem="6My-47-bfw" secondAttribute="top" id="h51-mM-jTH"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Wa-Ou-CCF">
-                                        <rect key="frame" x="117.66666666666666" y="0.0" width="97.333333333333343" height="52"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="215" height="52"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Min" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L56-T4-q2I">
-                                                <rect key="frame" x="64.333333333333343" y="0.0" width="23" height="52"/>
+                                                <rect key="frame" x="182" y="0.0" width="23" height="52"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="23" id="xhs-IQ-44Q"/>
                                                 </constraints>
@@ -1461,7 +1444,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ehg-iq-GoN">
-                                                <rect key="frame" x="0.0" y="0.0" width="62.333333333333336" height="52"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="180" height="52"/>
                                             </pickerView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1500,8 +1483,6 @@
                     </view>
                     <connections>
                         <outlet property="headerLabel" destination="TvK-1X-P8E" id="I7F-nc-bTy"/>
-                        <outlet property="houeLabel" destination="SqG-co-LW3" id="70o-q5-SMW"/>
-                        <outlet property="hourView" destination="6My-47-bfw" id="X1H-l0-ht2"/>
                         <outlet property="minLabel" destination="L56-T4-q2I" id="6KC-15-Pwm"/>
                         <outlet property="minuteView" destination="7Wa-Ou-CCF" id="QtF-v4-ymb"/>
                         <outlet property="minutesPickerView" destination="Ehg-iq-GoN" id="GwM-sA-roJ"/>
@@ -4066,10 +4047,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.55294117649999996" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.55294117647058827" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

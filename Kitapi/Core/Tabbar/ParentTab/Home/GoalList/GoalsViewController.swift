@@ -127,7 +127,7 @@ class GoalsViewController: UIViewController {
     private func showCreateGoalVC() {
         guard let contentVC = VCManager.openCreateGoalsVC() else { return }
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.5)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.54)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
 
@@ -448,6 +448,7 @@ extension GoalsViewController: FloatingPanelControllerDelegate {
     
     func floatingPanelDidRemove(_ fpc: FloatingPanelController) {
         self.floatingPanel = nil
+        self.fetchGoalsForSelectedChild()
     }
     func floatingPanelDidDismiss(_ fpc: FloatingPanelController) {
         self.floatingPanel = nil

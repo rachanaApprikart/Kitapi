@@ -6,7 +6,7 @@ import UIKit
 final class EventListTests: XCTestCase {
     func testAllFourTabsAndQueryParameters() throws {
         XCTAssertEqual(EventListFilter.allCases.map(\.title), ["All", "Live", "Upcoming", "Completed"])
-        let service = EventService(tokenProvider: { "unit-test-token" })
+        let service = EventService(client: APIClient(tokenProvider: { "unit-test-token" }))
         for filter in EventListFilter.allCases {
             let request = try service.request(filter: filter, page: 2)
             let url = try XCTUnwrap(request.url)
@@ -20,7 +20,7 @@ final class EventListTests: XCTestCase {
     }
 
     func testRequestRejectsMissingAuthentication() {
-        XCTAssertThrowsError(try EventService(tokenProvider: { nil }).request(filter: .all, page: 1))
+        XCTAssertThrowsError(try EventService(client: APIClient(tokenProvider: { nil })).request(filter: .all, page: 1))
     }
 
     func testCategoryColorsAreStableAndUsePaletteFallback() {
@@ -107,7 +107,7 @@ final class EventListTests: XCTestCase {
         let session = URLSession(configuration: configuration)
         defer { session.invalidateAndCancel() }
         var logs: [String] = []
-        let service = EventService(session: session, baseURL: "https://example.com", tokenProvider: { "secret-test-token" }, logger: { logs.append($0) })
+        let service = EventService(client: APIClient(session: session, baseURL: "https://example.com", tokenProvider: { "secret-test-token" }, logger: { logs.append($0) }))
         let result = try await service.fetchEvents(filter: .live, page: 1)
         XCTAssertEqual(result.events.first?.id, "network")
         do {
@@ -124,7 +124,7 @@ final class EventListTests: XCTestCase {
 
     func testMissingTokenLogsFailureBeforeSendingRequest() async {
         var logs: [String] = []
-        let service = EventService(tokenProvider: { nil }, logger: { logs.append($0) })
+        let service = EventService(client: APIClient(tokenProvider: { nil }, logger: { logs.append($0) }))
         do {
             _ = try await service.fetchEvents(filter: .upcoming, page: 3)
             XCTFail("Expected authentication error")
