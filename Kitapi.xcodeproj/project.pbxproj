@@ -101,6 +101,8 @@
 		184DBCB82FE132CC00E61AD0 /* TimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184DBCB72FE132CC00E61AD0 /* TimePickerViewController.swift */; };
 		184EDCF62FEEEBA200E69961 /* CreateChoreTemplateCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184EDCF42FEEEBA200E69961 /* CreateChoreTemplateCVCell.swift */; };
 		184EDCF72FEEEBA200E69961 /* CreateChoreTemplateCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184EDCF52FEEEBA200E69961 /* CreateChoreTemplateCVCell.xib */; };
+		184FEB3A30813199007F5841 /* ResetMPINViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184FEB3930813199007F5841 /* ResetMPINViewController.swift */; };
+		184FEB3D308131D6007F5841 /* ResetMPINViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184FEB3C308131D6007F5841 /* ResetMPINViewModel.swift */; };
 		185057CF2FB8798F00657490 /* PhotoPickerCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185057CD2FB8798F00657490 /* PhotoPickerCVCell.swift */; };
 		185057D02FB8798F00657490 /* PhotoPickerCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185057CE2FB8798F00657490 /* PhotoPickerCVCell.xib */; };
 		1852535C2F7C45DB00423FB8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1852535B2F7C45DB00423FB8 /* CustomTextField.swift */; };
@@ -293,6 +295,8 @@
 		184DBCB72FE132CC00E61AD0 /* TimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewController.swift; sourceTree = "<group>"; };
 		184EDCF42FEEEBA200E69961 /* CreateChoreTemplateCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChoreTemplateCVCell.swift; sourceTree = "<group>"; };
 		184EDCF52FEEEBA200E69961 /* CreateChoreTemplateCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateChoreTemplateCVCell.xib; sourceTree = "<group>"; };
+		184FEB3930813199007F5841 /* ResetMPINViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetMPINViewController.swift; sourceTree = "<group>"; };
+		184FEB3C308131D6007F5841 /* ResetMPINViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetMPINViewModel.swift; sourceTree = "<group>"; };
 		185057CD2FB8798F00657490 /* PhotoPickerCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerCVCell.swift; sourceTree = "<group>"; };
 		185057CE2FB8798F00657490 /* PhotoPickerCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoPickerCVCell.xib; sourceTree = "<group>"; };
 		1852535B2F7C45DB00423FB8 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -433,6 +437,7 @@
 		1830DC3330713B00003F9FF4 /* MPIN */ = {
 			isa = PBXGroup;
 			children = (
+				184FEB3B308131A4007F5841 /* ResetMPIN */,
 				1848FEE3302311AB00E9082D /* SetTimerViewController.swift */,
 				18390DBF3020C58000EA12EE /* MPINViewController.swift */,
 				1848FEE530231AAE00E9082D /* MPINViewModel.swift */,
@@ -698,6 +703,15 @@
 				184EDCF52FEEEBA200E69961 /* CreateChoreTemplateCVCell.xib */,
 			);
 			path = CreateChoreTemplate;
+			sourceTree = "<group>";
+		};
+		184FEB3B308131A4007F5841 /* ResetMPIN */ = {
+			isa = PBXGroup;
+			children = (
+				184FEB3930813199007F5841 /* ResetMPINViewController.swift */,
+				184FEB3C308131D6007F5841 /* ResetMPINViewModel.swift */,
+			);
+			path = ResetMPIN;
 			sourceTree = "<group>";
 		};
 		185057CB2FB8791500657490 /* Header */ = {
@@ -1360,6 +1374,7 @@
 				1861C2E22F9B59CC00EC6507 /* PasswordService.swift in Sources */,
 				1849AE843021D0B90088681C /* MPINService.swift in Sources */,
 				185A85382F8E18EA00A4D4B9 /* RegistrationService.swift in Sources */,
+				184FEB3A30813199007F5841 /* ResetMPINViewController.swift in Sources */,
 				18260A56303DE435001C29B2 /* GoalTypeViewController.swift in Sources */,
 				183D55C93041BF2300533C40 /* CurrentGoalCardCell.swift in Sources */,
 				1842D883304AA8CE003612F3 /* EventViewController.swift in Sources */,
@@ -1409,6 +1424,7 @@
 				188A4D763002AB0D001218AA /* CalenderViewController.swift in Sources */,
 				1878DA3F2FF252E1005A5D64 /* SelectTemplateImageViewController.swift in Sources */,
 				1848FEE4302311AB00E9082D /* SetTimerViewController.swift in Sources */,
+				184FEB3D308131D6007F5841 /* ResetMPINViewModel.swift in Sources */,
 				18390F573025E0590028A7AC /* Analytics.swift in Sources */,
 				1824A618303F3CA9001D323C /* GoalsViewModel.swift in Sources */,
 				183E20B52FD9468800B7B363 /* CreateChoreViewController.swift in Sources */,

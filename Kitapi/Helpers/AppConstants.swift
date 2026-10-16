@@ -177,5 +177,6 @@ struct APPConstants {
     static let changeMPINTitle: String = "Change MPIN"
     static let updateMPINTitle: String = "Update MPIN"
 
-    
+    static let resetMPINTitle: String = "Reset MPIN"
+
 }

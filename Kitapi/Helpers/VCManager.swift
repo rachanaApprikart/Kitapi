@@ -126,6 +126,10 @@ struct VCManager {
         return kitapiTabStoryBoard.instantiateViewController(identifier: MPINViewController.sbIdentifier) as? MPINViewController
     }
     
+    static func openResetMPINVC() -> ResetMPINViewController? {
+        return kitapiTabStoryBoard.instantiateViewController(identifier: ResetMPINViewController.sbIdentifier) as? ResetMPINViewController
+    }
+    
     static func opensetTimerVC() -> SetTimerViewController? {
         return kitapiTabStoryBoard.instantiateViewController(identifier: SetTimerViewController.sbIdentifier) as? SetTimerViewController
     }

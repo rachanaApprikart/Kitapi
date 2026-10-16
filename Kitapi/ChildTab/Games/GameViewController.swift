@@ -212,7 +212,7 @@ extension GameViewController {
         guard let contentVC = VCManager.openMPINVC() else { return }
         contentVC.disableDelegate = self
         contentVC.mode = .disable
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.6)
+        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.7)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     
