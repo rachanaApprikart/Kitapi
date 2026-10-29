@@ -76,7 +76,7 @@ struct APPConstants {
     static let newPasswordTitle: String = "Enter New Password"
     static let newPasswordPlaceholder: String = "Enter your new password"
     static let confirmNewPasswordTitle: String = "Confirm New Password"
-    static let confirmNewPasswordPlaceholder: String = "Renter to confirm your new password"
+    static let confirmNewPasswordPlaceholder: String = "Re enter to confirm your new password"
     
     //7-5
     static let createChidAcc: String = "Create child profile"

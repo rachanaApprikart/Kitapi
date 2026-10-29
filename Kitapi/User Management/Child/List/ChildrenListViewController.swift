@@ -14,6 +14,7 @@ class ChildrenListViewController: UIViewController {
     
     var childrenList: [Child] = []
     private var selectedChildId: String?
+    var onChildSelected: (() -> Void)?
     
     static var sbIdentifier: String {
         return String(describing: ChildrenListViewController.self)
@@ -48,6 +49,7 @@ extension ChildrenListViewController: UITableViewDelegate, UITableViewDataSource
         self.selectedChildId = child.id
         self.childListTV.reloadData()
         ChildManager.shared.selectedChild = child
+        self.onChildSelected?()
     }
 }
 

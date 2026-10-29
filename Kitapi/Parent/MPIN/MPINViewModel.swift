@@ -105,12 +105,26 @@ class MPINViewModel {
                     case .requestFailed(let error):
                         errorMessage = error.localizedDescription
                         
-                    case .authenticationFailed(_):
-                        DispatchQueue.main.async { [weak self] in
-                            self?.onLoadingChanged?(false)
-                        }
-                        return
+                    case .authenticationFailed(let errorResponse):
                         
+                        let message = errorResponse.message ?? "Authentication failed"
+
+                        if message == "Token has been invalidated. Please login again." {
+                               // SessionManager already handles reauthentication.
+                               DispatchQueue.main.async { [weak self] in
+                                   self?.onLoadingChanged?(false)
+                               }
+                               return
+                           }
+
+                           // Invalid or locked MPIN, or another authentication error as this also throws 401 error for 3 attempts and then 403 error
+
+                           DispatchQueue.main.async { [weak self] in
+                               self?.onLoadingChanged?(false)
+                               self?.onEnableChildModeError?(message)
+                           }
+
+                           return
                     default:
                         errorMessage = "Something went wrong"
                     }

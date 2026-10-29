@@ -16,8 +16,9 @@ struct CheckMPINStatus: Codable {
 
 struct MPINData: Codable {
     let isSetup: Bool
-    let isLocked, lockRemainingMinutes: String?
-    let failedAttempts, maxAttempts: Int
+    let isLocked: Bool?
+    let lockRemainingMinutes: Int?
+    let failedAttempts, maxAttempts: Int?
     let setupDate: String?
 }
 

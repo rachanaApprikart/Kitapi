@@ -46,7 +46,7 @@ struct ProfilePicture: Codable {
     let url: String?
     let filename, originalName: String?
     let size: Int?
-    let mimetype: Mimetype?
+    let mimetype: String?
 }
 
 enum Mimetype: String, Codable {

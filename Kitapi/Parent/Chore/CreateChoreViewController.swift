@@ -75,15 +75,21 @@ class CreateChoreViewController: UIViewController {
     @IBAction func changeRecurranceAction(_ sender: UISegmentedControl) {
         self.recurrenceDates.removeAll()
         self.recurrenceType = RepeatType(rawValue: sender.selectedSegmentIndex) ?? .once
-
+        
         switch self.recurrenceType {
-            case .weekly:
-                self.generateCurrentWeek()
-            case .daily:
-                self.recurrenceDates = [Calendar.current.startOfDay(for: Date())]
-            default:
-                break
-            }
+            
+        case .weekly:
+            self.generateNextSevenDays()
+            
+        case .daily:
+            self.recurrenceDates = [Calendar.current.startOfDay(for: Date())]
+            
+        case .once:
+            self.recurrenceDates = [Calendar.current.startOfDay(for: Date())]
+            
+        default:
+            break
+        }
         print(self.recurrenceDates)
         self.frequencyCV.reloadData()
     }
@@ -92,6 +98,12 @@ class CreateChoreViewController: UIViewController {
         self.clearAllErrors()
         self.view.endEditing(true)
         
+        if (self.recurrenceType == .weekly || self.recurrenceType == .monthly), self.recurrenceDates.isEmpty {
+            MessageManager.shared.show(message: self.recurrenceType == .weekly
+                ? "Please select at least one day"
+                : "Please select a date")
+            return
+        }
         self.viewModel.choreTemplateId = self.choreTemplate?.id ?? ""
         self.viewModel.choreDescription = self.choreDescpTextField.customTextField.text?.trimmingCharacters(in: .whitespaces) ?? ""
         self.viewModel.childId = ChildManager.shared.selectedChild?.id ?? ""
@@ -156,36 +168,60 @@ class CreateChoreViewController: UIViewController {
         self.toTimeTextField.customTextField.text = self.toTime.displayTextIn12HourFormat
     }
         
-    private func generateCurrentWeek() {
-        
+//    private func generateCurrentWeek() {
+//        
+//        self.weekDays.removeAll()
+//        
+//        let calendar = Calendar.current
+//        let today = calendar.startOfDay(for: Date())
+//        print("today-------------", today)
+//        
+//        // Sunday of current week
+//        guard let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: today)?.start else {
+//            return
+//        }
+//       
+//        let formatter = DateFormatter()
+//        formatter.calendar = calendar
+//        formatter.timeZone = calendar.timeZone
+//        formatter.dateFormat = "EEE"
+//        
+//        for index in 0..<7 {
+//            
+//            guard let date = calendar.date(byAdding: .day, value: index, to: startOfWeek) else {
+//                continue
+//            }
+//            let isEnabled = calendar.compare(date, to: today, toGranularity: .day) != .orderedAscending
+//            
+//            self.weekDays.append(
+//                WeekDay(
+//                    name: formatter.string(from: date), date: date,
+//                    isSelected: false, isEnabled: isEnabled
+//                )
+//            )
+//        }
+//    }
+    
+    private func generateNextSevenDays() {
         self.weekDays.removeAll()
-        
+
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
-        print("today-------------", today)
-        
-        // Sunday of current week
-        guard let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: today)?.start else {
-            return
-        }
-       
+
         let formatter = DateFormatter()
         formatter.calendar = calendar
         formatter.timeZone = calendar.timeZone
         formatter.dateFormat = "EEE"
-        
+
         for index in 0..<7 {
-            
-            guard let date = calendar.date(byAdding: .day, value: index, to: startOfWeek) else {
+            guard let date = calendar.date(byAdding: .day, value: index, to: today) else {
                 continue
             }
-            let isEnabled = calendar.compare(date, to: today, toGranularity: .day) != .orderedAscending
-            
             self.weekDays.append(
-                WeekDay(
-                    name: formatter.string(from: date), date: date,
-                    isSelected: false, isEnabled: isEnabled
-                )
+                WeekDay(name: formatter.string(from: date),
+                        date: date,
+                        isSelected: false,
+                        isEnabled: true)
             )
         }
     }
@@ -296,7 +332,7 @@ extension CreateChoreViewController: UICollectionViewDelegate, UICollectionViewD
         
         switch self.recurrenceType {
             
-        case .once, .monthly:
+        case .monthly:
             
             if self.recurrenceDates.isEmpty {
                 return 1
@@ -304,7 +340,7 @@ extension CreateChoreViewController: UICollectionViewDelegate, UICollectionViewD
                 return self.recurrenceDates.count + 1
             }
             
-        case .daily:
+        case .once, .daily:
             return 1
             
         case .weekly:
@@ -315,14 +351,31 @@ extension CreateChoreViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         switch self.recurrenceType {
+            
+        case .once:
+            
+            guard let selectDateCell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectDateCVCell.reUseIdentifier, for: indexPath) as? SelectDateCVCell else { return UICollectionViewCell() }
+            
+            let date = self.recurrenceDates[indexPath.item]
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd MMM"
+            let day = formatter.string(from: date)
+            selectDateCell.onSelectDateAction = nil
+            selectDateCell.selectDateLabel.text = day
+           
+            return selectDateCell
         
-        case .once, .monthly:
+        case .monthly:
             
             if self.recurrenceDates.isEmpty {
                 
                 guard let selectDateCell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectDateCVCell.reUseIdentifier, for: indexPath) as? SelectDateCVCell else { return UICollectionViewCell() }
                 
-                selectDateCell.onSelectDateAction = {
+                selectDateCell.selectDateLabel.text = "Select date"
+
+                selectDateCell.onSelectDateAction = { [weak self] in
+                    guard let self else { return }
                     self.openCalendar(for: self.recurrenceType)
                 }
                 return selectDateCell
@@ -399,8 +452,9 @@ extension CreateChoreViewController: UICollectionViewDelegate, UICollectionViewD
                let width = (collectionView.frame.width - totalSpacing) / 7
 
                return CGSize(width: width, height: 50)
+                    
             
-        case .once, .monthly:
+        case .monthly:
             
             if self.recurrenceDates.isEmpty {
                 return CGSize(width: collectionView.frame.width-30, height: 50)
@@ -451,7 +505,8 @@ extension CreateChoreViewController {
         
     private func setCreateChoreScreenUI() {
         self.appBGView.setGradientBackground()
-        
+        self.recurrenceDates = [Calendar.current.startOfDay(for: Date())]
+
         self.headerLabel.text = APPConstants.createChoreTitle
         self.headerLabel.textAlignment = .center
         self.headerLabel.font = UIFont(name: Fonts.urbanistBold, size: 22)

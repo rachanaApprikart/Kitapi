@@ -87,7 +87,7 @@ extension DatePickerViewController {
         }
        
         self.datePicker.maximumDate = calendar.date(byAdding: .year, value: -5, to: now)
-        self.datePicker.minimumDate = calendar.date(byAdding: .year, value: -18, to: now)
+        self.datePicker.minimumDate = calendar.date(byAdding: .year, value: -16, to: now)
 
     }
 }

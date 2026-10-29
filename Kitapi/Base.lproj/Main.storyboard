@@ -471,16 +471,28 @@
                                 <rect key="frame" x="0.0" y="59" width="430" height="839"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pi-ky-4GX">
-                                        <rect key="frame" x="0.0" y="0.0" width="430" height="948"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="430" height="1041.3333333333333"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BXH-eO-zPf">
-                                                <rect key="frame" x="0.0" y="0.0" width="430" height="948"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="430" height="1041.3333333333333"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfH-kh-jt5">
-                                                        <rect key="frame" x="0.0" y="0.0" width="430" height="233"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="430" height="326.33333333333331"/>
                                                         <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vO-RZ-C2S">
+                                                                <rect key="frame" x="15" y="15" width="45" height="45"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="45" id="4Ts-6g-WAS"/>
+                                                                    <constraint firstAttribute="width" constant="45" id="Vbv-Vq-JMg"/>
+                                                                </constraints>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <state key="normal" image="keyboard_arrow_left"/>
+                                                                <connections>
+                                                                    <action selector="backAction:" destination="9PC-cO-k8I" eventType="touchUpInside" id="qcH-Sd-Kjc"/>
+                                                                </connections>
+                                                            </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SIGN UP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4U-1o-JP3">
-                                                                <rect key="frame" x="0.0" y="29" width="430" height="35"/>
+                                                                <rect key="frame" x="0.0" y="96.666666666666657" width="430" height="35"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="35" id="31F-Uh-HAL"/>
                                                                 </constraints>
@@ -489,7 +501,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rdq-MZ-zmz">
-                                                                <rect key="frame" x="170" y="106.33333333333334" width="90" height="90"/>
+                                                                <rect key="frame" x="170" y="167" width="90" height="90"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kitapati" translatesAutoresizingMaskIntoConstraints="NO" id="kVv-70-FdE">
                                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
@@ -531,13 +543,15 @@
                                                         <constraints>
                                                             <constraint firstItem="Rdq-MZ-zmz" firstAttribute="centerY" secondItem="XfH-kh-jt5" secondAttribute="centerY" multiplier="1.3" id="3o5-sj-SBl"/>
                                                             <constraint firstAttribute="trailing" secondItem="G4U-1o-JP3" secondAttribute="trailing" id="9Ru-sC-cBA"/>
-                                                            <constraint firstItem="G4U-1o-JP3" firstAttribute="centerY" secondItem="XfH-kh-jt5" secondAttribute="centerY" multiplier="0.4" id="DFD-aj-Lqg"/>
+                                                            <constraint firstItem="G4U-1o-JP3" firstAttribute="centerY" secondItem="XfH-kh-jt5" secondAttribute="centerY" multiplier="0.7" id="DFD-aj-Lqg"/>
                                                             <constraint firstItem="Rdq-MZ-zmz" firstAttribute="centerX" secondItem="XfH-kh-jt5" secondAttribute="centerX" id="Gpp-eg-XsD"/>
                                                             <constraint firstItem="G4U-1o-JP3" firstAttribute="leading" secondItem="XfH-kh-jt5" secondAttribute="leading" id="S9l-eL-HKU"/>
+                                                            <constraint firstItem="7vO-RZ-C2S" firstAttribute="top" secondItem="XfH-kh-jt5" secondAttribute="top" constant="15" id="eJC-ZR-UwC"/>
+                                                            <constraint firstItem="7vO-RZ-C2S" firstAttribute="leading" secondItem="XfH-kh-jt5" secondAttribute="leading" constant="15" id="sfJ-vp-eue"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dt-Qs-3Tk">
-                                                        <rect key="frame" x="0.0" y="233" width="430" height="715"/>
+                                                        <rect key="frame" x="0.0" y="326.33333333333326" width="430" height="715"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="3mu-Nk-acO">
                                                                 <rect key="frame" x="20" y="0.0" width="390" height="570"/>
@@ -549,10 +563,10 @@
                                                                         <rect key="frame" x="0.0" y="95" width="390" height="95"/>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hDR-pR-BgJ" customClass="CustomTextField" customModule="Kitapi" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="190" width="390" height="95"/>
+                                                                        <rect key="frame" x="0.0" y="190.00000000000006" width="390" height="95"/>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MB6-0b-e00">
-                                                                        <rect key="frame" x="0.0" y="285" width="390" height="95"/>
+                                                                        <rect key="frame" x="0.0" y="285.00000000000006" width="390" height="95"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M0Z-hS-pRx">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="90" height="95"/>
@@ -613,7 +627,7 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eg1-NP-aRz" customClass="CustomTextField" customModule="Kitapi" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="380" width="390" height="95"/>
+                                                                        <rect key="frame" x="0.0" y="380.00000000000006" width="390" height="95"/>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BGy-M2-ZbC" customClass="CustomTextField" customModule="Kitapi" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="475" width="390" height="95"/>
@@ -692,7 +706,7 @@
                                                     <constraint firstItem="3dt-Qs-3Tk" firstAttribute="leading" secondItem="BXH-eO-zPf" secondAttribute="leading" id="Y2F-uK-GGo"/>
                                                     <constraint firstItem="XfH-kh-jt5" firstAttribute="top" secondItem="BXH-eO-zPf" secondAttribute="top" id="c3t-C2-Ewj"/>
                                                     <constraint firstAttribute="trailing" secondItem="3dt-Qs-3Tk" secondAttribute="trailing" id="d2X-RS-9PG"/>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="1000" id="kFf-PL-CsS"/>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="1500" id="kFf-PL-CsS"/>
                                                     <constraint firstItem="XfH-kh-jt5" firstAttribute="leading" secondItem="BXH-eO-zPf" secondAttribute="leading" id="va5-mQ-Y5h"/>
                                                     <constraint firstAttribute="trailing" secondItem="XfH-kh-jt5" secondAttribute="trailing" id="wUb-aA-DYZ"/>
                                                 </constraints>
@@ -723,7 +737,7 @@
                             <constraint firstItem="KJg-JS-nqN" firstAttribute="leading" secondItem="e54-RK-hwl" secondAttribute="leading" id="Cca-0N-1dZ"/>
                             <constraint firstItem="Uvu-uW-8TH" firstAttribute="top" secondItem="e54-RK-hwl" secondAttribute="top" id="EgP-pa-7uO"/>
                             <constraint firstItem="e54-RK-hwl" firstAttribute="trailing" secondItem="KJg-JS-nqN" secondAttribute="trailing" id="F9z-Ec-618"/>
-                            <constraint firstItem="XfH-kh-jt5" firstAttribute="height" secondItem="nQ6-cp-Qvm" secondAttribute="height" multiplier="0.25" id="KMn-PK-zXL"/>
+                            <constraint firstItem="XfH-kh-jt5" firstAttribute="height" secondItem="nQ6-cp-Qvm" secondAttribute="height" multiplier="0.35" id="KMn-PK-zXL"/>
                             <constraint firstItem="Uvu-uW-8TH" firstAttribute="leading" secondItem="e54-RK-hwl" secondAttribute="leading" id="LSc-iG-MKu"/>
                             <constraint firstAttribute="bottom" secondItem="KJg-JS-nqN" secondAttribute="bottom" id="RDB-le-t1i"/>
                             <constraint firstItem="Uvu-uW-8TH" firstAttribute="trailing" secondItem="e54-RK-hwl" secondAttribute="trailing" id="aVQ-Oz-jjg"/>

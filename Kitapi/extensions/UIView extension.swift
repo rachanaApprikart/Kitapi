@@ -42,12 +42,13 @@ extension UIView {
         gapLength: NSNumber,
         lineWidth: CGFloat
     ) {
+        self.removeDashedCircle()
         let shapeLayer = CAShapeLayer()
-
+        shapeLayer.name = "DashedCircleLayer"     // <- the missing piece
         shapeLayer.strokeColor = color.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.lineWidth = lineWidth
-        shapeLayer.lineDashPattern = [strokeLength, gapLength]
+//        shapeLayer.lineWidth = lineWidth
+//        shapeLayer.lineDashPattern = [strokeLength, gapLength]
         shapeLayer.lineCap = .round
         shapeLayer.lineWidth = 2
         shapeLayer.lineDashPattern = [4, 5]

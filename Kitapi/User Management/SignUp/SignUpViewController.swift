@@ -51,6 +51,10 @@ class SignUpViewController: UIViewController {
         self.bindViewModel()
     }
     
+    @IBAction func backAction(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @IBAction func selectCountryCodeAction(_ sender: UIButton) {
     }
     
