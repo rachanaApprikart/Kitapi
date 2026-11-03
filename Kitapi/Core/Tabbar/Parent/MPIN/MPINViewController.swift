@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FloatingPanel
 
 class MPINViewController: UIViewController {
     
@@ -21,6 +22,9 @@ class MPINViewController: UIViewController {
     @IBOutlet weak var createBiometricButton: UIButton!
     @IBOutlet weak var createMPINButton: UIButton!
     
+    @IBOutlet weak var forgotMPINButton: UIButton!
+    
+    private var floatingPanel: FloatingPanelController?
     private let viewModel = MPINViewModel()
     var selectedMinute: String?
     
@@ -55,6 +59,10 @@ class MPINViewController: UIViewController {
         }
     }
     
+    
+    @IBAction func forgotMPINAction(_ sender: UIButton) {
+        self.showResetMPINVC()
+    }
     
     @IBAction func createBiometricAction(_ sender: UIButton) {
     }
@@ -142,6 +150,14 @@ class MPINViewController: UIViewController {
         }
         sceneDelegate.window?.rootViewController = vc
     }
+    
+    fileprivate func returnToLoginAfterMPINReset() {
+        guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate,
+              let vc = VCManager.openLoginVC() else {
+            return
+        }
+        sceneDelegate.window?.rootViewController = vc
+    }
 }
 //4-8
 
@@ -151,6 +167,15 @@ extension MPINViewController {
         self.headerLabel.text = mode.title
         self.subtitleLabel.text = mode.subtitle
         self.createMPINButton.setTitle(mode.buttonTitle, for: .normal)
+        
+        switch mode {
+            
+        case .create:
+            self.forgotMPINButton.isHidden = true
+            
+        default:
+            self.forgotMPINButton.isHidden = false
+        }
     }
     
     private func setMPINUI() {
@@ -182,6 +207,13 @@ extension MPINViewController {
         self.createBiometricButton.layer.cornerRadius = 25
         self.createBiometricButton.layer.borderWidth = 1
         self.createBiometricButton.layer.borderColor = UIColor.buttonBorderColor.cgColor
+        
+        self.forgotMPINButton.setTitle("Forgot MPIN?", for: .normal)
+        self.forgotMPINButton.contentVerticalAlignment = .top
+        self.forgotMPINButton.contentHorizontalAlignment = .right
+        self.forgotMPINButton.titleLabel?.font = UIFont(name: Fonts.urbanistSemiBold, size: 16)
+        self.forgotMPINButton.setTitleColor(.textPlaceholderColor, for: .normal)
+        
         
         //Keeps button blurred initially
         self.updateMPINButtonState()
@@ -219,6 +251,41 @@ extension MPINViewController {
         self.activityIndicator.stopAnimating()
     }
     
+    private func showResetMPINVC() {
+        guard let contentVC = VCManager.openResetMPINVC() else { return }
+        
+        contentVC.onResetSuccess = { [weak self] in
+            
+            AppUserDefaults.authorizationToken = nil
+            AppUserDefaults.customerDetails = nil
+            ChildManager.shared.clearChildMode()
+            
+            self?.floatingPanel?.dismiss(animated: true)
+            self?.floatingPanel = nil
+            self?.returnToLoginAfterMPINReset()
+        }
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.4)
+        self.presentFloatingPanel(with: contentVC, layout: layout)
+    }
+    
+    
+    private func presentFloatingPanel(with contentVC: UIViewController, layout: FloatingPanelLayout) {
+        guard floatingPanel == nil else { return }
+        
+        let fpc = FloatingPanelController()
+        fpc.delegate = self
+        fpc.set(contentViewController: contentVC)
+        
+        fpc.surfaceView.appearance.cornerRadius = 25
+        fpc.surfaceView.grabberHandle.isHidden = false
+        fpc.layout = layout
+        fpc.isRemovalInteractionEnabled = true
+        fpc.backdropView.dismissalTapGestureRecognizer.isEnabled = true
+    
+        self.floatingPanel = fpc
+        self.present(fpc, animated: true)
+    }
+    
 }
 
 protocol CreateMPINDelegate: AnyObject {
@@ -228,3 +295,19 @@ protocol CreateMPINDelegate: AnyObject {
 protocol DisableChildModeDelegate: AnyObject {
     func didDisableChildModeSuccessfully()
 }
+
+
+extension MPINViewController: FloatingPanelControllerDelegate {
+    
+    func floatingPanelDidRemove(_ fpc: FloatingPanelController) {
+        self.floatingPanel = nil
+    }
+    func floatingPanelDidDismiss(_ fpc: FloatingPanelController) {
+        self.floatingPanel = nil
+    }
+}
+//The expected behavior is:
+//- .create: Forgot MPIN remains hidden.
+//- .enable and .disable: Forgot MPIN remains visible.
+//- Reset succeeds: return to the Login screen, not the parent or child tab bar.
+//- Reset fails: keep the reset panel open and display the error.

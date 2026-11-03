@@ -207,12 +207,12 @@ final class EventDetailsViewController: UIViewController {
         if vm.isRegistering { label = vm.bookingKind == .paid ? "Processing payment…" : "Registering…" }
         else if pendingVerification && !registered { label = "Retry Payment Verification" }
         bookingButton.setTitle(label, for: .normal)
-        bookingButton.isEnabled = !vm.isLoading && !vm.isRegistering && !ChildManager.shared.isChildMode && (registered ? vm.groupURL(childID: child?.id) != nil : pendingVerification || (open && vm.bookingKind != .unknown && vm.registrationChecked && child != nil && vm.hasAgreedTerms))
+        bookingButton.isEnabled = !vm.requiresSignIn && !vm.isLoading && !vm.isRegistering && !ChildManager.shared.isChildMode && (registered ? vm.groupURL(childID: child?.id) != nil : pendingVerification || (open && vm.bookingKind != .unknown && vm.registrationChecked && child != nil && vm.hasAgreedTerms))
         bookingButton.backgroundColor = registered ? .greenPrimaryColor : .pinkPrimaryColor
         bookingButton.alpha = bookingButton.isEnabled ? 1 : 0.55
         bookingMessage.text = message
         bookingMessage.isHidden = message == nil
-        footer.isHidden = vm.details != nil && !open && !registered && !pendingVerification
+        footer.isHidden = vm.requiresSignIn || (vm.details != nil && !open && !registered && !pendingVerification)
         footer.layoutMargins = footer.isHidden ? .zero : UIEdgeInsets(top: 10, left: 16, bottom: 12, right: 16)
         for arranged in footer.arrangedSubviews { arranged.isHidden = footer.isHidden }
         consentRow?.isHidden = footer.isHidden || registered || pendingVerification

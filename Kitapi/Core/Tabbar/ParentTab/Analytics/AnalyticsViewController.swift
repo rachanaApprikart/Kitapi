@@ -383,6 +383,10 @@ extension AnalyticsViewController {
         guard let contentVC = VCManager.openChildListVC() else { return }
         let layout = FloatingPanelCustomLayout(state: .half, inset: 0.5)
         contentVC.childrenList = ChildManager.shared.children
+        contentVC.onChildSelected = {
+            self.floatingPanel?.dismiss(animated: true)
+            self.floatingPanel = nil
+        }
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     
@@ -395,7 +399,7 @@ extension AnalyticsViewController {
     private func showMPINPanel() {
         guard let contentVC = VCManager.openMPINVC() else { return }
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.6)
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.7)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     
@@ -453,3 +457,4 @@ extension AnalyticsViewController: FloatingPanelControllerDelegate {
         self.floatingPanel = nil
     }
 }
+

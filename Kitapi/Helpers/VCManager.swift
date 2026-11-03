@@ -63,6 +63,7 @@ struct VCManager {
         return storyBoard.instantiateViewController(identifier: ResetPasswordViewController.sbIdentifier) as? ResetPasswordViewController
     }
     
+    
     static func openNewPasswordVC() -> NewPasswordViewController? {
         return storyBoard.instantiateViewController(identifier: NewPasswordViewController.sbIdentifier) as? NewPasswordViewController
     }
@@ -125,6 +126,11 @@ struct VCManager {
     static func openChoreDetailsVC() -> ChoreDescriptionViewController? {
         return kitapiTabStoryBoard.instantiateViewController(identifier: ChoreDescriptionViewController.sbIdentifier) as? ChoreDescriptionViewController
     }
+    
+    static func openResetMPINVC() -> ResetMPINViewController? {
+        return kitapiTabStoryBoard.instantiateViewController(identifier: ResetMPINViewController.sbIdentifier) as? ResetMPINViewController
+    }
+    
     
     static func openMPINVC() -> MPINViewController? {
         return kitapiTabStoryBoard.instantiateViewController(identifier: MPINViewController.sbIdentifier) as? MPINViewController

@@ -164,7 +164,7 @@ class EventListViewController: UIViewController {
             }
         }
         let empty = eventListVM.events.isEmpty
-        tableView.backgroundView?.isHidden = !empty
+        tableView.backgroundView?.isHidden = !empty || eventListVM.requiresSignIn
         stateLabel.isHidden = eventListVM.isLoading
         stateLabel.text = eventListVM.errorMessage ?? "No \(eventListVM.filter == .all ? "" : eventListVM.filter.rawValue + " ")events yet.\nPull down to refresh."
         retryButton.isHidden = eventListVM.errorMessage == nil
@@ -255,7 +255,7 @@ extension EventListViewController {
     private func showMPINPanel() {
         guard let contentVC = VCManager.openMPINVC() else { return }
         contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.6)
+        let layout = FloatingPanelCustomLayout(state: .half, inset: 0.7)
         self.presentFloatingPanel(with: contentVC, layout: layout)
     }
     
@@ -320,6 +320,7 @@ extension EventListViewController: CreateMPINDelegate {
 
 extension EventListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard !eventListVM.requiresSignIn else { return }
         tableView.deselectRow(at: indexPath, animated: true)
         guard eventListVM.events.indices.contains(indexPath.row),
               let navigationController,

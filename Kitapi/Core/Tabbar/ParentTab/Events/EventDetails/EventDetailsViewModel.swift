@@ -32,10 +32,11 @@ final class EventDetailsViewModel {
     private(set) var myParticipations: [EventParticipation] = []
     private(set) var isRegistering = false
     private(set) var registrationChecked = false
+    private(set) var requiresSignIn = false
     var hasAgreedTerms = false
     var selectedTab: EventDetailsTab = .about
     var onChange: (() -> Void)?
-    var canLoadParticipants: Bool { !participantsLoading && participantPage < participantTotalPages }
+    var canLoadParticipants: Bool { !requiresSignIn && !participantsLoading && participantPage < participantTotalPages }
 
     init(service: (any EventDetailsServing)? = nil, paymentService: (any EventPaymentServing)? = nil) {
         self.service = service ?? EventDetailsService()
@@ -58,6 +59,7 @@ final class EventDetailsViewModel {
         paidRegistrations = []
         batches = []
         registrationChecked = false
+        requiresSignIn = false
         participants = []
         participantPage = 0
         participantTotalPages = 1
@@ -86,10 +88,16 @@ final class EventDetailsViewModel {
                     paidRegistrations = existing
                     registrationChecked = true
                 }
+            } catch EventServiceError.signInRequired {
+                guard generation == token, !Task.isCancelled else { return }
+                markRequiresSignIn()
             } catch {
                 guard generation == token, !Task.isCancelled else { return }
                 bookingError = error.localizedDescription
             }
+        } catch EventServiceError.signInRequired {
+            guard generation == token, !Task.isCancelled else { return }
+            markRequiresSignIn()
         } catch {
             guard generation == token, !Task.isCancelled else { return }
             errorMessage = error.localizedDescription
@@ -111,6 +119,9 @@ final class EventDetailsViewModel {
             participants += result.participants.filter { seen.insert($0.id).inserted }
             participantPage += 1
             participantTotalPages = result.participants.isEmpty ? participantPage : max(participantPage, result.pagination.totalPages)
+        } catch EventServiceError.signInRequired {
+            guard generation == token, !Task.isCancelled else { return }
+            markRequiresSignIn()
         } catch {
             guard generation == token, !Task.isCancelled else { return }
             participantsError = error.localizedDescription
@@ -123,14 +134,14 @@ final class EventDetailsViewModel {
     }
 
     func groupURL(childID: String?) -> URL? {
-        guard let childID else { return nil }
+        guard !requiresSignIn, let childID else { return nil }
         if let paid = paidRegistrations.first(where: { $0.ownerChildID == childID && $0.isConfirmed }) { return paid.groupURL }
         guard let free = myParticipations.first(where: { $0.childId == childID && $0.isRegistered }) else { return nil }
         return EventGroupLink.url(free.whatsappGroupLink ?? free.event?.whatsappGroupLink ?? details?.whatsappGroupLink)
     }
 
     func preparePayment(eventID: String, childID: String?, batchID: String, isChildMode: Bool, grade: String?, school: String?) async -> EventPaymentOrder? {
-        guard !isRegistering, !isLoading, registrationChecked, bookingKind == .paid,
+        guard !requiresSignIn, !isRegistering, !isLoading, registrationChecked, bookingKind == .paid,
               details?.event.id == eventID, details?.acceptsRegistration == true,
               hasAgreedTerms, !isChildMode, let childID, !childID.isEmpty,
               batches.contains(where: { $0.id == batchID && $0.acceptsRegistration(at: Date()) }) else { return nil }
@@ -152,20 +163,31 @@ final class EventDetailsViewModel {
             activeOrder = order
             onChange?()
             return order
+        } catch EventServiceError.signInRequired {
+            markRequiresSignIn()
+            finishCheckout()
+            return nil
         } catch {
+            registrationError = error.localizedDescription
             // The webhook can confirm while an order request is in flight.
-            if let record = paidRegistrations.first(where: { $0.ownerChildID == childID && ($0.eventBatchId ?? $0.batch?.id) == batchID }),
-               var updated = try? await paymentService.registration(id: record.id), updated.id == record.id, updated.isConfirmed,
-               updated.ownerChildID == nil || updated.ownerChildID == childID {
-                updated.childId = childID
-                store(updated)
-            } else { registrationError = error.localizedDescription }
+            if let record = paidRegistrations.first(where: { $0.ownerChildID == childID && ($0.eventBatchId ?? $0.batch?.id) == batchID }) {
+                do {
+                    var updated = try await paymentService.registration(id: record.id)
+                    if updated.id == record.id, updated.isConfirmed, updated.ownerChildID == nil || updated.ownerChildID == childID {
+                        updated.childId = childID
+                        store(updated)
+                        registrationError = nil
+                    }
+                } catch EventServiceError.signInRequired { markRequiresSignIn() }
+                catch { /* Keep the original payment error when reconciliation also fails. */ }
+            }
             finishCheckout()
             return nil
         }
     }
 
     func verifyPayment(_ proof: EventPaymentProof, isChildMode: Bool) async -> Bool {
+        guard !requiresSignIn else { return false }
         guard isRegistering, let order = activeOrder, proof.razorpayOrderId == order.razorpayOrderId,
               !proof.razorpayPaymentId.isEmpty, !proof.razorpaySignature.isEmpty else {
             registrationError = "Payment could not be verified. Check your registration before trying again."
@@ -182,18 +204,28 @@ final class EventDetailsViewModel {
             guard result.isConfirmed else { throw EventServiceError.server("Payment confirmation is pending. Please refresh before paying again.") }
             pendingVerification = nil
             return true
+        } catch EventServiceError.signInRequired {
+            markRequiresSignIn()
+            return false
         } catch {
-            if var result = try? await paymentService.registration(id: order.registrationId), result.id == order.registrationId, result.isConfirmed,
-               result.ownerChildID == nil || result.ownerChildID == checkoutChildID {
-                result.childId = checkoutChildID; store(result); pendingVerification = nil; return true
-            }
             registrationError = error.localizedDescription
+            do {
+                var result = try await paymentService.registration(id: order.registrationId)
+                if result.id == order.registrationId, result.isConfirmed, result.ownerChildID == nil || result.ownerChildID == checkoutChildID {
+                    result.childId = checkoutChildID
+                    store(result)
+                    pendingVerification = nil
+                    registrationError = nil
+                    return true
+                }
+            } catch EventServiceError.signInRequired { markRequiresSignIn() }
+            catch { /* Keep the original verification error when reconciliation also fails. */ }
             return false
         }
     }
 
     func retryVerification(childID: String?, isChildMode: Bool) async -> Bool {
-        guard !isRegistering, !isChildMode, let pendingVerification, pendingVerification.childID == childID else { return false }
+        guard !requiresSignIn, !isRegistering, !isChildMode, let pendingVerification, pendingVerification.childID == childID else { return false }
         activeOrder = pendingVerification.order
         checkoutChildID = pendingVerification.childID
         isRegistering = true
@@ -203,6 +235,7 @@ final class EventDetailsViewModel {
     }
 
     func cancelPayment(message: String = "Your registration is not confirmed yet. You can continue payment.") {
+        guard !requiresSignIn else { finishCheckout(); return }
         registrationError = message
         finishCheckout()
     }
@@ -219,8 +252,19 @@ final class EventDetailsViewModel {
         paidRegistrations.append(record)
     }
 
+    private func markRequiresSignIn() {
+        requiresSignIn = true
+        registrationChecked = false
+        hasAgreedTerms = false
+        errorMessage = nil
+        bookingError = nil
+        registrationError = nil
+        participantsError = nil
+        pendingVerification = nil
+    }
+
     func register(eventID: String, childID: String?, isChildMode: Bool) async {
-        guard !isRegistering else { return }
+        guard !requiresSignIn, !isRegistering else { return }
         registrationError = nil
         guard !isLoading, let details, details.event.id == eventID, details.acceptsRegistration, bookingKind == .free, registrationChecked else {
             registrationError = "Registration is not available for this event."; onChange?(); return
@@ -235,9 +279,13 @@ final class EventDetailsViewModel {
         do {
             let result = try await service.registerFree(eventID: eventID, childID: childID)
             myParticipations.append(result)
+        } catch EventServiceError.signInRequired {
+            markRequiresSignIn()
         } catch {
             // A timeout/duplicate error can occur after the backend committed. Reconcile before retrying.
-            if let existing = try? await service.myParticipations(eventID: eventID) { myParticipations = existing }
+            do { myParticipations = try await service.myParticipations(eventID: eventID) }
+            catch EventServiceError.signInRequired { markRequiresSignIn(); return }
+            catch { /* Keep the original registration error when reconciliation also fails. */ }
             if !isRegistered(childID: childID) { registrationError = error.localizedDescription }
         }
     }

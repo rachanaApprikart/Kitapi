@@ -11,9 +11,10 @@ final class EventListViewModel {
     private(set) var events: [KitapiEvent] = []
     private(set) var isLoading = false
     private(set) var errorMessage: String?
+    private(set) var requiresSignIn = false
     var onChange: (() -> Void)?
 
-    var canLoadMore: Bool { currentPage < totalPages && !isLoading }
+    var canLoadMore: Bool { currentPage < totalPages && !isLoading && !requiresSignIn }
 
     init(service: (any EventListing)? = nil) { self.service = service ?? EventService() }
 
@@ -26,6 +27,7 @@ final class EventListViewModel {
         currentPage = 0
         totalPages = 1
         events = []
+        requiresSignIn = false
         isLoading = false
         await loadNextPage()
     }
@@ -56,6 +58,10 @@ final class EventListViewModel {
             events += result.events.filter { seen.insert($0.id).inserted }
             currentPage = page
             totalPages = result.events.isEmpty ? page : max(page, result.pagination.totalPages)
+        } catch EventServiceError.signInRequired {
+            guard requestGeneration == generation, !Task.isCancelled else { return }
+            requiresSignIn = true
+            errorMessage = nil
         } catch is CancellationError {
             EventAPILog.write("[EventList] CANCELLED filter=\(requestedFilter.rawValue) page=\(page)")
         } catch {
