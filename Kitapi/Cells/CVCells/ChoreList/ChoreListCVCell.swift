@@ -135,6 +135,92 @@ class ChoreListCVCell: UICollectionViewCell {
         }
     }
     
+    func configureViewAllChores(with chore: TaskData) {
+        
+        
+        let shouldStrikeThrough: Bool = {
+               switch chore.status {
+               case .completed, .overdue:
+                   return true
+               default:
+                   return false
+               }
+           }()
+
+           self.choreNameLabel.attributedText = NSAttributedString(
+            string: chore.title ?? "",
+               attributes: [
+                   .strikethroughStyle: shouldStrikeThrough
+                       ? NSUnderlineStyle.single.rawValue
+                       : 0
+               ]
+           )
+
+      //  self.choreNameLabel.text = chore.title
+        self.rewardCoinsLabel.text = "\(String(describing: chore.rewardCoins ?? 0))"
+        
+        //let shouldShowSchedule = (sectionType == .upNext)
+        
+        self.recurrenceLabel.isHidden = true
+        self.dateLabel.isHidden = true
+        self.timeLabel.isHidden = true
+        self.frequencyBGView.isHidden = true
+        self.choreStatusButton.isUserInteractionEnabled = false
+        
+//        if shouldShowSchedule {
+//            self.recurrenceLabel.text = chore.recurrence?.rawValue
+//            self.dateLabel.text = formatDate(chore.dueDate ?? "")
+//            self.timeLabel.text = formatTime(chore.startTime ?? "")
+//        }
+        
+        if let url = URL(string: chore.image?.url ?? "") {
+            self.choreImageView.kf.indicatorType = .activity
+            self.choreImageView.kf.setImage(with: url)
+        }
+        
+        // status
+        switch chore.status {
+            
+        case .pending, .upcoming:
+            
+            self.choreStatusButton.removeDashedCircle()
+
+            self.choreStatusButton.setImage(nil, for: .normal)
+            self.choreStatusButton.backgroundColor = .white
+            
+            let radius = min(choreStatusButton.bounds.width, choreStatusButton.bounds.height) / 2 - 2
+            
+            self.choreStatusButton.createDashedCircle(
+                center: CGPoint(x: self.choreStatusButton.bounds.midX, y: self.choreStatusButton.bounds.midY),
+                radius: radius,
+                color: .buttonStrokeColor,
+                strokeLength: 1.5,
+                gapLength: 0.5,
+                lineWidth: 1.5
+            )
+        case .completed:
+            self.choreStatusButton.removeDashedCircle()
+
+            self.choreStatusButton.backgroundColor = .greenPrimaryColor
+            self.choreStatusButton.setImage(AppImages.check, for: .normal)
+            
+        case .rejected:
+            self.choreStatusButton.removeDashedCircle()
+
+            self.choreStatusButton.backgroundColor = .redPrimaryColor
+            self.choreStatusButton.setImage(AppImages.close, for: .normal)
+
+        case .overdue:
+            self.choreStatusButton.removeDashedCircle()
+
+            self.choreStatusButton.backgroundColor = .orangePrimaryColor
+            self.choreStatusButton.setImage(AppImages.exclamation, for: .normal)
+
+        default:
+            self.choreStatusButton.removeDashedCircle()
+        }
+    }
+    
     func configureAvailableChores(with chore: TaskData, isSelected: Bool) {
         
         self.choreNameLabel.text = chore.template?.title

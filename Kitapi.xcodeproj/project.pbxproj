@@ -48,6 +48,7 @@
 		183A6C97301C838600C017AF /* ChoreDescriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183A6C96301C838600C017AF /* ChoreDescriptionViewModel.swift */; };
 		183B5A88305138C50035F73B /* Reauth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B5A87305138C50035F73B /* Reauth.swift */; };
 		183B5A8A3051390B0035F73B /* ReauthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B5A893051390B0035F73B /* ReauthService.swift */; };
+		183D02CC30AB4F9800482F5A /* AllChoresViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183D02CB30AB4F9800482F5A /* AllChoresViewModel.swift */; };
 		183D55C93041BF2300533C40 /* CurrentGoalCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183D55C73041BF2300533C40 /* CurrentGoalCardCell.swift */; };
 		183D55CA3041BF2300533C40 /* CurrentGoalCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183D55C83041BF2300533C40 /* CurrentGoalCardCell.xib */; };
 		183E20B52FD9468800B7B363 /* CreateChoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E20B42FD9468800B7B363 /* CreateChoreViewController.swift */; };
@@ -157,6 +158,8 @@
 		186428432FC4289900602DAE /* PersistentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186428422FC4289900602DAE /* PersistentHeaderView.swift */; };
 		1865DDE1303C91A400FCFE9B /* CreateGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865DDE0303C91A400FCFE9B /* CreateGoalViewController.swift */; };
 		186687CA2F7E79FE00479EF1 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186687C92F7E79FE00479EF1 /* SignUpViewController.swift */; };
+		1866AC3430AC39B200F8D19B /* ChoreStatusCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1866AC3230AC39B200F8D19B /* ChoreStatusCVCell.swift */; };
+		1866AC3530AC39B200F8D19B /* ChoreStatusCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1866AC3330AC39B200F8D19B /* ChoreStatusCVCell.xib */; };
 		186B5956304C593A00D79CC7 /* BagelFatOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 186B5955304C592200D79CC7 /* BagelFatOne-Regular.ttf */; };
 		186B5959304C60F500D79CC7 /* Games.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186B5958304C60F500D79CC7 /* Games.swift */; };
 		186B595B304C62A100D79CC7 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186B595A304C62A100D79CC7 /* GameService.swift */; };
@@ -199,6 +202,7 @@
 		18E4F43F2EF7D4DC003A103F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18E4F43E2EF7D4DC003A103F /* Assets.xcassets */; };
 		18E4F4422EF7D4DC003A103F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18E4F4402EF7D4DC003A103F /* LaunchScreen.storyboard */; };
 		18E4F44A2EF7DC25003A103F /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E4F4492EF7DC25003A103F /* ColorPalette.swift */; };
+		18FBD95030AA0894000A7DDA /* AllChoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FBD94F30AA0894000A7DDA /* AllChoresViewController.swift */; };
 		DC2557E1F5EFBD0A54B3F727 /* Pods_Kitapi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 345798EF54E379A9C3B6FC20 /* Pods_Kitapi.framework */; };
 /* End PBXBuildFile section */
 
@@ -244,6 +248,7 @@
 		183A6C96301C838600C017AF /* ChoreDescriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreDescriptionViewModel.swift; sourceTree = "<group>"; };
 		183B5A87305138C50035F73B /* Reauth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reauth.swift; sourceTree = "<group>"; };
 		183B5A893051390B0035F73B /* ReauthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReauthService.swift; sourceTree = "<group>"; };
+		183D02CB30AB4F9800482F5A /* AllChoresViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChoresViewModel.swift; sourceTree = "<group>"; };
 		183D55C73041BF2300533C40 /* CurrentGoalCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentGoalCardCell.swift; sourceTree = "<group>"; };
 		183D55C83041BF2300533C40 /* CurrentGoalCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentGoalCardCell.xib; sourceTree = "<group>"; };
 		183E20B42FD9468800B7B363 /* CreateChoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChoreViewController.swift; sourceTree = "<group>"; };
@@ -351,6 +356,8 @@
 		186428422FC4289900602DAE /* PersistentHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentHeaderView.swift; sourceTree = "<group>"; };
 		1865DDE0303C91A400FCFE9B /* CreateGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGoalViewController.swift; sourceTree = "<group>"; };
 		186687C92F7E79FE00479EF1 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		1866AC3230AC39B200F8D19B /* ChoreStatusCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreStatusCVCell.swift; sourceTree = "<group>"; };
+		1866AC3330AC39B200F8D19B /* ChoreStatusCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoreStatusCVCell.xib; sourceTree = "<group>"; };
 		186B5955304C592200D79CC7 /* BagelFatOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BagelFatOne-Regular.ttf"; sourceTree = "<group>"; };
 		186B5958304C60F500D79CC7 /* Games.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Games.swift; sourceTree = "<group>"; };
 		186B595A304C62A100D79CC7 /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
@@ -395,6 +402,7 @@
 		18E4F4412EF7D4DC003A103F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18E4F4432EF7D4DC003A103F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18E4F4492EF7DC25003A103F /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		18FBD94F30AA0894000A7DDA /* AllChoresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllChoresViewController.swift; sourceTree = "<group>"; };
 		345798EF54E379A9C3B6FC20 /* Pods_Kitapi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kitapi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC3680A020DE8B39E1734FF /* Pods-Kitapi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kitapi.release.xcconfig"; path = "Target Support Files/Pods-Kitapi/Pods-Kitapi.release.xcconfig"; sourceTree = "<group>"; };
 		B7103797FEF33FEB4E63CD84 /* Pods-Kitapi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kitapi.debug.xcconfig"; path = "Target Support Files/Pods-Kitapi/Pods-Kitapi.debug.xcconfig"; sourceTree = "<group>"; };
@@ -617,6 +625,8 @@
 				18403C493010AB6A0092E978 /* ChoreViewModel.swift */,
 				184ACCA73017314C00D14BCF /* ChoreDescriptionViewController.swift */,
 				183A6C96301C838600C017AF /* ChoreDescriptionViewModel.swift */,
+				18FBD94F30AA0894000A7DDA /* AllChoresViewController.swift */,
+				183D02CB30AB4F9800482F5A /* AllChoresViewModel.swift */,
 			);
 			path = ChoreList;
 			sourceTree = "<group>";
@@ -956,6 +966,15 @@
 			path = Goal;
 			sourceTree = "<group>";
 		};
+		1866AC3130AC397A00F8D19B /* ChoreStatus */ = {
+			isa = PBXGroup;
+			children = (
+				1866AC3230AC39B200F8D19B /* ChoreStatusCVCell.swift */,
+				1866AC3330AC39B200F8D19B /* ChoreStatusCVCell.xib */,
+			);
+			path = ChoreStatus;
+			sourceTree = "<group>";
+		};
 		1866CDEA2F82DC0200F7A115 /* CustomTextField */ = {
 			isa = PBXGroup;
 			children = (
@@ -1097,6 +1116,7 @@
 		18C694662EFAB099001F8440 /* CVCells */ = {
 			isa = PBXGroup;
 			children = (
+				1866AC3130AC397A00F8D19B /* ChoreStatus */,
 				18468217304D410D009EF05B /* GamesCV */,
 				183584A730441FBC0040B76E /* MilestoneCell */,
 				183D55C63041BEC200533C40 /* CurrentGoals */,
@@ -1307,6 +1327,7 @@
 				183D55CA3041BF2300533C40 /* CurrentGoalCardCell.xib in Resources */,
 				18BA58BF2F7A54D500EDE5C6 /* Urbanist-Light.ttf in Resources */,
 				18973FF92FEB9F0200C16F08 /* ChoreTemplateCVCell.xib in Resources */,
+				1866AC3530AC39B200F8D19B /* ChoreStatusCVCell.xib in Resources */,
 				1842D87D304AA2DF003612F3 /* ChildTab.storyboard in Resources */,
 				18BA58BD2F7A54B700EDE5C6 /* Urbanist-ExtraBold.ttf in Resources */,
 				1841F41C30125A4A000191C7 /* ChoreListCVCell.xib in Resources */,
@@ -1382,6 +1403,7 @@
 				187B3E6B2F99F960000E5174 /* Login.swift in Sources */,
 				183B5A8A3051390B0035F73B /* ReauthService.swift in Sources */,
 				186283C52FAB266200BB07DF /* HomeViewModel.swift in Sources */,
+				183D02CC30AB4F9800482F5A /* AllChoresViewModel.swift in Sources */,
 				184EDCF62FEEEBA200E69961 /* CreateChoreTemplateCVCell.swift in Sources */,
 				183EA3DF2EF84F54003A9ABF /* VCManager.swift in Sources */,
 				18468224304D8340009EF05B /* ReAuthViewModel.swift in Sources */,
@@ -1493,6 +1515,7 @@
 				1861C2E52F9B6B4500EC6507 /* NewPasswordViewModel.swift in Sources */,
 				1857E1192FB7389F00E63CD0 /* AvatarCVCell.swift in Sources */,
 				1855BB9F304E6FC90036E17D /* PlayGameViewController.swift in Sources */,
+				1866AC3430AC39B200F8D19B /* ChoreStatusCVCell.swift in Sources */,
 				1830DC3930714B34003F9FF4 /* EditParentViewController.swift in Sources */,
 				18260A58303DE457001C29B2 /* MilestoneViewController.swift in Sources */,
 				1826AB8E306ACC0000E3153D /* SessionManager.swift in Sources */,
@@ -1514,6 +1537,7 @@
 				185A85312F8E065F00A4D4B9 /* LogFile.swift in Sources */,
 				186283D22FAB27D100BB07DF /* ChildProfileViewController.swift in Sources */,
 				182EB9972F8638660093A900 /* NewPasswordViewController.swift in Sources */,
+				18FBD95030AA0894000A7DDA /* AllChoresViewController.swift in Sources */,
 				186B595D304C646200D79CC7 /* GamesViewModel.swift in Sources */,
 				1842D885304AA8E7003612F3 /* GameViewController.swift in Sources */,
 				1846FFA73045664C00B8CC47 /* GoalDetails.swift in Sources */,

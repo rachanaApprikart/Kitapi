@@ -101,21 +101,6 @@ class ChoresViewController: UIViewController {
             await self.choresViewModel.fetchAllChores(childId: childId)
         }
     }
-    
-    private func showCreatChoreVC() {
-        guard let contentVC = VCManager.openCreateChoresVC() else { return }
-        contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.95)
-        self.presentFloatingPanel(with: contentVC, layout: layout)
-    }
-    
-    private func showChoreDetailsVC(cID: String) {
-        guard let contentVC = VCManager.openChoreDetailsVC() else { return }
-        contentVC.choreId = cID
-        contentVC.delegate = self
-        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.85)
-        self.presentFloatingPanel(with: contentVC, layout: layout)
-    }
    
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -177,6 +162,10 @@ extension ChoresViewController: UICollectionViewDataSource, UICollectionViewDele
 
         let section = self.choreSection[indexPath.section]
         headerView.headerLabel.text = section.type.title
+        headerView.viewAllButton.isHidden = false
+        headerView.onViewAllChoresTapped = {
+            self.showAllChoresListVC()
+        }
         return headerView
     }
 }
@@ -331,7 +320,6 @@ extension ChoresViewController {
         self.view.sendSubviewToBack(self.activityView)
     }
 
-    
     private func presentFloatingPanel(with contentVC: UIViewController, layout: FloatingPanelLayout) {
         guard floatingPanel == nil else { return }
         
@@ -347,6 +335,27 @@ extension ChoresViewController {
     
         self.floatingPanel = fpc
         self.present(fpc, animated: true)
+    }
+    
+    private func showCreatChoreVC() {
+        guard let contentVC = VCManager.openCreateChoresVC() else { return }
+        contentVC.delegate = self
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.95)
+        self.presentFloatingPanel(with: contentVC, layout: layout)
+    }
+    
+    private func showChoreDetailsVC(cID: String) {
+        guard let contentVC = VCManager.openChoreDetailsVC() else { return }
+        contentVC.choreId = cID
+        contentVC.delegate = self
+        let layout = FloatingPanelCustomLayout(state: .full, inset: 0.85)
+        self.presentFloatingPanel(with: contentVC, layout: layout)
+    }
+    
+    private func showAllChoresListVC() {
+        guard let vc = VCManager.openViewAllChoresVC() else { return }
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

@@ -55,6 +55,9 @@ class DaysCVCell: UICollectionViewCell {
         self.daysLabel.textColor = item.isSelected ? .pinkPrimaryColor : UIColor.textColor
         self.bgView.layer.borderColor =  item.isSelected ? UIColor.pinkPrimaryColor.cgColor : UIColor.borderColor.cgColor
     }
+    
+    
+   
 }
 
 extension DaysCVCell {

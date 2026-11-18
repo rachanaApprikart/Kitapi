@@ -3289,6 +3289,122 @@
             </objects>
             <point key="canvasLocation" x="4110.6870229007636" y="-1025.3521126760563"/>
         </scene>
+        <!--All Chores View Controller-->
+        <scene sceneID="2Bi-Nn-Kh5">
+            <objects>
+                <viewController storyboardIdentifier="AllChoresViewController" id="AGq-OU-tS7" customClass="AllChoresViewController" customModule="Kitapi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vol-pb-8TR">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7a-Ta-6cp">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ojl-4z-t85">
+                                        <rect key="frame" x="156.66666666666666" y="386" width="80" height="80"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="2cr-MU-0uR">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="2cr-MU-0uR" firstAttribute="leading" secondItem="ojl-4z-t85" secondAttribute="leading" id="AFn-ZG-Hip"/>
+                                            <constraint firstAttribute="bottom" secondItem="2cr-MU-0uR" secondAttribute="bottom" id="Ent-EU-U55"/>
+                                            <constraint firstAttribute="width" constant="80" id="Vk8-ja-Pre"/>
+                                            <constraint firstAttribute="height" constant="80" id="ae3-JO-a47"/>
+                                            <constraint firstAttribute="trailing" secondItem="2cr-MU-0uR" secondAttribute="trailing" id="b8O-yD-Aeu"/>
+                                            <constraint firstItem="2cr-MU-0uR" firstAttribute="top" secondItem="ojl-4z-t85" secondAttribute="top" id="lSp-fg-4p2"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ojl-4z-t85" firstAttribute="centerY" secondItem="w7a-Ta-6cp" secondAttribute="centerY" id="9Jb-In-NxG"/>
+                                    <constraint firstItem="ojl-4z-t85" firstAttribute="centerX" secondItem="w7a-Ta-6cp" secondAttribute="centerX" id="Uzi-hw-NQS"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="paK-A8-Tgd">
+                                <rect key="frame" x="0.0" y="181" width="393" height="637"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FUh-r1-fPu">
+                                <rect key="frame" x="0.0" y="59" width="393" height="70"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="90w-iu-bPb">
+                                        <rect key="frame" x="15" y="15" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="C9m-3k-CE8"/>
+                                            <constraint firstAttribute="height" constant="40" id="ls2-VG-fFa"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="keyboard_arrow_left"/>
+                                        <connections>
+                                            <action selector="backAction:" destination="AGq-OU-tS7" eventType="touchUpInside" id="Byi-uk-UYj"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXl-qB-Ml0">
+                                        <rect key="frame" x="65" y="24.666666666666671" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="DXl-qB-Ml0" firstAttribute="leading" secondItem="90w-iu-bPb" secondAttribute="trailing" constant="10" id="0o4-8w-cOl"/>
+                                    <constraint firstItem="90w-iu-bPb" firstAttribute="leading" secondItem="FUh-r1-fPu" secondAttribute="leading" constant="15" id="1Ot-bl-mTi"/>
+                                    <constraint firstItem="90w-iu-bPb" firstAttribute="centerY" secondItem="FUh-r1-fPu" secondAttribute="centerY" id="RF3-om-BUK"/>
+                                    <constraint firstAttribute="height" constant="70" id="Ve1-7H-lGp"/>
+                                    <constraint firstItem="DXl-qB-Ml0" firstAttribute="centerY" secondItem="FUh-r1-fPu" secondAttribute="centerY" id="l2A-6y-5h3"/>
+                                </constraints>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3ch-4Q-xAI">
+                                <rect key="frame" x="0.0" y="129" width="393" height="689"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rYn-zl-iXS">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gTx-gg-KGQ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="gTx-gg-KGQ" firstAttribute="trailing" secondItem="FUh-r1-fPu" secondAttribute="trailing" id="1Xz-uQ-Qdh"/>
+                            <constraint firstItem="w7a-Ta-6cp" firstAttribute="top" secondItem="Vol-pb-8TR" secondAttribute="top" id="1hv-Rb-vSd"/>
+                            <constraint firstItem="gTx-gg-KGQ" firstAttribute="trailing" secondItem="paK-A8-Tgd" secondAttribute="trailing" id="BUd-LR-uXT"/>
+                            <constraint firstItem="paK-A8-Tgd" firstAttribute="leading" secondItem="gTx-gg-KGQ" secondAttribute="leading" id="DXW-sz-z8o"/>
+                            <constraint firstItem="w7a-Ta-6cp" firstAttribute="leading" secondItem="gTx-gg-KGQ" secondAttribute="leading" id="RqA-fv-8Qp"/>
+                            <constraint firstItem="paK-A8-Tgd" firstAttribute="top" secondItem="FUh-r1-fPu" secondAttribute="bottom" constant="52" id="VAi-2L-cAN"/>
+                            <constraint firstItem="gTx-gg-KGQ" firstAttribute="bottom" secondItem="paK-A8-Tgd" secondAttribute="bottom" id="Y5c-dT-UFl"/>
+                            <constraint firstAttribute="bottom" secondItem="w7a-Ta-6cp" secondAttribute="bottom" id="ZEl-Zk-n8d"/>
+                            <constraint firstItem="gTx-gg-KGQ" firstAttribute="bottom" secondItem="3ch-4Q-xAI" secondAttribute="bottom" id="d2S-fc-3HP"/>
+                            <constraint firstItem="3ch-4Q-xAI" firstAttribute="leading" secondItem="gTx-gg-KGQ" secondAttribute="leading" id="jUR-GF-hMB"/>
+                            <constraint firstItem="FUh-r1-fPu" firstAttribute="top" secondItem="gTx-gg-KGQ" secondAttribute="top" id="rLJ-Ol-8XT"/>
+                            <constraint firstItem="3ch-4Q-xAI" firstAttribute="top" secondItem="FUh-r1-fPu" secondAttribute="bottom" id="tkN-p3-rPf"/>
+                            <constraint firstItem="w7a-Ta-6cp" firstAttribute="trailing" secondItem="gTx-gg-KGQ" secondAttribute="trailing" id="utd-yf-fop"/>
+                            <constraint firstItem="gTx-gg-KGQ" firstAttribute="trailing" secondItem="3ch-4Q-xAI" secondAttribute="trailing" id="zBY-qL-8AO"/>
+                            <constraint firstItem="FUh-r1-fPu" firstAttribute="leading" secondItem="gTx-gg-KGQ" secondAttribute="leading" id="zxK-K4-Q94"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="2cr-MU-0uR" id="Zr8-Qd-Bba"/>
+                        <outlet property="activityView" destination="w7a-Ta-6cp" id="ICw-9w-ab9"/>
+                        <outlet property="allChoresCV" destination="3ch-4Q-xAI" id="Ihf-ib-cox"/>
+                        <outlet property="appBGView" destination="paK-A8-Tgd" id="sKv-ny-X2B"/>
+                        <outlet property="backButton" destination="90w-iu-bPb" id="ndi-w7-tKN"/>
+                        <outlet property="choreTitleLabel" destination="DXl-qB-Ml0" id="939-kr-XqJ"/>
+                        <outlet property="headerView" destination="FUh-r1-fPu" id="27E-yy-ehC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a71-1c-Ath" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4831" y="-1027"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="FUB-DX-pVV">
             <objects>
@@ -4066,6 +4182,7 @@
         <image name="edit" width="11" height="11"/>
         <image name="gold-coin-dollar-icon (1) 1" width="12" height="12"/>
         <image name="home_selected" width="24" height="24"/>
+        <image name="keyboard_arrow_left" width="24" height="24"/>
         <image name="kitapati" width="141.66667175292969" height="140"/>
         <image name="left" width="16" height="16"/>
         <image name="mic" width="24" height="24"/>

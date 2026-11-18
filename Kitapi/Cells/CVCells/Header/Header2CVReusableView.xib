@@ -5,8 +5,14 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Urbanist-Bold.ttf">
+            <string>Urbanist-Bold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -18,17 +24,34 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dru-hs-q9P">
-                            <rect key="frame" x="10" y="14.666666666666664" width="300" height="21"/>
+                            <rect key="frame" x="10" y="14.666666666666664" width="41.333333333333336" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5eF-FL-2aX">
+                            <rect key="frame" x="235" y="12.666666666666664" width="75" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="VW2-lP-a0V"/>
+                                <constraint firstAttribute="width" constant="75" id="vO4-IY-PCj"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Urbanist-Bold" family="Urbanist" pointSize="14"/>
+                            <inset key="titleEdgeInsets" minX="-32" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="View All" image="expand_circle_right">
+                                <color key="titleColor" systemColor="labelColor"/>
+                            </state>
+                            <connections>
+                                <action selector="viewAllAction:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="IVj-HD-VMw"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="5eF-FL-2aX" secondAttribute="trailing" constant="10" id="QrM-oR-kQK"/>
                         <constraint firstItem="dru-hs-q9P" firstAttribute="leading" secondItem="I76-aQ-fra" secondAttribute="leading" constant="10" id="Vlm-q9-CZU"/>
+                        <constraint firstItem="5eF-FL-2aX" firstAttribute="centerY" secondItem="I76-aQ-fra" secondAttribute="centerY" id="aBP-BY-rV9"/>
                         <constraint firstItem="dru-hs-q9P" firstAttribute="centerY" secondItem="I76-aQ-fra" secondAttribute="centerY" id="uIo-YE-o0x"/>
-                        <constraint firstAttribute="trailing" secondItem="dru-hs-q9P" secondAttribute="trailing" constant="10" id="zoq-Jz-EbI"/>
                     </constraints>
                 </view>
             </subviews>
@@ -41,8 +64,15 @@
             </constraints>
             <connections>
                 <outlet property="headerLabel" destination="dru-hs-q9P" id="nBs-yT-GsO"/>
+                <outlet property="viewAllButton" destination="5eF-FL-2aX" id="fjF-UB-I64"/>
             </connections>
             <point key="canvasLocation" x="21" y="-11"/>
         </collectionReusableView>
     </objects>
+    <resources>
+        <image name="expand_circle_right" width="16" height="16"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

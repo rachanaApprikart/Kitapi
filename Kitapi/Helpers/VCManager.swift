@@ -86,6 +86,11 @@ struct VCManager {
     static func openChoresVC() -> ChoresViewController? {
         return kitapiTabStoryBoard.instantiateViewController(identifier: ChoresViewController.sbIdentifier) as? ChoresViewController
     }
+    
+    static func openViewAllChoresVC() -> AllChoresViewController? {
+        return kitapiTabStoryBoard.instantiateViewController(identifier: AllChoresViewController.sbIdentifier) as? AllChoresViewController
+    }
+    
     static func openGoalsVC() -> GoalsViewController? {
         return kitapiTabStoryBoard.instantiateViewController(identifier: GoalsViewController.sbIdentifier) as? GoalsViewController
     }
